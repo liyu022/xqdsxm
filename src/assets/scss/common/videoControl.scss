@@ -1,0 +1,139 @@
+.video-control {
+  width: 100%;
+  height: 100%;
+  .video-control-top {
+    height: 165px;
+    .video-control-left {
+      width: calc(100% / 2);
+      height: 100%;
+      float: left;
+      position: relative;
+      .direction-key {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        left: 20px;
+        margin-top: 32px;
+        border-radius: 50px;
+        box-shadow: 0 0 6px 0 rgba(32, 160, 255, 0.43);
+        .direction-key-within {
+          width: 36px;
+          height: 36px;
+          border: solid 1px #bce2ff;
+          border-radius: 50px;
+          position: relative;
+          top: 31px;
+          left: 31px;
+        }
+        span {
+          position: absolute;
+          color: #27a3ff;
+          font-size: 14px;
+          cursor: pointer;
+        }
+        span:nth-child(1) {
+          top: 10px;
+          left: 44px;
+        }
+        span:nth-child(2) {
+          top: 75px;
+          left: 44px;
+        }
+        span:nth-child(3) {
+          top: 43px;
+          left: 8px;
+        }
+        span:nth-child(4) {
+          top: 43px;
+          left: 78px;
+        }
+      }
+    }
+    .video-control-right {
+      width: calc(100% / 2);
+      height: 100%;
+      float: left;
+      .control-key {
+        width: 130px;
+        margin-top: 12px;
+        .control-key-div {
+          height: 40px;
+          line-height: 40px;
+          .name {
+            float: left;
+            margin-right: 15px;
+            font-family: SimSun;
+            font-size: 12px;
+            color: #5a5e66;
+          }
+          .btn-box-slider {
+            width: 76px;
+            display: block;
+            float: left;
+            .el-slider__runway {
+              .el-slider__button {
+                width: 13px;
+                height: 13px;
+                margin-top: -5px;
+              }
+            }
+          }
+          .btn-box {
+            width: 76px;
+            height: 26px;
+            line-height: 26px;
+            background-color: rgba(135, 141, 153, 0.1);
+            border-radius: 2px;
+            display: block;
+            float: left;
+            margin-top: 6px;
+            span {
+              width: calc(100% / 2);
+              display: block;
+              float: left;
+              text-align: center;
+              font-size: 14px;
+              color: #878d99;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+  }
+  .video-control-bottom {
+    height: calc(100% - 165px);
+    .btn-key {
+      width: 100%;
+      margin-top: 30px;
+      div {
+        width: calc(100% / 4);
+        float: left;
+        text-align: center;
+        cursor: pointer;
+        span {
+          width: 100%;
+          display: block;
+        }
+        span:nth-child(1) {
+          width: 28px;
+          height: 28px;
+          line-height: 28px;
+          background-color: #ffffff;
+          box-shadow: 0 1px 8px 0 rgba(32, 160, 255, 0.3);
+          border-radius: 50px;
+          font-size: 14px;
+          color: #20a0ff;
+          margin-left: 25px;
+        }
+        span:nth-child(2) {
+          height: 30px;
+          line-height: 30px;
+          font-family: SimSun;
+          font-size: 12px;
+          color: #5a5e66;
+        }
+      }
+    }
+  }
+}

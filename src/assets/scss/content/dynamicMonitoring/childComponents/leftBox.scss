@@ -1,0 +1,315 @@
+.dynamic-monitoring-left-wrap{
+  width: 360px;
+  background: rgba(255,255,255,0.32);
+  overflow: hidden;
+  .lkfgConFgTitle{
+    height: 62px;
+    line-height: 62px;
+    .title {
+      float: left;
+      margin-left: 10px;
+      font-size: 14px;
+      color: #323232;
+    }
+    .more {
+      float: right;
+      margin-right: 10px;
+      font-size: 12px;
+      color: #646464;
+      cursor: pointer;
+      &:hover{
+        color: #4a96da;
+      }
+    }
+    .sf-switch {
+      top: -3px;
+      left: 215px;
+    }
+  }
+  .glzd_s{
+    height: 200px;
+  }
+  .lkfg{
+    width: 360px;
+    height: 290px;
+    padding: 0 10px;
+    clear: both;
+    .lkfgCon{
+      width: 340px;
+      height: 287px;
+      margin: 0 auto;
+      overflow: hidden;
+      .lkfgConFg{
+        overflow: hidden;
+        .lkfgConFg-left{
+          width: 130px;
+          float: left;
+          height: 145px;
+        }
+        .lkfgConFgInfo{
+          width: calc(100% - 130px);
+          float: right;
+          .lkfgConFgInfo-legend{
+            .lkfgConFgInfo-unit{
+              font-size: 12px;
+              color: #a0a0a0;
+            }
+            .lengds{
+              display: inline-block;
+              width: 12px;
+              height: 8px;
+              border-radius: 2px;
+              margin-right: 5px;
+              margin-left: 10px;
+            }
+            .yzydStyle{
+              background-color: #B90003;
+            }
+            .ydStyle{
+              background-color: #F13030;
+            }
+            .hxStyle{
+              background-color: #FE9D20;
+            }
+            .ctStyle{
+              background-color: #11BE13;
+            }
+          }
+          .lkfgConFgInfo-legend-yzyd{
+            .lkfgConFgInfo-title{
+              font-size: 14px;
+              color: #2a2a2a;
+            }
+            .lkfgConFgInfo-num{
+              font-family: 'Arial';
+              font-size: 18px;
+              font-weight:bold;
+              margin-right: 5px;
+              display: inline-block;
+              width: 56px;
+            }
+          }
+          .lkfgConFgInfo-legend-normal{
+            .lkfgConFgInfo-title{
+              font-size: 14px;
+              display: inline-block;
+              width: 56px;
+            }
+            .lkfgConFgInfo-num{
+              font-family: 'Arial';
+              font-size: 18px;
+              font-weight:bold;
+              margin-right: 5px;
+              display: inline-block;
+              width: 80px;
+              text-align: right;
+            }
+          }
+          p{
+            margin-bottom: 15px;
+          }
+        }
+      }
+      .lkfgConInfo{
+        padding: 0 20px;
+        .lkfgConInfo-title{
+          font-family: '苹方';
+          font-size: 13px;
+          color: #323232;
+        }
+        .lkfgConInfo-num{
+          font-family:'Arial';
+          font-size: 13px;
+          color: #000000;
+          font-weight: bold;
+        }
+        .lkfgConInfo-legend{
+          font-family: 'Arial';
+          font-size: 18px;
+          font-weight:bold;
+          color: #ff0402;
+          vertical-align: middle;
+        }
+        p{
+          margin: 10px 0 0 0;
+          font-size: 14px;
+          span{
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+  .qxfg{
+    width: 340px;
+    height: 269px;
+    overflow: hidden;
+    margin: 0 auto;
+    border-top: 1px rgba(228, 228, 228, 0.8) dashed;
+    .qxfgCon{
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      .qxfgCon-pie{
+        width: 160px;
+        height: 202px;
+        float: left;
+      }
+      .qxfgCon-legend{
+        width: calc(100% - 160px);
+        float: left;
+        height: 202px;
+        span{
+          display: inline-block;
+        }
+        .qxfgCon-legend-item{
+          width: 100%;
+          height: 14px;
+          margin-top: 15px;
+          span{
+            display: inline-block;
+            float: left;
+          }
+          .qxfgCon-legend-item-box{
+            width: 14px;
+            height: 10px;
+            border-radius: 2px;
+          }
+          .qxfgCon-legend-item-label {
+            font-family: '宋体';
+            color: #646464;
+            margin-left: 6px;
+            font-size: 12px;
+          }
+          .qxfgCon-legend-item-num{
+            font-family:'Arial';
+            color: #323232;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 5px;
+            display: inline-block;
+            width: 100px;
+            text-align: right;
+            overflow: hidden;
+          }
+          .qxfgCon-legend-item-unit{
+            font-family:'苹方';
+            color: #9f9f9f;
+            //margin-left: 22px;
+          }
+        }
+      }
+    }
+  }
+  .dmTop{
+    height: calc(100% - 328px - 270px);
+    width: 340px;
+    margin: 0 10px;
+    overflow: hidden;
+    border-top: 1px rgba(228, 228, 228, 0.8) dashed;
+    .cartogram{
+      height: 200px;
+      //margin: 22px 0 0px 0;
+      position: relative;
+      .cartogramCon{
+        //float: left;
+        height: 100%;
+        //width: 33%;
+        .cartogramConWrap{
+          height: 100%;
+          width: 100%;
+        }
+        .dynamic-box1-num{
+          font-size: 18px;
+          text-align: center;
+          font-weight: bold;
+          height: 35px;
+          line-height: 35px;
+        }
+        .dynamic-box1-unit{
+          font-family: 'Arial';
+          font-size: 12px;
+          margin-left: 5px;
+          color: #a0a0a0;
+        }
+        .dynamic-box1-name{
+          font-family: '苹方';
+          font-size: 14px;
+          color: #646464;
+          text-align: center;
+        }
+      }
+    }
+    .progress{
+      margin-top: 20px;
+      p{
+        font-size: 14px;
+        color: #646464;
+        &:nth-child(1){
+          margin-bottom: 20px;
+        }
+        .progress_ins_color_1{
+          color: #1F81C7;
+        }
+        .progress_ins_color_2{
+          color: #FF1B1B;
+        }
+      }
+    }
+    //.progress{
+    //  //padding: 0 15px;
+    //  .progressBars{
+    //    margin: 0 0px 40px;
+    //    overflow: hidden;
+    //    .progressBarName{
+    //      font-size: 14px;
+    //      margin-bottom: 5px;
+    //      display: inline-block;
+    //      font-family:'苹方';
+    //      font-size: 13px;
+    //      color: #646464;
+    //      .progressBarName-num{
+    //        padding: 3px;
+    //        font-family: 'Arial';
+    //        font-size: 13px;
+    //        color: #323232;
+    //        font-weight: bold;
+    //        cursor: pointer;
+    //      }
+    //    }
+    //    #sectionWarnLegend,#sectionWarnTime{
+    //      //width: 258px;
+    //      //height: 15px;
+    //      //float: left;
+    //    }
+    //    .progressNum{
+    //      //float: left;
+    //      //margin-left: 10px;
+    //      .progressNum-num{
+    //        font-family: 'Arial';
+    //        color: #2a2a2a;
+    //        font-size: 16px;
+    //      }
+    //      .progressNum-unit{
+    //        font-family: 'Arial';
+    //        color: #a0a0a0;
+    //        font-size: 12px;
+    //      }
+    //    }
+    //  }
+    //}
+  }
+}
+.station-points-1{
+  color: #fe0002 !important;
+  &:hover{
+    color: #1b9de8 !important;
+  }
+}
+.station-points-2{
+  color: #FD9C25 !important;
+  &:hover{
+    color: #1b9de8 !important;
+  }
+}
+

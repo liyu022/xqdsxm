@@ -1,0 +1,169 @@
+.listCommonWrap{
+  .wdDetailNav span{
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+    color: #222;
+    border-bottom: 1px solid #f3f3f3;
+  }
+  .navList{
+    height: 100%;
+    width: 100%;
+    .navListCon{
+      height: 100%;
+      overflow: hidden;
+      .listInfoWrap{
+        height: calc(100% - 40px);
+        overflow: hidden;
+        ul{
+          width: 100%;
+          li{
+            width: 100%;
+            height: 60px;
+            cursor: pointer;
+            &:hover{
+              background: #f3f3f3;
+            }
+            .listInfoWrapSp,.firstSp{
+              float: left;
+            }
+            .listInfoWrapYh,.firstSp{
+              float: left;
+            }
+            .firstSp{
+              .firstSpBox{
+                //display: inline-block;
+                //width: 16px;
+                //height: 16px;
+                //line-height: 16px;
+                //color: #fff;
+                //margin-top: 22px;
+                display: inline-block;
+                background-color: #bce3fa;
+                border-radius: 50%;
+                width: 24px;
+                height: 24px;
+                text-align: center;
+                line-height: 24px;
+                color: #FFFFFF;
+                margin-top: 20px;
+              }
+            }
+            .firstYh{
+              width: 40px;
+              line-height: 125px;
+              float: left;
+              margin-left: 20px;
+              position: relative;
+              .yhicon{
+                font-size: 28px;
+                color: red;
+              }
+              .yhsz{
+                position: absolute;
+                top: 0px;
+                left: 10px;
+                color: #fff;
+              }
+            }
+            .listInfoWrapYh{
+              .SpBox{
+                display: inline-block;
+                width: 100%;
+                height: 24px;
+                text-align: left;
+                line-height: 24px;
+                font-weight: 500;
+                font-family: ﻿MicrosoftYaHei;
+              }
+            }
+            .firstSp, .listInfoDb{
+              float: left;
+              height: 60px;
+              text-align: center;
+            }
+            .sfzStyle{
+              line-height: 60px;
+            }
+            .firstSp,.listInfoWrapSp{
+              text-align: center;
+            }
+            .gczActive{
+              line-height: 60px;
+            }
+            .gczActiveSpeed{
+              color: #333;
+              font-weight: bold;
+              margin-right: 5px;
+              font-family: SimSun;
+            }
+            .gczActiveDanwei{
+              color: #646464;
+            }
+            .clColor{
+              font-weight: bold;
+              font-family: SimSun;
+            }
+            .comClass{
+              font-family: SimSun;
+              font-weight: bold;
+            }
+            .gczActiveType{
+              color: #FE0002;
+              font-weight: bold;
+              font-family: SimSun;
+            }
+            .gczActiveTypes{
+              color: #FFBE00;
+            }
+            .listInfoDb{
+              p{
+                &:nth-child(1){
+                  margin: 6px 0;
+                }
+              }
+            }
+            .listInfoWrapSp{
+              p{
+                &:nth-child(1){
+                  margin: 10px 0;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                }
+              }
+            }
+          }
+        }
+      }
+      .listInfo{
+      }
+    }
+  }
+  .ct{
+    color: #3266FF;
+  }
+  .hx{
+    color: #FD9C25;
+  }
+  .yd{
+    color: #F13030;
+  }
+  .yzyd{
+    color: #B80003;
+  }
+  .fcct{
+    color: #00FF00;
+  }
+  .yb{
+    color: #FFC100;
+  }
+  .yj{
+    color: #FFC100;
+  }
+  .ds{
+    color: #FF0000;
+  }
+}

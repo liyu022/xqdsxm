@@ -1,0 +1,222 @@
+.zdxl{
+  .popper__arrow{
+    left: 80% !important;
+  }
+}
+.block-left-wrap{
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  .zdsj{
+    overflow: hidden;
+    height: 100%;
+    width: 360px;
+    background: #fff;
+    .cartogram{
+      width: 100%;
+      line-height: 22px;
+      margin-top: 12px;
+      .cartogram-legend{
+        width: 100%;
+        height: 22px;
+        .cartogram-label{
+          width: 50%;
+          height: 100%;
+          display: inline-block;
+          float: left;
+          text-align: center;
+        }
+        .cartogram-title{
+          font-family: '苹方';
+          font-size: 14px;
+          color: #323232;
+          background: url('../../../../../../static/images/lwjc_14.png') no-repeat 24px 0;
+        }
+        .cartogram-label-type{
+          width: 33%;
+          display: inline-block;
+          float: left;
+          text-align: center;
+          .cartogram-label-type-title{
+            font-family:'苹方';
+            color: #323232;
+            font-size: 14px;
+          }
+          .cartogram-label-type-num{
+            font-family:'Arial';
+            color: #ff0402;
+            font-size: 18px;
+          }
+          .cartogram-label-type-unit{
+            font-family:'苹方';
+            color: #a0a0a0;
+            font-size: 12px;
+          }
+        }
+      }
+      .cartogram-legend-unit{
+        height: 37px;
+        line-height: 37px;
+        width: 308px;
+        margin: auto;
+        border-bottom: 1px #ededed solid;
+        .cartogram-label:nth-child(1){
+          height: 100%;
+          display: inline-block;
+          float: left;
+          text-align: left;
+        }
+        .cartogram-label:nth-child(2){
+          height: 100%;
+          display: inline-block;
+          float: right;
+          text-align: right;
+        }
+      }
+    }
+    .zdsjNavTitle{
+      height: 160px;
+      overflow: hidden;
+      //border-bottom: 1px rgba(225,224,224,0.8) dashed;
+      margin: 0 25px;
+      ul{
+        overflow: hidden;
+        margin-top: 12px;
+        .zdsjNavTitleLi{
+          width: calc(100% / 2);
+          height: 30px;
+          line-height: 30px;
+          float: left;
+          span{
+            &:nth-child(1){
+              font-size: 13px;
+              color: #323232;
+            }
+            &:nth-child(2){
+              font-size: 14px;
+              color: #ff0402;
+              font-weight: bold;
+              margin: 0 5px;
+            }
+            &:nth-child(3){
+              font-size: 12px;
+              color: #a0a0a0;
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
+    .zdsjList{
+      height: calc(100% - 242px);
+      .zdsjListNav{
+        margin: 0 25px;
+        height: 40px;
+        line-height: 40px;
+        border: 1px solid rgba(225,224,224,0.8);
+        .el-input--suffix .el-input__inner{
+          border: none;
+          height: 20px;
+          border-right: 1px solid #f1f2f3;
+          border-radius: 0;
+        }
+        .last{
+          .el-input--suffix .el-input__inner{
+            border-right: none;
+          }
+        }
+      }
+      .zdsjListDetail{
+        height: calc(100%);
+        //overflow: hidden;
+        .zdsjListDetailBox{
+          width: 380px;
+          max-height: calc(100% - 42px);
+          overflow: auto;
+          .zdsjListDetailLi{
+            height: 90px;
+            overflow: hidden;
+            cursor: pointer;
+            &:hover{
+              background: #f1f5f9;
+            }
+            .zdsjListDetailLiLeft{
+              width: 20px;
+              height: 30px;
+              float: left;
+              margin-top: 30px;
+              margin-left: 20px;
+              position: relative;
+              .zdicon{
+                font-size: 28px;
+                color: red;
+              }
+              .sz{
+                position: absolute;
+                top: 7px;
+                left: 10px;
+                color: #fff;
+              }
+            }
+            .zdsjListDetailLiRight{
+              width: calc(100% - 10px - 43px);
+              height: 100%;
+              float: right;
+              overflow: hidden;
+              p{
+                &:nth-child(1){
+                  margin-top: 16px;
+                  span{
+                    font-size: 13px;
+                    &:nth-child(1){
+                      color: #118cfe;
+                    }
+                    &:nth-child(2){
+                      color: #323232;
+                      margin-left: 12px;
+                      overflow:hidden;
+                      text-overflow:ellipsis;
+                      white-space:nowrap;
+                      display: inline-block;
+                      width: 255px;
+                      vertical-align: bottom;
+                    }
+                  }
+                }
+                &:nth-child(2){
+                  line-height: 24px;
+                  color: #969696;
+                }
+              }
+            }
+          }
+        }
+        .roadDetailLeftListPage{
+          height: 40px;
+          overflow: hidden;
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          .pager-wrap{
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+    .demo-ruleForm{
+      float: right;
+      margin-top: 0;
+      margin-right: 12px;
+      .el-form-item{
+        margin: 0;
+      }
+    }
+    .titleTab{
+      float: right;
+      .titleBotton{
+        margin-right: 15px;
+        cursor: pointer;
+      }
+    }
+  }
+}

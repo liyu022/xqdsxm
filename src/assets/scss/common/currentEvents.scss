@@ -1,0 +1,41 @@
+.warning-current-events {
+  height: 100%;
+  overflow: hidden;
+  .e-content-wrap {
+    margin-top: 25px;
+    padding: 43px 10px;
+    .e-content {
+      margin-left: 30px;
+      background: url("../../../static/images/bg_line.png") no-repeat 14px 0;
+      width: 310px;
+      height: 90px;
+      .e-model-wrap {
+        .e-model {
+          width: calc(100% / 3);
+          float: left;
+          .e-total {
+            position: relative;
+            left: -30px;
+            top: -38px;
+            font-family: PingFang-SC-Regular;
+            font-size: 28px;
+            color: #323232;
+          }
+          .e-block {
+            float: left;
+            text-align: center;
+            line-height: 18px;
+            color: #ffffff;
+            width: 46px;
+            height: 18px;
+            border-radius: 2px;
+          }
+        }
+        .e-model:nth-child(4) {
+          margin-top: 38px;
+          float: right;
+        }
+      }
+    }
+  }
+}

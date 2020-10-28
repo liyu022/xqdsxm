@@ -1,0 +1,24 @@
+.yhDetailRight{
+  height: 100%;
+  margin: 0 auto;
+  color: #fff;
+  overflow: hidden;
+  .yhDetailRightTab{
+    height: 30px;
+    width: 340px;
+    margin: 15px auto;
+    span{
+      display: inline-block;
+      width: calc(100% / 2);
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+    }
+  }
+  .yhDetailRightCon{
+    height: calc(100% - 60px);
+    .listInfoDb,.listInfoWrapSp,.firstSp{
+      font-size: 12px;
+    }
+  }
+}

@@ -1,0 +1,270 @@
+$color1: SimSun;
+$color2: MicrosoftYaHei;
+.dbClickStyle{
+  color: #1B9DE8;
+  border: 1px solid #1B9DE8!important;
+  background: url("../../../../static/images/selected.png") no-repeat right bottom;
+}
+@mixin styles {
+  background-color: rgba(27, 157, 232, 0.1);
+  color: #1b9de8;
+}
+@mixin positions {
+  position: absolute;
+  left: 0px;
+  top: 90px;
+  border-radius: 3px;
+  background: #fff;
+  z-index: 999;
+}
+.erjiPanel{
+  margin: 0 10px;
+  height: 100%;
+  position: relative;
+  .erJiTitle{
+    height: 44px;
+    border-bottom: 1px dashed #DCDCDC;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .erJiTitleLeft{
+      display: flex;
+      height: 100%;
+      align-items: center;
+      .blockStyle{
+        width: 4px;
+        height: 14px;
+        background-color: rgba(15, 115, 208, 0.6);
+        border-radius: 1px;
+        margin-left: 6px;
+      }
+      span{
+        font-family: $color1;
+        font-size: 14px;
+        color: #343434;
+        margin-left: 10px;
+      }
+    }
+    .closeIcon{
+      font-size: 12px;
+      color: #585858;
+      margin-right: 5px;
+      cursor: pointer;
+    }
+  }
+  .selectTj{
+    width: 100%;
+    height: 32px;
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    .selectTjPanel{
+      width: 165px;
+      height: 32px;
+      border: 1px solid #e6e6e6;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(247, 247, 247, 0.8);
+      input{
+        width: 140px;
+        border: 0;
+        height: 30px;
+        font-size: 12px;
+        color: #585858;
+        padding-left: 10px;
+        cursor: pointer;
+      }
+      span{
+        font-size: 12px;
+        color: rgba(88, 88, 88, 0.8);
+        margin-right: 10px;
+        cursor: pointer;
+      }
+    }
+  }
+  .getIns{
+    padding: 10px 0;
+    .getInsBox{
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      label{
+        padding-left: 14px;
+        margin-right: 10px;
+        font-family: $color1;
+        color: #585858;
+      }
+      input{
+        border-radius: 3px;
+        border: 1px solid #c6c8c8;
+        padding-left: 15px;
+        height: 28px;
+      }
+      .getInsBoxIns{
+        width: 248px;
+        margin-left: 8px;
+      }
+      .zhIs{
+        width: 114px;
+        &:nth-of-type(1){
+          margin-left: 8px;
+        }
+      }
+      .hLine{
+        display: inline-block;
+        width: 10px;
+        height: 1px;
+        background: #585858;
+        margin: 0 5px;
+      }
+    }
+  }
+  .getDj{
+    padding: 10px 0;
+    .getDjType{
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      .getDjTypeTitle{
+        font-family: $color2;
+        color: #1b9de8;
+        margin-left: 13px;
+        &:before{
+          content: '';
+          width: 2px;
+          height: 12px;
+          background-color: #1b9de8;
+          position: absolute;
+          left: 5px;
+          top: 2px;
+        }
+      }
+      .selectAll{
+        color: #ccc;
+        font-size: 14px;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+    }
+    .getDjTypeVal{
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin: 10px 10px 0 10px;
+      .djTypeVal{
+        width: 80px;
+        height: 20px;
+        line-height: 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: all .2s;
+        margin: 10px 5px 0 0;
+        border-radius: 3px;
+      }
+      .selectedStyle{
+        background-color: #1b9de9;
+        color: #fff;
+        transform: background-color, color;
+      }
+    }
+  }
+  .submitData{
+    display: flex;
+    justify-content: space-between;
+    margin: 50px 80px 0 80px;
+    span{
+      display: inline-block;
+      width: 68px;
+      height: 28px;
+      border-radius: 3px;
+      text-align: center;
+      line-height: 28px;
+      font-family: $color1;
+      cursor: pointer;
+      &:nth-of-type(1){
+        border: solid 1px #1b9de8;
+        color: #1b9de8;
+      }
+      &:nth-of-type(2){
+        border: solid 1px #d6d6d6;
+        color: #393939;
+      }
+    }
+  }
+  .gsgxPanel{
+    @include positions;
+    width: 165px;
+    height: 112px;
+    box-shadow: 0px 0px 6px 0px rgba(133, 133, 133, 0.31);
+    ul{
+      margin: 0 10px;
+      padding-top: 10px;
+      li{
+        height: 30px;
+        line-height: 30px;
+        font-size: 12px;
+        padding-left: 6px;
+        font-family: $color1;
+        color: #333;
+        cursor: pointer;
+        &:hover{
+          @include styles;
+        }
+      }
+      .activeStyle{
+        @include styles;
+      }
+    }
+  }
+  .xzqhPanel{
+    @include positions;
+    padding: 10px 0;
+    width: 100%;
+    height: calc(100% - 90px);
+    .szqhNavBtn{
+      height: 40px;
+      line-height: 40px;
+      display: flex;
+      justify-content: space-between;
+      span{
+        font-size: 14px;
+        font-family: $color1;
+        &:nth-of-type(1){
+          margin-left: 15px;
+          font-weight: bold;
+        }
+        &:nth-of-type(2){
+          margin-right: 15px;
+          color: #585858;
+          cursor: pointer;
+        }
+      }
+    }
+    .xzqhDatas{
+      padding: 15px 0;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin: 0 20px;
+      border-bottom: 1px dashed #DDDDDD;
+      .xzqhDatasVal{
+        width: 60px;
+        height: 26px;
+        border: 1px solid transparent;
+        text-align: center;
+        line-height: 26px;
+        cursor: pointer;
+        margin: 0 10px;
+        margin-bottom: 5px;
+      }
+      .clickStyle{
+        color: #1B9DE8;
+      }
+    }
+    .childrenStyle{
+      border: 0;
+      margin-top: 10px;
+    }
+  }
+}

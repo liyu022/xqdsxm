@@ -1,0 +1,82 @@
+// 登录成功
+export const USER_SIGNIN = 'USER_SIGNIN'
+// 退出登录
+export const USER_SIGNOUT = 'USER_SIGNOUT'
+// 地图加载状态
+export const SET_MAP_LOAD_STATE = 'SET_MAP_LOAD_STATE'
+//初始化地图
+export const INIT_MAP='INIT_MAP'
+//获取车辆列表
+export const GET_VEHICLES='GET_VEHICLES'
+
+//车辆的框选查询
+export const GET_POLYGONVEHICLE='GET_POLYGONVEHICLE'
+//添加车辆图层
+export const ADD_VEHICLELAYER='ADD_VEHICLELAYER'
+
+//添加智慧树桩
+export const ADD_WISHTREELAYER='ADD_WISHTREELAYER'
+
+//更新弹框状态
+export const UPDATE_VEHICLEDIALOG='UPDATE_VEHICLEDIALOG'
+//获取车辆在线率
+export const GET_STATISTICS='GET_STATISTICS'
+//根据经纬度获取所在省市县
+export const GET_PLACE='GET_PLACE'
+//获取车辆动态信息服务
+export const GET_VEHICLEGPSDETAIL='GET_VEHICLEGPSDETAIL'
+export const  SET_TOOL_PANEL = 'SET_TOOL_PANEL'
+export const  SHOW_TOOL_BAR = 'SHOW_TOOL_BAR'
+export const  SHOW_TRAFFIC = 'SHOW_TRAFFIC'
+export const  SET_TOP_TOOL = 'SET_TOP_TOOL'
+export const  SET_AUTH_STATE = 'SET_AUTH_STATE'
+export const  SET_AUTH_HEADER = 'SET_AUTH_HEADER'
+export const  SET_PANO= 'SET_PANO'
+export const  SET_PANO_POS= 'SET_PANO_POS'
+//获取智慧路桩状态
+export const GET_WISHTREESTATUS='GET_WISHTREESTATUS'
+//获取智慧路桩列表
+export const GET_WISHTREELIST='GET_WISHTREELIST'
+//获取仓库等级
+export const GET_WAREHOUSELAVEL='GET_WAREHOUSELAVEL'
+//获取仓库列表
+export const GET_WAREHOUSELIST='GET_WAREHOUSELIST'
+//更新仓库弹框
+export const UPDATE_WAREHOUSEDIALOG='UPDATE_WAREHOUSEDIALOG'
+//添加仓库图层
+export const ADD_WAREHOUSELAYER='ADD_WAREHOUSELAYER'
+//桥梁登录
+export const BRIDGE_LOGIN='BRIDGE_LOGIN'
+//添加桥梁信息
+export const GET_BRIDGELIST='GET_BRIDGELIST'
+//更新智慧路桩弹框
+export const UPDATE_WISHTREEDIALOG='UPDATE_WISHTREEDIALOG'
+//获取桥梁状态
+export const GET_BRIDGESTATUS='GET_BRIDGESTATUS'
+//添加桥梁图层
+export const ADD_BRIDGELAYER='ADD_BRIDGELAYER'
+//更新桥梁弹框状态
+export const GET_BRIDGEVISIBLE='GET_BRIDGEVISIBLE'
+//获取车辆树
+export const GET_VEHICLETREE='GET_VEHICLETREE'
+//获取历史轨迹
+export const GET_HISROUTE='GET_HISROUTE'
+//更新仓库属性
+export const UPDATE_WAREHOUSEDETAIL='UPDATE_WAREHOUSEDETAIL'
+// 网页涉及
+export const USER_SETTING = 'USER_SETTING'
+export const TOGGLE_SIDEBAR = 'TOGGLE_SIDEBAR'
+export const CLOSE_SIDEBAR = 'CLOSE_SIDEBAR'
+export const TOGGLE_DEVICE = 'TOGGLE_DEVICE'
+export const SET_SIZE = 'SET_SIZE'
+
+//标题中的页签
+export const DEL_OTHERS_VISITED_VIEWS = 'DEL_OTHERS_VISITED_VIEWS'
+export const DEL_OTHERS_CACHED_VIEWS = 'DEL_OTHERS_CACHED_VIEWS'
+export const DEL_ALL_VISITED_VIEWS = 'DEL_ALL_VISITED_VIEWS'
+export const DEL_ALL_CACHED_VIEWS = 'DEL_ALL_CACHED_VIEWS'
+export const UPDATE_VISITED_VIEW = 'UPDATE_VISITED_VIEW'
+export const ADD_VISITED_VIEW = 'ADD_VISITED_VIEW'
+export const DEL_VISITED_VIEW = 'DEL_VISITED_VIEW'
+export const ADD_CACHED_VIEW = 'ADD_CACHED_VIEW'
+export const DEL_CACHED_VIEW = 'DEL_CACHED_VIEW'

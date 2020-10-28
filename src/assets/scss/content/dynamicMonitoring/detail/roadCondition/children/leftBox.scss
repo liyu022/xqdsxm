@@ -1,0 +1,211 @@
+.roadDetailLeft{
+  padding: 0 10px;
+  height: 100%;
+  width: 360px;
+  background: rgba(255,255,255,0.92);
+  .roadDetailLeftLkts{
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px dashed #DCDCDC;
+    position: relative;
+    .lktsTitle{
+      font-size: 15px;
+      margin-left: 16px;
+      font-weight: bold;
+      &:before{
+        content: '';
+        width: 4px;
+        height: 14px;
+        background-color: #0f73d0;
+        position: absolute;
+        left: 6px;
+        top: 13px;
+      }
+    }
+    .time-update{
+      color: #a0a0a0;
+      .time-update-color{
+        color: #a0a0a0;
+        font-size: 14px;
+        cursor: pointer;
+        margin-left: 10px;
+        &:hover{
+          color: #1b9dc8;
+        }
+      }
+    }
+    .lktsIcon{
+      font-size: 16px;
+      float: right;
+      cursor: pointer;
+      &:hover{
+        color: #0f73d0;
+      }
+    }
+    .lktsName{
+      color: #0f73d0;
+      float: right;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+  }
+  .roadDetailLeftTjt{
+    overflow: hidden;
+    .roadDetailLeftTjt-left-pie{
+      width: 120px;
+      height: 100px;
+      float: left;
+      margin: 29px 0 29px 19px;
+    }
+    .lkfgConFgInfo{
+      width: calc(100% - 139px);
+      float: right;
+      margin: 14px 0 0 0;
+      .lkfgConFgInfo-title{
+        font-size: 13px;
+        color: #646464;
+      }
+      .lkfgConFgInfo-num{
+        font-size: 16px;
+        color: #323232;
+        display: inline-block;
+        width: 60px;
+        text-align: right;
+        margin-right: 5px;
+      }
+      .lkfgConFgInfo-unit{
+        font-size: 12px;
+        color: #a0a0a0;
+        font-family: SimSun;
+      }
+      p{
+        padding-left: 25px;
+        margin-top: 17px;
+        &:nth-of-type(1){
+          .lkfgConFgInfo-num{
+            color: #ff0402;
+            font-size: 18px;
+            display: inline-block;
+            width: 59px;
+            text-align: right;
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+  }
+  .roadDetailLefttJInfo{
+    height: calc(100% - 158px);
+    position: relative;
+    .roadDetailLefttJInfoTab{
+      height: 38px;
+      width: 340px;
+      border: solid 1px #e6e6e6;
+      .rdTab{
+        display: inline-block;
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        margin: 4px;
+        text-align: center;
+        cursor: pointer;
+        span{
+          &:nth-child(1){
+            margin-right: 5px;
+          }
+        }
+      }
+      .activeStyle{
+        background: #0099f7;
+        color: #fff;
+      }
+    }
+    .roadDetailLefttJInfoSearch{
+      height: 30px;
+      width: 338px;
+      border: solid 1px #e6e6e6;
+      margin-top: 10px;
+      .el-input__inner{
+        border: 0;
+        //width: 130px;
+      }
+      .insZh{
+       .el-input__inner{
+         width: 36px!important;
+         padding: 0!important;
+         padding-left: 10px!important;
+       }
+      }
+      .el-input{
+        width: auto;
+      }
+      .el-form-item__content{
+        margin-left: 0!important;
+        line-height: 0;
+      }
+      .el-select{
+        &:after{
+          content: '';
+          width: 1px;
+          height: 20px;
+          background-color: #e1e1e1;
+          position: absolute;
+          top: 5px;
+          left: 135px;
+        }
+      }
+      .el-form-item{
+        &:nth-of-type(1){
+          width: 135px;
+        }
+        &:nth-of-type(2){
+          width: calc(100% - 172px);
+          float: right;
+        }
+      }
+      .el-form--inline .el-form-item{
+        float: none;
+        margin: 0;
+      }
+      .el-form-item__label{
+        font-size: 12px;
+        color: #323232;
+      }
+      .lktsSearch{
+        float: right;
+        margin: 6px 10px 0 0;
+        cursor: pointer;
+      }
+    }
+    .roadDetailLeftList{
+      height: calc(100% - 78px);
+      position: relative;
+    }
+    .roadDetailLeftListPage{
+      width: 100%;
+      height: 40px;
+      overflow: hidden;
+      position: absolute;
+      bottom: 0;
+      .pager-wrap{
+        margin-top: 10px;
+      }
+    }
+    .noData{
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      margin: auto;
+      line-height: 100px;
+      text-align: center;
+      color: #000;
+    }
+  }
+  .el-loading-mask{
+    background: rgba(255, 255, 255, 0.92)!important;
+  }
+}

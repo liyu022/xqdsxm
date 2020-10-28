@@ -1,0 +1,374 @@
+.dynamic-monitoring-right-wrap{
+  width: 360px;
+  height: 100%;
+  .lkfgConFgTitle{
+    height: 52px;
+    line-height: 52px;
+    border-bottom: 1px rgba(225, 224, 224, 0.8) dashed;
+    span{
+      &:nth-child(1){
+        float: left;
+        margin-left: 10px;
+        font-size: 14px;
+        color: #323232;
+      }
+      &:nth-child(2){
+        float: right;
+        margin-right: 10px;
+        font-size: 12px;
+        color: #646464;
+        cursor: pointer;
+        &:hover{
+          color: #4a96da;
+        }
+      }
+    }
+    .more {
+       float: right;
+       margin-right: 10px;
+       font-size: 12px;
+       color: #646464;
+       cursor: pointer;
+       &:hover{
+         color: #4a96da;
+       }
+     }
+
+    .sf-switch {
+      top: 6px;
+      left: 200px;
+    }
+    .sf-switch__button{
+      margin-left: 0 !important;
+    }
+  }
+  .wxpcConFgTitle {
+    height: 52px;
+    line-height: 52px;
+    border-bottom: 1px rgba(225, 224, 224, 0.8) dashed;
+  }
+  .lzzfcTitle {
+    height: 52px;
+    line-height: 52px;
+    border-bottom: 1px rgba(225, 224, 224, 0.8) dashed;
+  }
+  .spjrConFgTitle {
+    height: 52px;
+    line-height: 52px;
+    border-bottom: 1px rgba(225, 224, 224, 0.8) dashed;
+  }
+  .glzdDom{
+    height: 270px;
+    width: 360px;
+    padding: 0 10px;
+    .cartogram{
+      #glzd_s{
+        //height: calc(100% - 52px);
+        height: 170px;
+      }
+    }
+    //.cartogram{
+    //  width: 100%;
+    //  height: calc(100% - 41px);
+    //  line-height: 22px;
+    //  .twoSidesStatisticsLabelAdjacent-wrap-list{
+    //    height: 35px!important;
+    //    line-height: 35px!important;
+    //  }
+    //  .cartogram-legend{
+    //    width: 100%;
+    //    height: 22px;
+    //    .cartogram-label{
+    //      width: 50%;
+    //      height: 100%;
+    //      display: inline-block;
+    //      float: left;
+    //      text-align: center;
+    //    }
+    //    .cartogram-title{
+    //      font-family: '苹方';
+    //      font-size: 12px;
+    //      color: #323232;
+    //      background: url('../../../../static/images/lwjc_14.png') no-repeat 6px 0;
+    //    }
+    //    .cartogram-label-type{
+    //      width: 50%;
+    //      //width: 33%;
+    //      display: inline-block;
+    //      float: left;
+    //      text-align: center;
+    //      .cartogram-label-type-title{
+    //        font-family:'苹方';
+    //        color: #323232;
+    //        font-size: 14px;
+    //      }
+    //      .cartogram-label-type-num{
+    //        font-family:'Arial';
+    //        color: #ff0402;
+    //        font-size: 18px;
+    //      }
+    //      .cartogram-label-type-unit{
+    //        font-family:'苹方';
+    //        color: #a0a0a0;
+    //        font-size: 12px;
+    //      }
+    //    }
+    //  }
+    //}
+  }
+  .ljxt{
+    width: 340px;
+    margin: 0 auto;
+    height: 300px;
+    .bar{
+      height: calc(100% - 80px);
+      padding: 0 20px;
+    }
+    .bar_fengxian{
+      height: 50px;
+      line-height: 50px;
+      font-size: 14px;
+      text-align: center;
+      span{
+        color: #F89294;
+      }
+    }
+    .bottom{
+      height: 29px;
+      width: 330px;
+      line-height: 29px;
+      margin: 20px auto 0 auto;
+      border-top: 1px solid #ccc;
+      ul{
+        width: 100%;
+        height: 30px;
+        li{
+          width: calc(100% / 3);
+          height: 30px;
+          line-height: 30px;
+          float: left;
+          text-align: center;
+          font-size: 14px;
+        }
+      }
+    }
+
+    .pie{
+      height: calc(100% - 50px);
+    }
+  }
+  .wxpc {
+    width: 340px;
+    height: 210px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+  }
+  .yhfg{
+    width: 340px;
+    height: 210px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+    // border-bottom: 1px rgba(225, 224, 224, 0.8) dashed;
+    overflow: hidden;
+    .jhyh_data{
+      height: 200px;
+    }
+    //.yhfgCon{
+    //  overflow: hidden;
+    //  width: 100%;
+    //  //margin: 11px auto;
+    //  .yhfgLeft{
+    //    .yhfgLeft-img{
+    //      float: left;
+    //      width: 60px;
+    //      height: 49px;
+    //      margin: 12px 28px 0 20px;
+    //      background-image: url("../../../../static/images/lwjc_20.png");
+    //      font-size: 28px;
+    //      color: #1c8de0;
+    //      line-height: 49px;
+    //      text-align: center;
+    //    }
+    //    .yhfgLeftInfo{
+    //      float: left;
+    //      p{
+    //        font-size: 14px;
+    //        text-align: right;
+    //        span{
+    //          display: inline-block;
+    //        }
+    //        .yhfgLeftInfo-title{
+    //          font-family: '苹方';
+    //          color: #323232;
+    //          font-size: 14px;
+    //        }
+    //        .yhfgLeftInfo-unit{
+    //          font-family: '苹方';
+    //          color: #9f9f9f;
+    //          font-size: 12px;
+    //        }
+    //        &:nth-child(1){
+    //          margin: 10px 0;
+    //        }
+    //      }
+    //      p:nth-child(2){
+    //        float: left;
+    //      }
+    //    }
+    //    .yhfgLeftInfo-zh{
+    //      .yhfgLeftInfo-count{
+    //        font-family: 'Arial';
+    //        color: #ff0402;
+    //        font-size: 16px;
+    //        font-weight: bold;
+    //      }
+    //      .yhfgLeftInfo-mileage{
+    //        font-family: 'Arial';
+    //        color: #ff0402;
+    //        font-weight: bold;
+    //        font-size: 18px;
+    //      }
+    //    }
+    //    .yhfgLeftInfo-normal{
+    //      .yhfgLeftInfo-count{
+    //        font-family: 'Arial';
+    //        color: #323232;
+    //        font-size: 14px;
+    //        font-weight: bold;
+    //      }
+    //      .yhfgLeftInfo-mileage{
+    //        font-family: 'Arial';
+    //        color: #323232;
+    //        font-weight: bold;
+    //        font-size: 16px;
+    //      }
+    //    }
+    //  }
+    //  .yhfgRight{
+    //    .yhfgRight-img{
+    //      float: right;
+    //      width: 60px;
+    //      height: 49px;
+    //      margin: 12px 20px 0 25px;
+    //      background-image: url("../../../../static/images/lwjc_20.png");
+    //      font-size: 28px;
+    //      color: #1c8de0;
+    //      line-height: 49px;
+    //      text-align: center;
+    //    }
+    //    .yhfgLeftInfo{
+    //      float: right;
+    //      p{
+    //        font-size: 14px;
+    //        text-align: right;
+    //        span{
+    //          display: inline-block;
+    //        }
+    //        .yhfgLeftInfo-title{
+    //          font-family: '苹方';
+    //          color: #323232;
+    //          font-size: 14px;
+    //        }
+    //        .yhfgLeftInfo-unit{
+    //          font-family: '苹方';
+    //          color: #9f9f9f;
+    //          font-size: 12px;
+    //        }
+    //        &:nth-child(1){
+    //          margin: 10px 0;
+    //        }
+    //      }
+    //      p:nth-child(2){
+    //        float: right;
+    //      }
+    //    }
+    //    .yhfgLeftInfo-zh{
+    //      .yhfgLeftInfo-count{
+    //        font-family: 'Arial';
+    //        color: #ff0402;
+    //        font-size: 16px;
+    //        font-width: bold;
+    //      }
+    //      .yhfgLeftInfo-mileage{
+    //        font-family: 'Arial';
+    //        color: #ff0402;
+    //        font-weight: bold;
+    //        font-size: 18px;
+    //      }
+    //    }
+    //    .yhfgLeftInfo-normal{
+    //      .yhfgLeftInfo-count{
+    //        font-family: 'Arial';
+    //        color: #323232;
+    //        font-size: 14px;
+    //        font-weight: bold;
+    //      }
+    //      .yhfgLeftInfo-mileage{
+    //        font-family: 'Arial';
+    //        color: #323232;
+    //        font-weight: bold;
+    //        font-size: 16px;
+    //      }
+    //    }
+    //  }
+    //}
+  }
+  .sjyx_data{
+    height: calc(100% - 62px - 180px);
+    margin: 5px 30px;
+    display: flex;
+    justify-content: space-between;
+    .sjyx_data_ins{
+      p{
+        height: 50%;
+        line-height: 43px;
+        font-size: 14px;
+        color: #7F7F7F;
+        text-align: center;
+        span{
+          color: #F66064;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+  .grid-carz{
+    text-align:center;
+    padding:10px;
+    font-size: 14px;
+    font-weight: bolder;
+    font-family: "微软雅黑", Arial, sans-serif;
+  }
+  .grid-car{
+    text-align:center;
+    padding:10px 10px 10px 20px;
+    font-size: 12px;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+  .grid-carzz{
+    text-align:center;
+    font-size: 14px;
+    font-weight: bolder;
+  }
+  .grid-cart{
+    text-align:center;
+    padding:5px 10px 5px 20px;
+    font-size: 12px;
+  }
+  .el-aside {
+    border: 1px dashed #E9EEF3;
+    color: #333;
+    text-align: center;
+    height: 70px;
+  }
+  .el-main {
+    border: 1px dashed #E9EEF3;
+    color: #333;
+    text-align: center;
+    height: 70px;
+    padding-left: 0px;
+  }
+  .el-container {
+    margin-bottom: 5px;
+  }
+}

@@ -1,0 +1,155 @@
+.is-wrap-bottom{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: rgba(255,255,255,0.92);
+  .isBottomNav{
+    height: 50px;
+    position: relative;
+    .tabList{
+      float: right;
+      display: inline-block;
+      height: 20px;
+      line-height: 20px;
+      width: 64px;
+      cursor: pointer;
+      background: #f9f9f9;
+      margin: 14px 20px 0 0;
+      text-align: center;
+      border-radius: 3px;
+      border: 1px solid #e4e4e4;
+    }
+    .isBottomNavqsfx{
+      display: inline-block;
+      font-size: 15px;
+      height: 50px;
+      color: #323232;
+      padding:0px 0 0 35px;
+      font-weight: bold;
+      line-height: 50px;
+      &:before{
+        content: '';
+        width: 4px;
+        height: 14px;
+        left: 22px;
+        top: 18px;
+        background: #6EABE2;
+        position: absolute;
+      }
+    }
+    .isfxNavList{
+      float: right;
+      margin-top: 13px;
+      li{
+        float: left;
+        width: 34px;
+        height: 22px;
+        text-align: center;
+        line-height: 22px;
+        border: 1px solid #e4e4e4;
+        border-radius: 3px;
+        margin-right: 12px;
+        cursor: pointer;
+      }
+      .activeStyles{
+        border-color: #89bae7;
+        color: #89bae7;
+      }
+    }
+    .demo-ruleForm{
+      margin-right: 20px;
+      margin-top: 13px;
+    }
+    .el-form-item{
+      width: auto;
+      margin-bottom: 0;
+      float: left;
+      margin-left: 35px;
+    }
+    .el-form{
+      float: right;
+    }
+    .el-form-item__content{
+      line-height: 50px;
+    }
+    .qcListInfos{
+      float: right;
+      height: 50px;
+      line-height: 50px;
+      .qcListInfosBox{
+        float: left;
+        margin-right: 13px;
+        cursor: pointer;
+        span{
+          font-family: SimSun;
+          color: #323232;
+          font-size: 12px;
+        }
+      }
+      .activeTabStyle{
+        span{
+          color: #1FA5F7;
+        }
+      }
+    }
+  }
+  .isBottomTemp{
+    height: calc(100% - 50px - 20px);
+    .isBottomTempNav{
+      width: 870px;
+      height: 100%;
+      float: left;
+      &:after{
+        content: '';
+        position: absolute;
+        width: 1px;
+        height: 210px;
+        background: #EDECEC;
+        left: 882px;
+        top: 60px;
+      }
+    }
+    .isBottomTempInfo{
+      width: calc(100% - 890px);
+      height: 100%;
+      float: right;
+      position: relative;
+    }
+  }
+  .isBottomTemps{
+    height: calc(100% - 50px);
+    padding: 0 20px;
+    .el-table th, .el-table td{
+      text-align: center;
+      padding: 0;
+    }
+    .el-table th{
+      height: 36px;
+      background: #f3f3f3;
+    }
+    .el-table td{
+      height: 40px;
+    }
+    .el-table th>.cell{
+      font-size: 12px;
+      color: #333;
+      font-family: MicrosoftYaHei;
+    }
+  }
+  .el-date-editor.el-input{
+    width: 126px;
+    height: 24px;
+  }
+  .el-form--inline .el-form-item{
+    float: right;
+  }
+  .el-input--small .el-input__inner{
+    height: 24px;
+    line-height: 22px;
+  }
+  .el-input--small .el-input__icon{
+    line-height: 22px;
+  }
+}
+
+
