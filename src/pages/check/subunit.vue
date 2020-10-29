@@ -261,7 +261,7 @@
                :modal="modal"
                :before-close="resetForm" :visible.sync="showMessage" width="500px" height="400px"
                :close-on-click-modal="modal" @close="resetForm">
-      <el-form ref="form" :model="form" label-width="80px":rules="rules" class="demo-ruleForm">
+      <el-form ref="form" :model="form" label-width="80px" :rules="rules" class="demo-ruleForm">
         <el-form-item label="考核名称" style="width:90%;">
           <el-input v-model="form.name" placeholder="请输入考核名称"></el-input>
         </el-form-item>
