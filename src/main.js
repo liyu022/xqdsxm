@@ -40,7 +40,8 @@ router.beforeEach((to, from, next) => {
      sessionStorage.setItem('status',366)
   }
   if (to.path!='/') {
-   let token=JSON.parse(localStorage.getItem('token'))
+ 
+   let token=localStorage.getItem('token')
    console.log(token,55 )
    if (!token) {
      next('/')
