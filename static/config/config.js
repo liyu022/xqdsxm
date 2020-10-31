@@ -1,12 +1,12 @@
 var config = {
-  baseUrl: 'http://127.0.0.1:8888',
+  baseUrl: 'http://124.70.144.177:8888',
   service: {
     user: {
       userList: '/user/userList'
     }
   },
-  baseUrlSBGL: 'http://127.0.0.1:8888/XQDS-WEB/',
-  AppUrlSBGL: 'http://127.0.0.1:8801/',
+  baseUrlSBGL: 'http://124.70.144.177:8888/XQDS-WEB/',
+  AppUrlSBGL: 'http://124.70.144.177:8801/',
   mks:[
     {
       "id": "01",

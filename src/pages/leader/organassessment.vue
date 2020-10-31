@@ -1,5 +1,5 @@
 <template>
-  <div class="chart-container">
+  <div class="chart-container_org">
     <!-- 科技机关考核 -->
     
     <div class="main">
@@ -7,16 +7,12 @@
         <span class="tabs__item" :class="activeName=='机关考核'?'active':''" @click="handleClick('机关考核')">机关考核</span>
         <span class="tabs__item" :class="activeName=='战队考核'?'active':''"      @click="handleClick('战队考核')">战队考核</span>
     </div>
-      <div class="total">
-        考核人数共计<span class="all">45</span>人，已完成考核<span class="ok">10</span>人，待考核<span class="no">35</span>人。
-      </div>
-      <div class="current">
-        <span>当前考核人：</span><span style="color:#409EFF">郝星</span>
-        <span>所属机构：</span><span style="color:#409EFF">靖边作业区</span>
-      </div>
+   
       <div class="card">
-        <vxe-table border resizable :data="tableData" :edit-config="{trigger: 'click', mode: 'cell'}">
-
+        <ul class="tab_c">
+          <li>
+            <vxe-table border  :span-method="mergeRowMethod" resizable :data="tableData" :edit-config="{trigger: 'click', mode: 'cell'}">
+          <vxe-table-column field="names" title="姓名" width="120" align="center"></vxe-table-column>
           <vxe-table-column field="name" title="考核项" width="120" align="center"></vxe-table-column>
           <vxe-table-column field="nickname" title="分值">
             <template v-slot="{ row }">
@@ -28,14 +24,60 @@
           </vxe-table-column>
 
         </vxe-table>
+        <vxe-table border   :span-method="mergeRowMethod" resizable :data="tableData" :edit-config="{trigger: 'click', mode: 'cell'}">
+          <vxe-table-column field="names" title="姓名" width="120" align="center"></vxe-table-column>
+          <vxe-table-column field="name" title="考核项" width="120" align="center"></vxe-table-column>
+          <vxe-table-column field="nickname" title="分值">
+            <template v-slot="{ row }">
+              <el-rate :texts="texts" v-model="row.score" :max="10" show-text>
+              </el-rate>
+            </template>
+
+
+          </vxe-table-column>
+
+        </vxe-table>
+          </li>
+          <li>
+            <vxe-table border   :show-header="false" :span-method="mergeRowMethod" resizable :data="tableData" :edit-config="{trigger: 'click', mode: 'cell'}">
+          <vxe-table-column field="names" title="姓名" width="120" align="center"></vxe-table-column>
+          <vxe-table-column field="name" title="考核项" width="120" align="center"></vxe-table-column>
+          <vxe-table-column field="nickname" title="分值">
+            <template v-slot="{ row }">
+              <el-rate :texts="texts" v-model="row.score" :max="10" show-text>
+              </el-rate>
+            </template>
+
+
+          </vxe-table-column>
+
+        </vxe-table>
+        <vxe-table border :show-header="false" :span-method="mergeRowMethod" resizable :data="tableData" :edit-config="{trigger: 'click', mode: 'cell'}">
+          <vxe-table-column field="names" title="姓名" width="120" align="center"></vxe-table-column>
+          <vxe-table-column field="name" title="考核项" width="120" align="center"></vxe-table-column>
+          <vxe-table-column field="nickname" title="分值">
+            <template v-slot="{ row }">
+              <el-rate :texts="texts" v-model="row.score" :max="10" show-text>
+              </el-rate>
+            </template>
+
+
+          </vxe-table-column>
+
+        </vxe-table>
+          </li>
+        </ul>
+        
+
+<!-- 
       <div class="btn-group">
               <el-button type="primary">上一位</el-button>
               <el-button type="primary">下一位</el-button>
               <el-button type="success">提交</el-button>
-      </div>
+      </div> -->
 
 
-      <div class="infoList">
+      <!-- <div class="infoList">
         <h1 class="model">考核完成情况</h1>
         <p class="tips">提示:红色背景是当前选中人员，绿色背景为已完成考核，灰色背景为未完成考核</p>
           <ul>
@@ -62,7 +104,7 @@
               <li class="no">张八</li>
               <li class="no">张九</li>
           </ul>
-      </div>
+      </div> -->
       </div>
 
     </div>
@@ -75,6 +117,7 @@
 </template>
 
 <script>
+import XEUtils from 'xe-utils'
   export default {
     name: 'MixChart',
     data() {
@@ -82,30 +125,37 @@
         activeName:'机关考核',
         texts:['1分','2分','3分','4分','5分','6分','7分','8分','9分','10分'],
         tableData: [{
+            names:'郝星',
             name: '政治素质',
             score: 1
           },
           {
+            names:'郝星',
             name: '职业素质',
             score: 5
           },
           {
+            names:'郝星',
             name: '廉洁从业',
             score: 6
           },
           {
+            names:'郝星',
             name: '决策能力',
             score: 4
           },
           {
+            names:'郝星',
             name: '执行能力',
             score: 8
           },
           {
+            names:'郝星',
             name: '创新能力',
             score: 4
           },
           {
+            names:'郝星',
             name: '履职表现',
             score: 3
           },
@@ -115,16 +165,58 @@
     methods:{
       handleClick(e){
         this.activeName=e
-      }
+      },
+    
+        mergeRowMethod ({ row, _rowIndex, column, visibleData }) {
+              const fields = ['names']
+              const cellValue = XEUtils.get(row, column.property)
+              if (cellValue && fields.includes(column.property)) {
+                const prevRow = visibleData[_rowIndex - 1]
+                let nextRow = visibleData[_rowIndex + 1]
+                if (prevRow && XEUtils.get(prevRow, column.property) === cellValue) {
+                  return { rowspan: 0, colspan: 0 }
+                } else {
+                  let countRowspan = 1
+                  while (nextRow && XEUtils.get(nextRow, column.property) === cellValue) {
+                    nextRow = visibleData[++countRowspan + _rowIndex]
+                  }
+                  if (countRowspan > 1) {
+                    return { rowspan: countRowspan, colspan: 1 }
+                  }
+                }
+              }
+            }
+      
     }
   }
 </script>
 
-<style lang="scss" scoped>
-  .chart-container {
+<style lang="scss"  >
+.app-main{
+  overflow:auto !important;
+    }
+  .el-card{
+    overflow:auto !important;
+  }
+  .chart-container_org {
     position: relative;
     width: 100%;
-    height: calc(100vh - 50px);
+    display: inline-block;
+    
+    .main {
+    display: inline-block;
+    margin: 0 auto;
+    width: 95%;
+  }
+    .vxe-table{
+      width: 50%;
+    }
+      .tab_c{
+    li{
+      list-style: none;
+      display: flex;
+    }
+    
   }
   .tabs{
     height: 40px;
@@ -158,28 +250,9 @@
       border-bottom: 2px solid #409EFF;
     }
   }
-  .main {
-    margin: 0 auto;
-    width: 95%;
-  }
+ 
 
-  .total {
-    line-height: 60px;
-    font-size: 18px;
-
-  }
-
-  .total>.ok {
-    color: green;
-  }
-
-  .total>.all {
-    color: red;
-  }
-
-  .total>.no {
-    color: #E6A23C;
-  }
+ 
 
   .card {
 
@@ -230,4 +303,6 @@
       }
 
   }
+  }
+
 </style>
