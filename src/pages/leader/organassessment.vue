@@ -174,11 +174,13 @@ import XEUtils from 'xe-utils'
         let uid=localStorage.getItem('userid')
         let params = {
           currentPage:1,
-          pageSize:100,
+          pageSize:1000,
           uid,
         }
         approveApi.cadreitemList(params).then(res=>{
-          console.log(res,777 )
+           if (res.data.code==0) {
+             let org= res.data.data.list
+           }
         })
       },
         mergeRowMethod ({ row, _rowIndex, column, visibleData }) {
