@@ -118,6 +118,7 @@
 
 <script>
 import XEUtils from 'xe-utils'
+ import * as approveApi from '@/api/approve'
   export default {
     name: 'MixChart',
     data() {
@@ -162,11 +163,24 @@ import XEUtils from 'xe-utils'
         ]
       }
     },
+    created (){
+      this.getcadreitemList()
+    },
     methods:{
       handleClick(e){
         this.activeName=e
       },
-    
+      getcadreitemList(){
+        let uid=localStorage.getItem('userid')
+        let params = {
+          currentPage:1,
+          pageSize:100,
+          uid,
+        }
+        approveApi.cadreitemList(params).then(res=>{
+          console.log(res,777 )
+        })
+      },
         mergeRowMethod ({ row, _rowIndex, column, visibleData }) {
               const fields = ['names']
               const cellValue = XEUtils.get(row, column.property)

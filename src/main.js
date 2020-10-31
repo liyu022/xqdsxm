@@ -39,6 +39,13 @@ router.beforeEach((to, from, next) => {
   if (from.matched.length==0 && to.path!='/') {
      sessionStorage.setItem('status',366)
   }
+  if (to.path!='/') {
+   let token=JSON.parse(localStorage.getItem('token'))
+   console.log(token,55 )
+   if (!token) {
+     next('/')
+   }
+  }
   next()
 })
 Vue.prototype.formatDate = function (date) {

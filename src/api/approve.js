@@ -43,3 +43,41 @@ export const deleteApproveIndex = _params => {
     })
 }
 
+/**
+ *  查询干部考核机关战队
+ * @param _params
+ * @returns {AxiosPromise}
+ */
+export const cadreitemList = _params => {
+    return axios.get(`cadreitem/list`, {
+        params: _params,
+        baseURL: config.baseUrlSBGL
+    })
+}
+
+
+/**
+ *  sysroleproportion
+ * @param _params
+ * @returns {AxiosPromise}
+ */
+export const sysroleproportionList = _params => {
+    return axios.get(`sysroleproportion/list`, {
+        params: _params,
+        baseURL: config.baseUrlSBGL
+    })
+}
+
+
+
+/**
+ *  update
+ * @param _params
+ * @returns {AxiosPromise}
+ */
+export const sysroleproportionUpdate = _params => {
+    return axios.post(`sysroleproportion/update`, _params,{
+        baseURL: config.baseUrlSBGL
+    })
+}
+ 

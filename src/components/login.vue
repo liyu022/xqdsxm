@@ -1,5 +1,7 @@
 <template>
-    <div class="login">
+    <div class="login" v-loading="loading" element-loading-text="正在登陆，请稍后..."
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)">
         <div class="main-body">
             <div class="qr-code">
                 <div class="title">欢迎进入</div>
@@ -55,6 +57,7 @@ import layout from '@/components/layout'
 export default {
     data() {
         return {
+            loading:false,
             username: "",
             password: "",
             type:'password',
@@ -84,7 +87,9 @@ export default {
                     username: this.username,
                     password: this.password
                 };
+                this.loading=true
                 api.signIn(paramt).then(res => {
+                    this.loading=false
                     if (res.data.code === 1) {
                         this.$message({
                             message: "系统异常，请求错误",
