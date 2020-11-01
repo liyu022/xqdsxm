@@ -7,31 +7,17 @@
       </div>
       <div class="table-res">
         <el-table :data="tableData" ref="multipleTable" border style="width: 100%"  @selection-change="handleSelectionChange">
-          <el-table-column type="index" label="序号" width="80">
+          <el-table-column label-class-name="DisabledSelection" type="selection" width="55">
           </el-table-column>
-          <el-table-column prop="bumen" label="部门" width="100">
+          <el-table-column prop="date" label="日期" width="180">
           </el-table-column>
-          <el-table-column prop="zhiwei" label="职务">
+          <el-table-column prop="name" label="姓名" width="180">
           </el-table-column>
-          <el-table-column prop="ygbh" label="员工编号">
-          </el-table-column>
-          <el-table-column prop="username" label="姓名">
-          </el-table-column>
-          <el-table-column prop="brithday" label="出生年月">
-          </el-table-column>
-          <el-table-column prop="whcd" label="文化程度">
-          </el-table-column>
-          <el-table-column prop="ygxs" label="用工形式">
-          </el-table-column>
-          <el-table-column prop="xrzjsj" label="现任职务时间">
-          </el-table-column>
-          <el-table-column prop="xrzwsj" label="现任职级时间">
-          </el-table-column>
-          <el-table-column label-class-name="DisabledSelection" type="selection" width="80" align="center">
+          <el-table-column prop="address" label="地址">
           </el-table-column>
         </el-table>
         <div class="btn-group">
-          <el-button   type="primary" @click="handelSubmit">提 交</el-button>
+          <el-button size="mini" type="primary" @click="handelSubmit">提 交</el-button>
         </div>
       </div>
     </div>
@@ -44,10 +30,10 @@
      <li class="empty">你未选择任何人，确认请点击提交</li>
    </ul>
    <ul v-else>
-     <li >
-       <div class="item" v-for="(item,index) in multipleSelection" :key="index">
-          <div><span class="label">姓 名 :</span><span>{{item.username}}</span></div>
-          <div><span class="label">机 构 :</span><span>{{item.bumen}}</span></div>
+     <li>
+       <div class="item">
+          <div><span class="label">姓 名 :</span><span>郝星</span></div>
+          <div><span class="label">机 构 :</span><span>靖边作业区</span></div>
        </div>
      </li>
    </ul>
@@ -60,7 +46,6 @@
 </template>
 
 <script>
-import * as approveApi from '@/api/approve'
   export default {
     name: 'MixChart',
     data() {
@@ -68,11 +53,40 @@ import * as approveApi from '@/api/approve'
         showView:false,
         limit:3,
         multipleSelection:[],
-        tableData: []
+        tableData: [{
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1517 弄'
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄'
+        }, {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1516 弄'
+        },{
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄'
+        }, {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1516 弄'
+        },{
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄'
+        }, {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1516 弄'
+        }]
       }
-    },
-    created(){
-      this.gethbcadreitemList()
     },
     methods:{
       handleSelectionChange(rows){
@@ -85,56 +99,12 @@ import * as approveApi from '@/api/approve'
       handelSubmit(){
         this.showView=true
         console.log(this.multipleSelection,555)
-      },
-      gethbcadreitemList() {
-        let params = {
-          currentPage: 1,
-          pageSize: 10000,
-        }
-        approveApi.hbcadreitemList(params).then(res => {
-          if (res.data.code == 0) {
-            let data = res.data.data
-            this.total = data.total
-            this.tableData = data.list
-          }
-        })
-      },
+      }
     }
   }
 </script>
-<style  >
-.el-table /deep/.DisabledSelection .cell .el-checkbox__inner{
-  display:none;
-  position:relative;
-}
-.el-table /deep/.DisabledSelection .cell:before{
-  content:"推荐情况";
-  position:absolute;
-  right :11px;
-}
-</style>
-<style   lang="scss">
-.el-checkbox__inner{
-  width: 25px;
-  height: 25px;
-}
-.el-checkbox__inner::after{
-  width: 15px;
-  height: 15px;
-  left: 3px;
-  top: -3px;
-}
- .el-table thead th{
-  background: gray;
-  color: #000;
-}
-.app-main {
-    overflow: auto !important;
-  }
 
-  .el-card {
-    overflow: auto !important;
-  }
+<style   lang="scss">
   .chart-container {
     position: relative;
     width: 95%;
@@ -142,7 +112,10 @@ import * as approveApi from '@/api/approve'
     height: calc(100vh - 50px);
   }
 
-
+.el-table >>> .DisabledSelection .cell .el-checkbox__inner {
+  display: none;
+  position: relative;
+}
   
   .elrow {
     line-height: 40px;
@@ -168,11 +141,8 @@ import * as approveApi from '@/api/approve'
         list-style: none;
         min-height: 200px;
         .item{
-          display: inline-block;
-            margin: 10px;
           >div{
             line-height: 30px;
-            
             .label{
               display: inline-block;
               width: 50px;

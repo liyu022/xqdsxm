@@ -104,3 +104,56 @@ export const cadreresultdetailCadreResult = _params => {
 }
 
  
+
+//==================科级干部考核项接口===================
+/**
+ *  科级干部考核项查询
+ * @param _params
+ * @returns {AxiosPromise}
+ */
+export const selectHbcadreitemList = _params => {
+    return axios.get(`hbcadreitemst`, {
+        params: _params,
+        baseURL: config.baseUrlSBGL
+    })
+  }
+  /**
+  *  科级干部考核项添加
+  * @param _params
+  * @returns {AxiosPromise}
+  */
+  export const addHbcadreitem = _params => {
+    return axios.post(`hbcadreitem/add`, _params,{
+        baseURL: config.baseUrlSBGL
+    })
+  }
+  /**
+  *  科级干部考核项修改
+  * @param _params
+  * @returns {AxiosPromise}
+  */
+  export const updateHbcadreitem = _params => {
+    return axios.post(`hbcadreitem/update`, _params,{
+        baseURL: config.baseUrlSBGL
+    })
+  }
+  /**
+  *  科级干部考核项删除
+  * @param _params
+  * @returns {AxiosPromise}
+  */
+  export const deleteHbcadreitem = _params => {
+    return axios.get(`hbcadreitem/deleteall`, {
+        params: _params,
+        baseURL: config.baseUrlSBGL
+    })
+  }
+
+ 
+
+  export const hbcadreitemList = _params => {
+    return axios.get(`hbcadreitem/list`, {
+        params: _params,
+        baseURL: config.baseUrlSBGL
+    })
+  }
