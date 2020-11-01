@@ -82,7 +82,7 @@
         this.getsysroleproportionList()
       },
       getsysroleproportionList() {
-        let uid = localStorage.getItem('userid')
+        let uid = JSON.parse(localStorage.getItem('userid')) 
         let params = {
           currentPage: this.currentPage,
           pageSize: this.pageSize,

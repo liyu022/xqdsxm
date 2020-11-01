@@ -288,3 +288,47 @@ export const leaderResult = _params => {
     baseURL: config.baseUrlSBGL
   })
 }
+
+
+/**
+ * 机关考核计划添加
+ * @param _params
+ * @returns {AxiosPromise}
+ */
+export const cadreplanAdd = _params => {
+  return axios.post(`cadreplan/add`, _params,{
+    baseURL: config.baseUrlSBGL
+  })
+}
+/**
+ *  机关干部考核计划修改
+ * @param _params
+ * @returns {AxiosPromise}
+ */
+export const cadreplanUpdate = _params => {
+  return axios.post(`cadreplan/update`, _params,{
+    baseURL: config.baseUrlSBGL
+  })
+}
+/**
+ *  机关干部考核计划删除
+ * @param _params
+ * @returns {AxiosPromise}
+ */
+export const cadreplanDelete = _params => {
+  return axios.get(`cadreplan/deleteall`, {
+    params: _params,
+    baseURL: config.baseUrlSBGL
+  })
+}
+/**
+ *  机关干部考核计划中获取全部
+ * @param _params
+ * @returns {AxiosPromise}
+ */
+export const cadreplanList = _params => {
+  return axios.get(`cadreplan/list`, {
+    params: _params,
+    baseURL: config.baseUrlSBGL
+  })
+}

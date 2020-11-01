@@ -54,7 +54,17 @@ export const cadreitemList = _params => {
         baseURL: config.baseUrlSBGL
     })
 }
-
+/**
+ *  查询干部考核机关战队
+ * @param _params
+ * @returns {AxiosPromise}
+ */
+export const cadreplanGetMaxList = _params => {
+    return axios.get(`cadreplan/getMaxList`, {
+        params: _params,
+        baseURL: config.baseUrlSBGL
+    })
+}
 
 /**
  *  sysroleproportion
@@ -80,4 +90,17 @@ export const sysroleproportionUpdate = _params => {
         baseURL: config.baseUrlSBGL
     })
 }
+
+
+/**
+ *  cadreresultdetailCadreResult
+ * @param _params
+ * @returns {AxiosPromise}
+ */
+export const cadreresultdetailCadreResult = _params => {
+    return axios.post(`cadreresultdetail/cadreResult`, _params,{
+        baseURL: config.baseUrlSBGL
+    })
+}
+
  

@@ -70,9 +70,9 @@
 
 
         <!--角色授权-->
-        <el-dialog title="角色授权" custom-class="dialog" :visible.sync="showWarrant" width="500px">
-          <!-- <el-cascader style="width: 400px" :options="warrantList" :props="warrantProps" collapse-tags v-model="warrantValue"
-                                 clearable></el-cascader> -->
+        <!-- <el-dialog title="角色授权" custom-class="dialog" :visible.sync="showWarrant" width="500px">
+          <el-cascader style="width: 400px" :options="warrantList" :props="warrantProps" collapse-tags v-model="warrantValue"
+                                 clearable></el-cascader>
           <div class="tree_box">
             <el-tree ref="tree" default-expand-all :data="treeData" show-checkbox node-key="id" :props="defaultProps"
               :default-checked-keys="checkedKeys">
@@ -83,7 +83,15 @@
             <el-button @click="showWarrant = false">取 消</el-button>
             <el-button type="primary" @click="subimetWarrant">添 加</el-button>
           </span>
-        </el-dialog>
+        </el-dialog> -->
+        <el-dialog title="角色授权" custom-class="dialog" :visible.sync="showWarrant" width="500px">
+                    <el-cascader style="width: 400px;" :options="warrantList" :props="warrantProps" collapse-tags :change-on-select="true" v-model="warrantValue" clearable></el-cascader>
+
+                    <span slot="footer" class="dialog-footer">
+                      <el-button @click="showWarrant = false">取 消</el-button>
+                      <el-button type="primary" @click="subimetWarrant">添 加</el-button>
+                    </span>
+                </el-dialog>
       </div>
     </div>
     <div class="footer">
@@ -120,6 +128,7 @@
         warrantList: [],
         warrantProps: {
           id: 'ID',
+          value: 'ID',
           label: 'FUN_NAME',
           children: 'children',
           multiple: true,
@@ -189,44 +198,63 @@
        * 分配权限
        */
       updateForm() {
-        if (this.multipleSelection.length === 1) {
-          this.roleid = this.multipleSelection[0].id
-          api.selectFunctionTree({
-            id: '',
-            roleid: this.roleid
-          }).then(({
-            data
-          }) => {
-              var yx = data.data;
-              console.log(yx,52 )
-              this.checkedKeys=[]
-              this.deepSet(yx)
-              this.treeData = yx
-           
-            const nav = data.data;
-        
-            this.warrantList = nav
-            const warrantValue = []
-            for (const item of nav) {
-
-              for (const val of item.children) {
-                if (val.FLAG == '0') {
-                  warrantValue.push([val.ID, val.FUN_NAME])
-                }
-              }
-            }
-            this.warrantValue = warrantValue
+        // if (this.multipleSelection.length === 1) {
+        //   this.roleid = this.multipleSelection[0].id
+        //   api.selectFunctionTree({
+        //     id: '',
+        //     roleid: this.roleid
+        //   }).then(({
+        //     data
+        //   }) => {
+        //       var yx = data.data;
+        //       console.log(yx,52 )
+        //       this.checkedKeys=[]
+        //       this.deepSet(yx)
+        //       this.treeData = yx
             
-            this.showWarrant = true
-            console.log(this.warrantValue);
-          })
-        } else {
-          this.$message({
-            showClose: true,
-            message: '不行！必须选择一条数据',
-            type: 'error'
-          })
-        }
+        //     this.showWarrant = true
+        //     console.log(this.warrantValue);
+        //   })
+        // } else {
+        //   this.$message({
+        //     showClose: true,
+        //     message: '不行！必须选择一条数据',
+        //     type: 'error'
+        //   })
+        // }
+        if (this.multipleSelection.length === 1) {
+                this.roleid = this.multipleSelection[0].id
+                api.selectFunctionTree({
+                    id: '',
+                    roleid: this.roleid
+                }).then(({data}) => {
+                    this.warrantList = data.data[0].children;
+                    const warrantValue = []
+                    for (const items of this.warrantList) {
+                        if (items.FLAG == '0') {
+                          warrantValue.push(items.ID);
+                        }
+                        for (const item of items.children) {
+                          if (item.FLAG == '0') {
+                            warrantValue.push([items.ID,item.ID]);
+                          }
+                          for (const ite of item.children) {
+                              if (ite.FLAG == '0') {
+                                warrantValue.push([items.ID,item.ID,ite.ID]);
+                              }
+                          }
+                      }
+                    }
+                    this.warrantValue = warrantValue;
+                    this.showWarrant = true
+                })
+            } else {
+                this.$message({
+                    showClose: true,
+                    message: '不行！必须选择一条数据',
+                    type: 'error'
+                })
+            }
       },
       deepSet(datas) {
 
@@ -248,22 +276,58 @@
        * 提交分配权限
        */
       subimetWarrant() {
-          let currentData=this.$refs.tree.getHalfCheckedNodes().concat(this.$refs.tree.getCheckedNodes());
-        
-          let str=''
-          for (let i = 0; i < currentData.length; i++) {
-               if (i<currentData.length-1) {
-                   str+=currentData[i].ID+','
-               }else{
-                   str+=currentData[i].ID
-               }
+        //   let uid =JSON.parse(localStorage.getItem('userid')) 
+        //   let currentData=this.$refs.tree.getHalfCheckedNodes().concat(this.$refs.tree.getCheckedNodes());
+        //   let str=''
+        //   let cq_str=''
+        //   let cq_=this.$refs.tree.getCheckedNodes()
+        //   for (let i = 0; i < currentData.length; i++) {
+        //     delete currentData[i].children
+        //       if (i<currentData.length-1) {
+        //            str+=currentData[i].ID+','
+        //        }else{
+        //            str+=currentData[i].ID
+        //        }
+        //   }
+          
+        //   for (let i = 0; i < cq_.length; i++) {
+        //       delete cq_[i].children
+        //        if (i<cq_.length-1) {
+        //            cq_str+=cq_[i].ID+','
+        //        }else{
+        //            cq_str+=cq_[i].ID
+        //        }
               
-          }
-           
-    
+        //   }
+        //    let edit={
+        //        id: this.roleid,
+        //        show: cq_str,
+        //        createby: uid
+        //    }
+ 
+        //  api.updateRole(edit).then(res => {
+        //   if (res.data.code === 0) {
+ 
+        //     this.$message({
+        //       type: 'success',
+        //       message: '修改成功!'
+        //     })
+        //   }
+     
+        // })
+        // api.permission({
+        //   id: this.roleid,
+        //   funs:str
+        // }).then(res => {
+        //   if (res.data.code == 0) {
+        //     this.showWarrant = false
+        //   }
+        // })
+        const warrantValue = this.warrantValue.flat(Infinity);
+        const funs = [...new Set(warrantValue)];
         api.permission({
           id: this.roleid,
-          funs:str
+          funs:funs.join()
         }).then(res => {
           if (res.data.code == 0) {
             this.showWarrant = false
@@ -372,6 +436,9 @@
       height: calc(100vh - 150px) !important;
 
       .el-dialog {
+        .el-dialog__body{
+          min-height: 350px;
+        }
         top: 40px;
         .el-tree-node__expand-icon.is-leaf{
             color: #ffffff!important;

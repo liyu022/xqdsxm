@@ -353,19 +353,34 @@ export function removeClass(ele, cls) {
  * @param {*} children 孩子节点字段 默认 'children'
  * @param {*} rootId 根Id 默认 0
  */
-export function treeData (source, id = 'value', parentId = 'parentId', children = 'children', rootId = '-1') {
+// FLAG: "0"
+// label: "智能推送"
+// value: "2020102418215600004"
+// parentId: "0"
+// const warrantList = treeData(nav, 'value', 'parentId', 'childern', '0')
+export function treeData (source, id = 'id', parentId = 'parentId', name = '', rootId) {
   const cloneData = JSON.parse(JSON.stringify(source))// 对源数据深度克隆
   function main (arr, pid, superior = '') {
     const temp = []
     for (const item of arr) {
-      if (item['PID'] === pid) {
-        item.superiorId = pid
-        item.superiorName = item['FUN_NAME']
-        const children = main(item['children'], item['ID'], '')
-        if (children.length > 0) {
-          item.children = children
-        }
-        temp.push(item)
+        if(item['PID'] === pid){
+          item.superiorId = pid
+          item.superiorName = superior
+          const children = main(arr, item[id], item[name])
+          if (children.length > 0) {
+            for(const ite of item){
+              if (ite['PID'] === pid) {
+                ite.superiorId = pid
+                ite.superiorName = superior
+                const children = main(arr, ite[id], ite[name])
+                if (children.length > 0) {
+                  ite.children = children
+                }
+                item.push(ite)
+              }
+            }
+          }
+          temp.push(item)
       }
     }
     return temp

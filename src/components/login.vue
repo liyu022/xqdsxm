@@ -121,6 +121,7 @@ export default {
                             // this.$store.dispatch("orgid", res.data.data.user.orgid);
                             localStorage.setItem("token", JSON.stringify(res.headers.token));
                             localStorage.setItem("fun", JSON.stringify(res.data.data.fun));
+                            localStorage.setItem("proportion", JSON.stringify(res.data.data.proportion));
                             localStorage.setItem("role", JSON.stringify(res.data.data.role));
                             localStorage.setItem('userid', JSON.stringify(res.data.data.user.id))
                             localStorage.setItem("orgid", res.data.data.organization[0].id);
