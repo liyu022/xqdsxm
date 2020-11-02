@@ -193,3 +193,30 @@ export const hbcadResultAdds = _params => {
     baseURL: config.baseUrlSBGL
 })
 }
+
+// 干部考核结果
+
+export const cadreresultCadrelist = _params => {
+    return axios.get(`cadreresult/cadrelist`, {
+        params: _params,
+        baseURL: config.baseUrlSBGL
+    })
+  }
+
+  // 干部考核结果详情
+
+export const cadrelistbyuserid = _params => {
+    return axios.get(`cadreresult/cadrelistbyuserid`, {
+        params: _params,
+        baseURL: config.baseUrlSBGL
+    })
+  }
+
+//   雷达图
+
+export const cadreresultcount = _params => {
+    return axios.get(`cadreresult/cadreresultcount`, {
+        params: _params,
+        baseURL: config.baseUrlSBGL
+    })
+  }

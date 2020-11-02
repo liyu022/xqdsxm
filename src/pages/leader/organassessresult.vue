@@ -1,34 +1,46 @@
 <template>
   <div class="chart-container">
-    <el-table :data="tableData" style="width: 100%">
+    <el-table :data="tableData" v-if="refresh" style="width: 100%" @expand-change="expandChange">
       <el-table-column type="expand">
         <template slot-scope="props">
-          <el-table :data="props.row.children" style="width: 100%" :default-sort="{prop: 'date', order: 'descending'}">
-            <el-table-column prop="khx" label="考核项" width="100">
+          <el-table border :data="props.row.children" v-loading="props.row.loading"  style="width: 100%" :default-sort="{prop: 'date', order: 'descending'}">
+            <el-table-column prop="UNCHECKUSERNAME" label="被考核人">
             </el-table-column>
-            <el-table-column prop="fs" label="分数">
-            </el-table-column>
+            <el-table-column prop="CREATENAME" label="考核人"  >
+      </el-table-column>
+       <el-table-column prop="CHECKRESULT"   label="分数">
+         
+      </el-table-column>
+       <el-table-column prop="CREATETIME" label="考核时间">
+      </el-table-column>
           </el-table>
         </template>
       </el-table-column>
-      <el-table-column prop="sort" label="排名" width="100">
+      <el-table-column type="index" label="排名" width="100">
       </el-table-column>
-      <el-table-column prop="bkhr" label="被考核人">
+      <el-table-column prop="USERNAME" label="被考核人">
       </el-table-column>
-      <el-table-column prop="fs" label="总分">
+      <el-table-column   label="总分">
+         <template slot-scope="props">
+            {{Number(props.row.RESULT).toFixed(2)}}
+          </template>
       </el-table-column>
-      <el-table-column label="是否有效" prop="id">
+      <el-table-column label="是否有效" >
+          <template slot-scope="props">
+              <span>{{Number(props.row.TOTAL) == Number(props.row.UNTOTAL) ? "有效" : "无效" }}</span>
+          </template>
       </el-table-column>
-      <el-table-column label="已考核人数" prop="name">
+      <el-table-column label="已考核人数" prop="UNTOTAL">
       </el-table-column>
-      <el-table-column label="总人数" prop="desc">
+      <el-table-column label="总人数" prop="TOTAL">
       </el-table-column>
-      <el-table-column label="考核人" prop="desc">
+      <el-table-column label="考核人"  >
+        -
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          <el-button size="mini" @click="handleEdit(scope.row)">雷达图</el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">折线图</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -40,15 +52,16 @@
 
       </div>
 
-      <span slot="footer" class="dialog-footer">
+      <!-- <span slot="footer" class="dialog-footer">
         <el-button @click="showView = false">取 消</el-button>
         <el-button type="primary" @click="showView = false">提 交</el-button>
-      </span>
+      </span> -->
     </el-dialog>
   </div>
 </template>
 
 <script>
+  import * as approveApi from '@/api/approve'
   import echarts from 'echarts'
   export default {
     name: 'MixChart',
@@ -58,24 +71,65 @@
         showView: false,
         limit: 3,
         multipleSelection: [],
-        tableData: []
+        tableData: [],
+        refresh:true
       }
     },
     created() {
-
+      this.getcadreresultCadrelist()
     },
 
     methods: {
-      initRadarChart() {
+      getcadreresultCadrelist(){
+        approveApi.cadreresultCadrelist().then(res=>{
+          if (res.data.code==0) {
+            res.data.data.map((item, index) => {
+                        item.children = []; // 添加子表格数据
+                        item.loading= false
+                    });
+            this.tableData=res.data.data
+         
+          }  
+        })
+      },
+     expandChange (row, expandedRows) {
+           
+            if (row.children.length==0) {
+            	// 通过$set属性可设置loading实现实时加载loading效果(经过测试,通过$set直接给父层数据声明子层数据时会出现报错,所以才在获取父层表格数据时声明子层表格数据)
+                let params={
+                  userid:row.UNCHECKUSERID
+                }
+                // this.$set(row, 'loading', true);
+                approveApi.cadrelistbyuserid(params).then((res) => {
+                    if (res.data.code === 0) {
+                         
+                        const taskData = JSON.parse(JSON.stringify(res.data.data));
+                        // 遍历父层表格数据
+                        this.$set(row, 'children', taskData);
+           
+                        this.tableData.forEach((temp, index) => {
+                            // 找到当前展开的行，把获取到的数据赋值进去
+                            if (temp.ID === row.ID) {
+                               console.log(taskData,77 )
+                                this.tableData[index].children = taskData || [];
+                            }
+                        });
+                    }
+                    this.$set(row, 'loading', false);
+                }, (err) => {
+                    this.$set(row, 'loading', false);
+                });
+            }
+      },
+      initRadarChart(ins,data) {
         this.chart = echarts.init(document.getElementById('echarts'))
+        console.log(this.chart,10 )
         let option = {
           title: {
-            text: '基础雷达图'
+            text: '干部考核7项指标合计统计'
           },
           tooltip: {},
-          legend: {
-            data: ['预算分配（Allocated Budget）', '实际开销（Actual Spending）']
-          },
+
           radar: {
             // shape: 'circle',
             name: {
@@ -86,45 +140,19 @@
                 padding: [3, 5]
               }
             },
-            indicator: [{
-                name: '销售（sales）',
-                max: 6500
-              },
-              {
-                name: '管理（Administration）',
-                max: 16000
-              },
-              {
-                name: '信息技术（Information Techology）',
-                max: 30000
-              },
-              {
-                name: '客服（Customer Support）',
-                max: 38000
-              },
-              {
-                name: '研发（Development）',
-                max: 52000
-              },
-              {
-                name: '市场（Marketing）',
-                max: 25000
-              }
-            ]
+            indicator: ins
           },
           series: [{
-            name: '预算 vs 开销（Budget vs spending）',
+            name: '干部考核7项指标合计统计',
             type: 'radar',
             // areaStyle: {normal: {}},
-            data: [{
-                value: [4300, 10000, 28000, 35000, 50000, 19000],
-                name: '预算分配（Allocated Budget）'
-              },
-              {
-                value: [5000, 14000, 28000, 31000, 42000, 21000],
-                name: '实际开销（Actual Spending）'
-              }
-            ]
+            data: [
+            {
+                value: data,
+                name: '干部考核7项指标合计统计'
+            },
+
+        ]
           }]
         };
         this.chart.setOption(option)
@@ -202,9 +230,32 @@
         this.multipleSelection = rows;
       },
       handleEdit(row) {
-        console.log(row, 555)
+        //雷达图
+         this.showView=true
+         let params={
+                  userid:row.UNCHECKUSERID
+                }
+                // this.$set(row, 'loading', true);
+                approveApi.cadreresultcount(params).then((res) => {
+                    if (res.data.code === 0) {
+                        console.log(res.data.data,777)
+                        let da=res.data.data
+                        let indicator=[],data=[]
+                        for (let i = 0; i < da.length; i++) {
+                          let obj={
+                            name:da[i].NAME,
+                            
+                          }
+                          indicator.push(obj)
+                          data.push(da[i].VALUE)
+                        }
+                       console.log(indicator, data)
+                        this.initRadarChart(indicator,data)
+                    }
+                })
       },
       handleDelete(row) {
+        // 折线图
         console.log(row, 555)
       }
     }
@@ -212,9 +263,9 @@
 </script>
 
 <style lang="scss">
-  .echarts {
-    width: 500px;
-    height: 200px;
+  #echarts {
+    width: 800px;
+    height: 400px;
   }
 
   .chart-container {
