@@ -157,3 +157,39 @@ export const selectHbcadreitemList = _params => {
         baseURL: config.baseUrlSBGL
     })
   }
+
+
+  
+//==================后备干部推荐票接口===================
+/**
+ *  后备干部推荐查询
+ * @param _params
+ * @returns {AxiosPromise}
+ */
+export const selectHbcadreResultList = _params => {
+  return axios.get(`hbcadreresult/list`, {
+      params: _params,
+      baseURL: config.baseUrlSBGL
+  })
+}
+/**
+*  查询用户是否考核过了
+* @param _params
+* @returns {AxiosPromise}
+*/
+export const hbcadResultByUserId = _params => {
+  return axios.get(`hbcadreresult/selectByUserId`, {
+      params: _params,
+      baseURL: config.baseUrlSBGL
+  })
+}
+/**
+*  批量添加考核投票
+* @param _params
+* @returns {AxiosPromise}
+*/
+export const hbcadResultAdds = _params => {
+  return axios.post(`hbcadreresult/adds`, _params,{
+    baseURL: config.baseUrlSBGL
+})
+}

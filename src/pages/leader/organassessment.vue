@@ -7,13 +7,14 @@
         <span v-if="flag.indexOf('A')>-1" class="tabs__item" :class="activeName=='A'?'active':''"
           @click="handleClick('A')">机关考核</span>
         <span v-if="flag.indexOf('D')>-1" class="tabs__item" :class="activeName=='D'?'active':''"
-          @click="handleClick('D')">战队考核</span>
+          @click="handleClick('D')">站队考核</span>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="el-icon-star-on"></span><span class="el-icon-star-on"></span><span class="el-icon-star-on"></span><span style="color:red;font-weight:600;">{{name}}</span>
       </div>
       <div class="hd">
 
       </div>
       <div class="card">
-        <ul class="tab_c">
+        <ul class="tab_c" v-loading="loading">
           <li v-for="(item,index) in tableData" :key="index">
             <vxe-table border :show-header="index>1?false:true" :span-method="mergeRowMethod" resizable
               :data="item.temp" :edit-config="{trigger: 'click', mode: 'cell'}">
@@ -51,19 +52,32 @@
     data() {
       return {
         nosubmit:false,
+        loading:false,
         activeName: '',
         texts: ['1分', '2分', '3分', '4分', '5分', '6分', '7分', '8分', '9分', '10分'],
         tableData: [],
         proportion: [],
         flag: [],
         flagValue: {},
-        planId: ''
+        planId: '',
+        name: '',
       }
     },
     created() {
       this.proportion = JSON.parse(localStorage.getItem('proportion'))
       this.flag = []
       let obj = {}
+      let info = JSON.parse(localStorage.getItem('userDetail'))
+      let infoz = JSON.parse(localStorage.getItem('role'))
+      if(this.proportion.length>1){
+        this.name = "  考核人角色："+infoz[0].name + ",   考核人姓名：" + info.name +"， 机关干部打分权重：" + this.proportion[0].proportion + ",  站队科级干部打分权重："+ this.proportion[1].proportion
+      }else{
+        if (infoz[0].name == "站队一般员工") {
+          this.name = "  考核人角色："+infoz[0].name + ",   考核人姓名：" + info.name +"， 站队科级干部打分权重：" + this.proportion[0].proportion
+        }else{
+          this.name = "  考核人角色："+infoz[0].name + ",   考核人姓名：" + info.name +"， 机关干部打分权重：" + this.proportion[0].proportion
+        }
+      }
       for (let i = 0; i < this.proportion.length; i++) {
         obj[this.proportion[i].type] = this.proportion[i].proportion
         this.flag.push(this.proportion[i].type)
@@ -75,7 +89,7 @@
     methods: {
       handleClick(e) {
         this.activeName = e
-        this.getcadreitemList()
+        this.cadreplanGetMaxList()
       },
       cadreplanGetMaxList() {
         let uid = JSON.parse(localStorage.getItem('userid'))
@@ -85,13 +99,15 @@
         }
         approveApi.cadreplanGetMaxList(params).then(res => {
           if (res.data.code == 0) {
-            if (res.data.data.map == []) {
+            if (res.data.data.map.length === 0) {
               //未考核
+              this.nosubmit = false;
               this.planId = res.data.data.plan.id
               this.getcadreitemList()
             } else {
               let org = res.data.data.map
               let Obj = org.reduce((pre, cur, index) => {
+                 cur.VALUE = Number(cur.VALUE)
                 if (!pre[cur.UNCHECKUSERID]) {
                   pre[cur["UNCHECKUSERID"]] = [cur]
                 } else {
@@ -117,7 +133,7 @@
         let uid = JSON.parse(localStorage.getItem('userid'))
         let role = JSON.parse(localStorage.getItem('role'))
         let orgid
-        if (role[0].name == "机关一般员工" || role[0].name == "战队一般员工") {
+        if (role[0].name == "站队一般员工") {
           orgid = localStorage.getItem('orgid')
         } else {
           orgid = ""
@@ -130,8 +146,10 @@
           uid,
           orgid
         }
+        this.loading=true
         approveApi.cadreitemList(params).then(res => {
           if (res.data.code == 0) {
+            this.loading=false
             let org = res.data.data.list
             let Obj = org.reduce((pre, cur, index) => {
               cur.VALUE = 0
@@ -194,7 +212,10 @@
           sdata[i].temp = JSON.stringify(sdata[i].temp)
         }
         approveApi.cadreresultdetailCadreResult(sdata).then(res => {
-          console.log(res, 555)
+           if(res.data.code === 0){
+             alert("考核成功");
+             this.nosubmit = true;
+           }
         })
       },
       mergeRowMethod({
@@ -234,10 +255,6 @@
 
 <style lang="scss">
   .app-main {
-    overflow: auto !important;
-  }
-
-  .el-card {
     overflow: auto !important;
   }
 

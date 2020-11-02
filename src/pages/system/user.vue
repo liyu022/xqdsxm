@@ -471,7 +471,7 @@ export default {
     }
 
     .right-content {
-      width: 80%;
+      width: 78%;
       height: calc(100vh - 150px) !important;
       margin: 0px;
       float: left;

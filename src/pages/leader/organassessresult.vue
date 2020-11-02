@@ -219,9 +219,7 @@
 
   .chart-container {
     position: relative;
-    width: 95%;
-    margin: 0 auto;
-    height: calc(100vh - 50px);
+    margin: 10px;
   }
 
   .el-table>>>.DisabledSelection .cell .el-checkbox__inner {

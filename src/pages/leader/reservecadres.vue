@@ -30,7 +30,7 @@
           <el-table-column label-class-name="DisabledSelection" type="selection" width="80" align="center">
           </el-table-column>
         </el-table>
-        <div class="btn-group">
+        <div class="btn-group" v-show="isActiveShow">
           <el-button   type="primary" @click="handelSubmit">提 交</el-button>
         </div>
       </div>
@@ -39,21 +39,21 @@
   title="提交预览"
   custom-class="viewPage"
   :visible.sync="showView"
-  width="70%">
+  width="35%">
    <ul v-if="multipleSelection.length==0">
      <li class="empty">你未选择任何人，确认请点击提交</li>
    </ul>
    <ul v-else>
      <li >
        <div class="item" v-for="(item,index) in multipleSelection" :key="index">
-          <div><span class="label">姓 名 :</span><span>{{item.username}}</span></div>
-          <div><span class="label">机 构 :</span><span>{{item.bumen}}</span></div>
+          <div><span class="label">姓 名 :</span><span>{{item.username}}{{item.USERNAME}}</span></div>
+          <div><span class="label">机 构 :</span><span>{{item.bumen}}{{item.BUMEN}}</span></div>
        </div>
      </li>
    </ul>
   <span slot="footer" class="dialog-footer">
-    <el-button @click="showView = false">取 消</el-button>
-    <el-button type="primary" @click="showView = false">提 交</el-button>
+    <el-button v-if="isshowView">取 消</el-button>
+    <el-button type="primary" v-if="isshowView" @click="summit">提 交</el-button>
   </span>
 </el-dialog>
   </div>
@@ -66,12 +66,15 @@ import * as approveApi from '@/api/approve'
     data() {
       return {
         showView:false,
+        isshowView:false,
         limit:3,
+        isActiveShow:true,
         multipleSelection:[],
         tableData: []
       }
     },
     created(){
+      this.getUserCheck();
       this.gethbcadreitemList()
     },
     methods:{
@@ -84,7 +87,39 @@ import * as approveApi from '@/api/approve'
       },
       handelSubmit(){
         this.showView=true
-        console.log(this.multipleSelection,555)
+        this.isshowView=true
+      },
+      summit(){
+        let arr = this.multipleSelection.map(item =>{
+            return {
+              checkuserid:JSON.parse(localStorage.getItem('userid')),
+              hbcardreirtemid:item.id
+            }
+        })
+        approveApi.hbcadResultAdds(arr).then(res => {
+           if (res.data.code == 0) {
+             this.showView=false
+             this.isActiveShow = false
+          }
+        })
+      },
+      getUserCheck(){
+        let params = {
+          userid: JSON.parse(localStorage.getItem('userid'))
+        }
+        approveApi.hbcadResultByUserId(params).then(res => {
+          if (res.data.code === 0) {
+            if(res.data.data.length > 0){
+              alert("你已经进行推荐过了！不用在推荐了");
+              if (res.data.data) {
+                this.multipleSelection = res.data.data;
+                this.showView = true;
+                this.isshowView = false;
+                this.isActiveShow = false;
+              }
+            }
+          }
+        })
       },
       gethbcadreitemList() {
         let params = {
