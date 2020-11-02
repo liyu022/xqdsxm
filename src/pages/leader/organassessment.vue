@@ -21,15 +21,15 @@
               <vxe-table-column field="NAME" title="考核项" width="120" align="center"></vxe-table-column>
               <vxe-table-column field="VALUE" title="分值">
                 <template v-slot="{ row }">
-                  <el-rate :texts="texts" v-model="row.VALUE" :max="10" show-text>
+                  <el-rate :texts="texts" :disabled="nosubmit" v-model="row.VALUE" :max="10" show-text>
                   </el-rate>
                 </template>
               </vxe-table-column>
             </vxe-table>
           </li>
         </ul>
-        <div class="bt-group">
-          <el-button v-if="!nosubmit" type="primary" size="mini" @click='handelSubmit'>提交</el-button>
+        <div class="btn-group">
+          <el-button v-if="!nosubmit" type="primary"   @click='handelSubmit'>提交</el-button>
         </div>
 
       </div>
