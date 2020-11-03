@@ -1,0 +1,517 @@
+{
+  "code": 0,
+  "message": "请求成功",
+  "data": {
+    "role": [
+      {
+        "id": "2020101920343685855",
+        "code": "administrator",
+        "name": "系统管理员",
+        "description": "系统管理人员",
+        "createby": null,
+        "createtime": "2020-10-19T12:34:03.000+0000"
+      }
+    ],
+    "organization": [
+      {
+        "id": "fd3fdf72acee498dbfb7ca0033d68574",
+        "code": "500000",
+        "name": "甘陕管理处",
+        "type": "0",
+        "pid": "-1",
+        "fax": "029-53235672",
+        "link": "管理员",
+        "addr": "陕西省商洛市中心街",
+        "status": "启用",
+        "createby": "eb4ac12d545e47848439c1489a5a0b98",
+        "createtime": "2020-03-29T11:00:32.000+0000"
+      }
+    ],
+    "user": {
+      "id": "eb4ac12d545e47848439c1489a5a0b98",
+      "isenabled": "启用",
+      "email": "guess@summit.com.cn",
+      "name": "系统管理员",
+      "username": "admin",
+      "hint": "1",
+      "password": "ISGMyneATSuhkiwz4BURBQ==",
+      "phone": "13709839403",
+      "updatetime": "2020-10-19T12:19:50.000+0000",
+      "authorize": "已授权",
+      "orgid": "fd3fdf72acee498dbfb7ca0033d68574",
+      "position": "3"
+    },
+    "fun": [
+      {
+        "id": "2020102418215600016",
+        "funName": "系统管理",
+        "pid": "0",
+        "funType": "0",
+        "funDesc": "系统管理",
+        "funIndex": 1,
+        "funUrl": "/system",
+        "funIcon": "el-icon-s-platform",
+        "children": [
+          {
+            "id": "2020102418215600006",
+            "funName": "资源管理",
+            "pid": "2020102418215600016",
+            "funType": "0",
+            "funDesc": "功能管理",
+            "funIndex": 103,
+            "funUrl": "/fun",
+            "funIcon": "el-icon-link",
+            "children": []
+          },
+          {
+            "id": "2020102418215600015",
+            "funName": "日志管理",
+            "pid": "2020102418215600016",
+            "funType": "0",
+            "funDesc": "日志管理",
+            "funIndex": 106,
+            "funUrl": "/note",
+            "funIcon": "el-icon-notebook-1",
+            "children": []
+          },
+          {
+            "id": "2020102418215600034",
+            "funName": "组织机构管理",
+            "pid": "2020102418215600016",
+            "funType": "0",
+            "funDesc": "组织机构管理",
+            "funIndex": 107,
+            "funUrl": "/orgnization",
+            "funIcon": "el-icon-s-grid",
+            "children": []
+          },
+          {
+            "id": "2020102418215600005",
+            "funName": "角色管理",
+            "pid": "2020102418215600016",
+            "funType": "0",
+            "funDesc": "角色管理",
+            "funIndex": 102,
+            "funUrl": "/role",
+            "funIcon": "el-icon-guide",
+            "children": []
+          },
+          {
+            "id": "2020102418215600001",
+            "funName": "用户管理",
+            "pid": "2020102418215600016",
+            "funType": "0",
+            "funDesc": "用户管理",
+            "funIndex": 101,
+            "funUrl": "/user",
+            "funIcon": "el-icon-user-solid",
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "2020102418215600017",
+        "funName": "智能监管",
+        "pid": "0",
+        "funType": "0",
+        "funDesc": "智能监管",
+        "funIndex": 2,
+        "funUrl": "/manage",
+        "funIcon": "el-icon-menu",
+        "children": [
+          {
+            "id": "2020102418215600019",
+            "funName": "智能监督子系统",
+            "pid": "2020102418215600017",
+            "funType": "0",
+            "funDesc": "智能监督子系统",
+            "funIndex": 201,
+            "funUrl": "/aicheck",
+            "funIcon": "el-icon-view",
+            "children": []
+          },
+          {
+            "id": "2020102418215600018",
+            "funName": "智能管理子系统",
+            "pid": "2020102418215600017",
+            "funType": "0",
+            "funDesc": "智能管理子系统",
+            "funIndex": 202,
+            "funUrl": "/aimanager",
+            "funIcon": "el-icon-menu",
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "2020102418215600004",
+        "funName": "智能推送",
+        "pid": "0",
+        "funType": "0",
+        "funDesc": "智能推送",
+        "funIndex": 3,
+        "funUrl": "/equipment",
+        "funIcon": "el-icon-s-tools",
+        "children": [
+          {
+            "id": "2020102418215600003",
+            "funName": "短信推送",
+            "pid": "2020102418215600004",
+            "funType": "0",
+            "funDesc": "短信推送",
+            "funIndex": 301,
+            "funUrl": "/message",
+            "funIcon": "el-icon-s-promotion",
+            "children": []
+          },
+          {
+            "id": "2020102418215600002",
+            "funName": "APP推送",
+            "pid": "2020102418215600004",
+            "funType": "0",
+            "funDesc": "APP推送",
+            "funIndex": 302,
+            "funUrl": "/site",
+            "funIcon": "el-icon-s-home",
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "2020102418215600020",
+        "funName": "智能分析",
+        "pid": "0",
+        "funType": "0",
+        "funDesc": "智能分析",
+        "funIndex": 4,
+        "funUrl": "/analyse",
+        "funIcon": "el-icon-data-analysis",
+        "children": [
+          {
+            "id": "2020102418215600025",
+            "funName": "故障统计表",
+            "pid": "2020102418215600020",
+            "funType": "0",
+            "funDesc": "故障统计报表",
+            "funIndex": 401,
+            "funUrl": "/faulttable",
+            "funIcon": "el-icon-date",
+            "children": []
+          },
+          {
+            "id": "2020102418215600022",
+            "funName": "月度统计表",
+            "pid": "2020102418215600020",
+            "funType": "0",
+            "funDesc": "月度统计表",
+            "funIndex": 405,
+            "funUrl": "/monthtable",
+            "funIcon": "el-icon-date",
+            "children": []
+          },
+          {
+            "id": "2020102418215600027",
+            "funName": "违章统计表",
+            "pid": "2020102418215600020",
+            "funType": "0",
+            "funDesc": "违章统计表",
+            "funIndex": 402,
+            "funUrl": "/noruletable",
+            "funIcon": "el-icon-date",
+            "children": []
+          },
+          {
+            "id": "2020102418215600024",
+            "funName": "旬统计表",
+            "pid": "2020102418215600020",
+            "funType": "0",
+            "funDesc": "旬统计表",
+            "funIndex": 404,
+            "funUrl": "/periodtable",
+            "funIcon": "el-icon-date",
+            "children": []
+          },
+          {
+            "id": "2020102418215600023",
+            "funName": "季度统计表",
+            "pid": "2020102418215600020",
+            "funType": "0",
+            "funDesc": "季度统计表",
+            "funIndex": 406,
+            "funUrl": "/quartertable",
+            "funIcon": "el-icon-date",
+            "children": []
+          },
+          {
+            "id": "2020102418215600026",
+            "funName": "隐患排查统计表",
+            "pid": "2020102418215600020",
+            "funType": "0",
+            "funDesc": "隐患排查统计表",
+            "funIndex": 403,
+            "funUrl": "/troubletable",
+            "funIcon": "el-icon-date",
+            "children": []
+          },
+          {
+            "id": "2020102418215600021",
+            "funName": "年度统计报表",
+            "pid": "2020102418215600020",
+            "funType": "0",
+            "funDesc": "年度统计报表",
+            "funIndex": 407,
+            "funUrl": "/yeartable",
+            "funIcon": "el-icon-s-flag",
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "2020102418215600028",
+        "funName": "干部考核",
+        "pid": "0",
+        "funType": "0",
+        "funDesc": "干部考核",
+        "funIndex": 5,
+        "funUrl": "/leader",
+        "funIcon": "el-icon-s-check",
+        "children": [
+          {
+            "id": "2020102518293217529",
+            "funName": "科级机关考核",
+            "pid": "2020102418215600028",
+            "funType": "1",
+            "funDesc": "科级机关考核",
+            "funIndex": 501,
+            "funUrl": "/organassessment",
+            "funIcon": "el-icon-s-custom",
+            "children": []
+          },
+          {
+            "id": "2020102823381253602",
+            "funName": "权重设置",
+            "pid": "2020102418215600028",
+            "funType": "1",
+            "funDesc": "权重设置",
+            "funIndex": 500,
+            "funUrl": "/proportion",
+            "funIcon": "el-icon-s-tools",
+            "children": []
+          },
+          {
+            "id": "2020102518311259878",
+            "funName": "后备干部推荐",
+            "pid": "2020102418215600028",
+            "funType": "1",
+            "funDesc": "后备干部推荐",
+            "funIndex": 502,
+            "funUrl": "/reservecadres",
+            "funIcon": "el-icon-picture-outline-round",
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "2020102418215600007",
+        "funName": "考核体系",
+        "pid": "0",
+        "funType": "0",
+        "funDesc": "考核体系",
+        "funIndex": 6,
+        "funUrl": "/check",
+        "funIcon": "el-icon-s-help",
+        "children": [
+          {
+            "id": "2020102418215600010",
+            "funName": "制度审批",
+            "pid": "2020102418215600007",
+            "funType": "0",
+            "funDesc": "制度审批",
+            "funIndex": 602,
+            "funUrl": "/approve",
+            "funIcon": "el-icon-s-check",
+            "children": []
+          },
+          {
+            "id": "2020102418215600008",
+            "funName": "考核项",
+            "pid": "2020102418215600007",
+            "funType": "0",
+            "funDesc": "考核项",
+            "funIndex": 604,
+            "funUrl": "/checkitem",
+            "funIcon": "el-icon-document-checked",
+            "children": []
+          },
+          {
+            "id": "2020102418215600009",
+            "funName": "制度管理",
+            "pid": "2020102418215600007",
+            "funType": "0",
+            "funDesc": "制度管理",
+            "funIndex": 601,
+            "funUrl": "/institution",
+            "funIcon": "el-icon-c-scale-to-original",
+            "children": []
+          },
+          {
+            "id": "2020102418215600011",
+            "funName": "制度下达",
+            "pid": "2020102418215600007",
+            "funType": "0",
+            "funDesc": "制度下达",
+            "funIndex": 603,
+            "funUrl": "/notice",
+            "funIcon": "el-icon-s-claim",
+            "children": []
+          },
+          {
+            "id": "2020102418215600014",
+            "funName": "考核评估报告",
+            "pid": "2020102418215600007",
+            "funType": "0",
+            "funDesc": "考核评估报告",
+            "funIndex": 607,
+            "funUrl": "/report",
+            "funIcon": "el-icon-document-checked",
+            "children": []
+          },
+          {
+            "id": "2020102418215600012",
+            "funName": "区队考核",
+            "pid": "2020102418215600007",
+            "funType": "0",
+            "funDesc": "区队考核",
+            "funIndex": 606,
+            "funUrl": "/subunit",
+            "funIcon": "el-icon-tickets",
+            "children": []
+          },
+          {
+            "id": "2020102418215600013",
+            "funName": "班组考核",
+            "pid": "2020102418215600007",
+            "funType": "0",
+            "funDesc": "班组考核",
+            "funIndex": 605,
+            "funUrl": "/team",
+            "funIcon": "el-icon-notebook-2",
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "2020102518040032618",
+        "funName": "党员责任区",
+        "pid": "0",
+        "funType": "0",
+        "funDesc": "党员责任区",
+        "funIndex": 7,
+        "funUrl": "/partyArea",
+        "funIcon": "el-icon-s-opportunity",
+        "children": [
+          {
+            "id": "2020102518195915894",
+            "funName": "复合型人才",
+            "pid": "2020102518040032618",
+            "funType": "0",
+            "funDesc": "复合型人才",
+            "funIndex": 702,
+            "funUrl": "/compositetalent",
+            "funIcon": "el-icon-attract",
+            "children": [
+              {
+                "id": "2020102418215600029",
+                "funName": "考核项",
+                "pid": "2020102518195915894",
+                "funType": "2",
+                "funDesc": "考核项",
+                "funIndex": 501,
+                "funUrl": "/citem",
+                "funIcon": "el-icon-collection",
+                "children": []
+              },
+              {
+                "id": "2020102418215600031",
+                "funName": "考核评价人",
+                "pid": "2020102518195915894",
+                "funType": "2",
+                "funDesc": "考核评价人",
+                "funIndex": 503,
+                "funUrl": "/cleader",
+                "funIcon": "el-icon-user-solid",
+                "children": []
+              },
+              {
+                "id": "2020102418215600030",
+                "funName": "考核计划",
+                "pid": "2020102518195915894",
+                "funType": "2",
+                "funDesc": "考核计划",
+                "funIndex": 502,
+                "funUrl": "/cplan",
+                "funIcon": "el-icon-date",
+                "children": []
+              },
+              {
+                "id": "2020102418215600033",
+                "funName": "考核结果",
+                "pid": "2020102518195915894",
+                "funType": "2",
+                "funDesc": "考核结果",
+                "funIndex": 505,
+                "funUrl": "/creport",
+                "funIcon": "el-icon-reading",
+                "children": []
+              },
+              {
+                "id": "2020102418215600032",
+                "funName": "后备干部管理",
+                "pid": "2020102518195915894",
+                "funType": "2",
+                "funDesc": "后备干部管理",
+                "funIndex": 504,
+                "funUrl": "/unleader",
+                "funIcon": "el-icon-user",
+                "children": []
+              }
+            ]
+          },
+          {
+            "id": "2020102518264567163",
+            "funName": "一级指标考核",
+            "pid": "2020102518040032618",
+            "funType": "1",
+            "funDesc": "一级指标考核",
+            "funIndex": 703,
+            "funUrl": "/gradeonecheck",
+            "funIcon": "el-icon-bank-card",
+            "children": []
+          },
+          {
+            "id": "2020102518272976923",
+            "funName": "二级指标考核",
+            "pid": "2020102518040032618",
+            "funType": "1",
+            "funDesc": "二级指标考核",
+            "funIndex": 704,
+            "funUrl": "/gradetwocheck",
+            "funIcon": "el-icon-money",
+            "children": []
+          },
+          {
+            "id": "2020102518161064662",
+            "funName": "星级机组",
+            "pid": "2020102518040032618",
+            "funType": "0",
+            "funDesc": "星级机组",
+            "funIndex": 701,
+            "funUrl": "/startcrew",
+            "funIcon": "el-icon-star-off",
+            "children": []
+          }
+        ]
+      }
+    ]
+  }
+}

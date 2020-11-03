@@ -330,52 +330,9 @@
     }
 
     .btn-group {
+      margin-bottom: 20px;
       line-height: 70px;
       text-align: center;
-    }
-
-    .infoList {
-      .model {
-        line-height: 80px;
-        border-bottom: 1px solid black;
-      }
-
-      .tips {
-        font-size: 14px;
-        color: #303133;
-      }
-
-      ul {
-        li {
-          margin: 5px;
-          cursor: pointer;
-          list-style: none;
-          min-width: 80px;
-          display: inline-block;
-          border: 1px solid #EBEEF5;
-          height: 30px;
-          padding: 0px 5px;
-          line-height: 30px;
-          border-radius: 5px;
-          text-align: center;
-          white-space: 1px;
-          letter-spacing: 5px;
-          color: #fff;
-        }
-
-        .current {
-          background: #F56C6C;
-        }
-
-        .success {
-          background: #67C23A;
-        }
-
-        .no {
-          background: #909399;
-        }
-      }
-
     }
   }
 </style>

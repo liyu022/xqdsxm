@@ -78,56 +78,8 @@
     margin: 10px;
   }
 
-.el-table >>> .DisabledSelection .cell .el-checkbox__inner {
-  display: none;
-  position: relative;
-}
+ 
   
-  .elrow {
-    line-height: 40px;
-    display: flex;
-    justify-content: space-between;
-  }
-  .btn-group{
-    text-align: center;
-    line-height: 50px;
-  }
-  .viewPage{
-    top: 10%;
-    .el-dialog__header{
-      background: #97a8be;
-    }
-    .el-dialog__title,.el-dialog__headerbtn .el-dialog__close{
-      font-weight: 800;
-      color: #fff;
-    }
-    
-    ul{
-      li{
-        list-style: none;
-        min-height: 200px;
-        .item{
-          >div{
-            line-height: 30px;
-            .label{
-              display: inline-block;
-              width: 50px;
-              text-align: center;
-            }
-          }
-          cursor: pointer;
-          width: 150px;
-          height: 70px;
-          border: 1px solid #909399;
-          border-radius: 5px;
-        }
-      }
-      .empty{
-        height: 200px;
-        line-height: 200px;
-        text-align: center;
-        font-size: 20px;
-      }
-    }
-  }
+ 
+ 
 </style>

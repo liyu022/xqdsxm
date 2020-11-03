@@ -185,6 +185,7 @@ import * as approveApi from '@/api/approve'
     justify-content: space-between;
   }
   .btn-group{
+    margin-bottom: 20px;
     text-align: center;
     line-height: 50px;
   }
