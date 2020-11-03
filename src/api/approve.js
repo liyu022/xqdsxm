@@ -220,3 +220,12 @@ export const cadreresultcount = _params => {
         baseURL: config.baseUrlSBGL
     })
   }
+
+// 折线图
+
+export const cadreresultcountbyrole = _params => {
+    return axios.get(`cadreresult/cadreresultcountbyrole`, {
+        params: _params,
+        baseURL: config.baseUrlSBGL
+    })
+  }

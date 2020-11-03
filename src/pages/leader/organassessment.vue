@@ -61,6 +61,7 @@
         flagValue: {},
         planId: '',
         name: '',
+        infoz: '',
       }
     },
     created() {
@@ -68,14 +69,14 @@
       this.flag = []
       let obj = {}
       let info = JSON.parse(localStorage.getItem('userDetail'))
-      let infoz = JSON.parse(localStorage.getItem('role'))
+      this.infoz = JSON.parse(localStorage.getItem('role'))
       if(this.proportion.length>1){
-        this.name = "  考核人角色："+infoz[0].name + ",   考核人姓名：" + info.name +"， 机关干部打分权重：" + this.proportion[0].proportion + ",  站队科级干部打分权重："+ this.proportion[1].proportion
+        this.name = "  考核人角色："+this.infoz[0].name + ",   考核人姓名：" + info.name +"， 机关干部打分权重：" + this.proportion[0].proportion + ",  站队科级干部打分权重："+ this.proportion[1].proportion
       }else{
         if (infoz[0].name == "站队一般员工") {
-          this.name = "  考核人角色："+infoz[0].name + ",   考核人姓名：" + info.name +"， 站队科级干部打分权重：" + this.proportion[0].proportion
+          this.name = "  考核人角色："+this.infoz[0].name + ",   考核人姓名：" + info.name +"， 站队科级干部打分权重：" + this.proportion[0].proportion
         }else{
-          this.name = "  考核人角色："+infoz[0].name + ",   考核人姓名：" + info.name +"， 机关干部打分权重：" + this.proportion[0].proportion
+          this.name = "  考核人角色："+this.infoz[0].name + ",   考核人姓名：" + info.name +"， 机关干部打分权重：" + this.proportion[0].proportion
         }
       }
       for (let i = 0; i < this.proportion.length; i++) {
@@ -84,12 +85,22 @@
       }
       this.activeName = this.flag[0]
       this.flagValue = obj
-      this.cadreplanGetMaxList()
+      if(this.infoz[0].name == "系统管理员"){
+        this.nosubmit = true;
+        alert("您是系统管理员,不能参加考核!");
+      }else{
+        this.cadreplanGetMaxList()
+      }
     },
     methods: {
       handleClick(e) {
         this.activeName = e
-        this.cadreplanGetMaxList()
+        if(this.infoz[0].name == "系统管理员"){
+          this.nosubmit = true;
+          alert("您是系统管理员,不能参加考核!");
+        }else{
+          this.cadreplanGetMaxList()
+        }
       },
       cadreplanGetMaxList() {
         let uid = JSON.parse(localStorage.getItem('userid'))

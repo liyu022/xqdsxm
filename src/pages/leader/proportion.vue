@@ -28,7 +28,7 @@
         layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
-    <el-dialog title="分配权重" custom-class="viewPage" :visible.sync="showView" :close-on-click-modal="false" width="70%">
+    <el-dialog title="分配权重" custom-class="viewPage" :visible.sync="showView" :close-on-click-modal="false" width="37%">
 
       <el-form ref="form" class="elform" v-model="form" label-width="100px">
         <el-form-item label="角色名称：">

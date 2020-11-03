@@ -70,12 +70,18 @@ import * as approveApi from '@/api/approve'
         limit:3,
         isActiveShow:true,
         multipleSelection:[],
-        tableData: []
+        tableData: [],
+        infoz: JSON.parse(localStorage.getItem('role'))
       }
     },
     created(){
-      this.getUserCheck();
-      this.gethbcadreitemList()
+      if(this.infoz[0].name == "系统管理员"){
+        this.isActiveShow = false;
+        alert("您是系统管理员,不能参加考核!");
+      }else{
+        this.getUserCheck();
+        this.gethbcadreitemList()
+      }
     },
     methods:{
       handleSelectionChange(rows){

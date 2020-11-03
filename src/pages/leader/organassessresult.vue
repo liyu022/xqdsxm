@@ -9,8 +9,13 @@
             </el-table-column>
             <el-table-column prop="CREATENAME" label="考核人">
             </el-table-column>
-            <el-table-column prop="CHECKRESULT" label="分数">
-
+            <el-table-column prop="ORGNAME" label="考核人组织机构">
+            </el-table-column>
+            <el-table-column prop="ROLENAME" label="考核人角色">
+            </el-table-column>
+            <el-table-column prop="CHECKRESULT" label="考核人打分">
+            </el-table-column>
+            <el-table-column prop="PROPORTION" label="考核人权重">
             </el-table-column>
             <el-table-column prop="CREATETIME" label="考核时间">
             </el-table-column>
@@ -20,6 +25,8 @@
       <el-table-column type="index" label="排名" width="100">
       </el-table-column>
       <el-table-column prop="USERNAME" label="被考核人">
+      </el-table-column>
+      <el-table-column prop="ORGNAME" label="组织机构">
       </el-table-column>
       <el-table-column label="总分">
         <template slot-scope="props">
@@ -36,18 +43,18 @@
       <el-table-column label="总人数" prop="TOTAL">
       </el-table-column>
       <el-table-column label="考核人">
-        -
+        ---
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.row)">雷达图</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">折线图</el-button>
+          <el-button class="btn41" size="mini" @click="handleEdit(scope.row)"><svg-icon class-name="rad-icon" icon-class="rad" /></el-button>
+          <el-button class="btn41" size="mini" @click="handleDelete(scope.row)"><svg-icon class-name="rad-icon" icon-class="line" /></el-button>
         </template>
       </el-table-column>
     </el-table>
 
 
-    <el-dialog title="统计图表" custom-class="viewPage" :visible.sync="showView" width="800px">
+    <el-dialog :title="ctitle" custom-class="viewPage" :visible.sync="showView" width="800px">
 
       <div id="echarts">
 
@@ -73,7 +80,8 @@
         limit: 3,
         multipleSelection: [],
         tableData: [],
-        refresh: true
+        refresh: true,
+        ctitle:''
       }
     },
     created() {
@@ -195,7 +203,7 @@
         const maxValue = [...dataSet[1]].reduce((m, v) => Math.max(m, v), -Infinity);
 
         const radius = 0.8;
-        const theta = Math.PI * 2 / dataSet[2].length;
+        const theta = Math.PI * 2 / dataSet[1].length;
 
         const getPoints = (R, ps, max) => ps.map((v, i) => {
           const t = i * theta;
@@ -205,7 +213,7 @@
           return [x, y];
         });
         let option = {
-          backgroundColor: '#000000',
+          backgroundColor: 'rgba(0,0,0,0.8)',
           tooltip: {
             // trigger: 'axis',
             // show: true
@@ -315,7 +323,7 @@
               },
             },
             {
-              name: 's1',
+              name: '七项指标统计',
               type: 'radar',
               tooltip: {
                 trigger: 'item'
@@ -351,12 +359,79 @@
         };
         this.chart.setOption(option)
       },
-      initLineChart() {
+       Scolor(){
+         var r=Math.floor(Math.random()*256);
+       var g=Math.floor(Math.random()*256);
+       var b=Math.floor(Math.random()*256);
+       return [r,g,b]
+       },
+      initLineChart(xLabel,sys) {
+        this.chart=null
+       console.log(xLabel, sys)
         this.chart = echarts.init(document.getElementById('echarts'))
+        this.chart.clear()
+        let series=[]
+        for (let i = 0; i < sys.length; i++) {
+          let c=this.Scolor()
+          series.push({
+              name: sys[i].name,
+              type: 'line',
+              smooth: true, //是否平滑
+              showAllSymbol: true,
+              // symbol: 'image://./static/images/guang-circle.png',
+              symbol: 'circle',
+              symbolSize: 15,
+              lineStyle: {
+                normal: {
+                  color: "rgb("+c[0]+','+c[1]+','+c[2]+")",
+                  // shadowColor: 'rgba(0, 0, 0, .3)',
+                  // shadowBlur: 0,
+                  // shadowOffsetY: 5,
+                  // shadowOffsetX: 5,
+                },
+              },
+              label: {
+                show: true,
+                position: 'top',
+                textStyle: {
+                  color: '#00b3f4',
+                }
+              },
+              itemStyle: {
+                color: "#00b3f4",
+                borderColor: "#fff",
+                borderWidth: 3,
+                shadowColor: 'rgba(0, 0, 0, .3)',
+                shadowBlur: 0,
+                shadowOffsetY: 2,
+                shadowOffsetX: 2,
+              },
+              tooltip: {
+                show: true
+              },
+              areaStyle: {
+                normal: {
+                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                      offset: 0,
+                      color: 'rgba(8,8,128,0.4)',
+                    },
+                    {
+                      offset: 1,
+                      color: 'rgba(70,130,180,0.4)',
+                    }
+                  ], false),
+                  shadowColor: 'rgba(70,206,209,0.4)',
+                  shadowBlur: 20
+                }
+              },
+              data: sys[i].data
+            })
+          
+        }
         let option = {
           backgroundColor: '#080b30',
           title: {
-            text: '多线图',
+      
             textStyle: {
               align: 'center',
               color: '#fff',
@@ -365,6 +440,13 @@
             top: '5%',
             left: 'center',
           },
+          legend: {
+       right: 10,
+       top: 10,
+       textStyle:{//图例文字的样式
+            color:'#fff',
+        }
+        },
           tooltip: {
             trigger: 'axis',
             axisPointer: {
@@ -416,7 +498,7 @@
               show: false
             },
             boundaryGap: false,
-            data: ['A', 'B', 'C', 'D', 'E', 'F'],
+            data: xLabel,
 
           }],
 
@@ -446,114 +528,7 @@
               show: false,
             },
           }],
-          series: [{
-              name: '注册总量',
-              type: 'line',
-              smooth: true, //是否平滑
-              showAllSymbol: true,
-              // symbol: 'image://./static/images/guang-circle.png',
-              symbol: 'circle',
-              symbolSize: 15,
-              lineStyle: {
-                normal: {
-                  color: "#00b3f4",
-                  shadowColor: 'rgba(0, 0, 0, .3)',
-                  shadowBlur: 0,
-                  shadowOffsetY: 5,
-                  shadowOffsetX: 5,
-                },
-              },
-              label: {
-                show: true,
-                position: 'top',
-                textStyle: {
-                  color: '#00b3f4',
-                }
-              },
-              itemStyle: {
-                color: "#00b3f4",
-                borderColor: "#fff",
-                borderWidth: 3,
-                shadowColor: 'rgba(0, 0, 0, .3)',
-                shadowBlur: 0,
-                shadowOffsetY: 2,
-                shadowOffsetX: 2,
-              },
-              tooltip: {
-                show: false
-              },
-              areaStyle: {
-                normal: {
-                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                      offset: 0,
-                      color: 'rgba(0,179,244,0.3)'
-                    },
-                    {
-                      offset: 1,
-                      color: 'rgba(0,179,244,0)'
-                    }
-                  ], false),
-                  shadowColor: 'rgba(0,179,244, 0.9)',
-                  shadowBlur: 20
-                }
-              },
-              data: [502.84, 205.97, 332.79, 281.55, 398.35, 214.02, ]
-            },
-            {
-              name: '注册总量',
-              type: 'line',
-              smooth: true, //是否平滑
-              showAllSymbol: true,
-              // symbol: 'image://./static/images/guang-circle.png',
-              symbol: 'circle',
-              symbolSize: 15,
-              lineStyle: {
-                normal: {
-                  color: "#00ca95",
-                  shadowColor: 'rgba(0, 0, 0, .3)',
-                  shadowBlur: 0,
-                  shadowOffsetY: 5,
-                  shadowOffsetX: 5,
-                },
-              },
-              label: {
-                show: true,
-                position: 'top',
-                textStyle: {
-                  color: '#00ca95',
-                }
-              },
-
-              itemStyle: {
-                color: "#00ca95",
-                borderColor: "#fff",
-                borderWidth: 3,
-                shadowColor: 'rgba(0, 0, 0, .3)',
-                shadowBlur: 0,
-                shadowOffsetY: 2,
-                shadowOffsetX: 2,
-              },
-              tooltip: {
-                show: false
-              },
-              areaStyle: {
-                normal: {
-                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                      offset: 0,
-                      color: 'rgba(0,202,149,0.3)'
-                    },
-                    {
-                      offset: 1,
-                      color: 'rgba(0,202,149,0)'
-                    }
-                  ], false),
-                  shadowColor: 'rgba(0,202,149, 0.9)',
-                  shadowBlur: 20
-                }
-              },
-              data: [281.55, 398.35, 214.02, 179.55, 289.57, 356.14, ],
-            },
-          ]
+          series: series
         };
         this.chart.setOption(option)
       },
@@ -566,14 +541,16 @@
       },
       handleEdit(row) {
         //雷达图
+     
         this.showView = true
+        this.ctitle= row.USERNAME+ '综合指标分析'
         let params = {
           userid: row.UNCHECKUSERID
         }
         // this.$set(row, 'loading', true);
         approveApi.cadreresultcount(params).then((res) => {
           if (res.data.code === 0) {
-            console.log(res.data.data, 777)
+           
             let da = res.data.data
             let indicator = [],
               data = []
@@ -585,7 +562,7 @@
               indicator.push(da[i].NAME)
               data.push(da[i].VALUE)
             }
-            console.log(indicator, data)
+          
             this.initRadarChart(indicator, data)
           }
         })
@@ -593,15 +570,78 @@
       handleDelete(row) {
         // 折线图
         console.log(row, 555)
+        this.showView = true
+        this.ctitle= row.USERNAME+ '综合指标分析'
+        let params = {
+          userid: row.UNCHECKUSERID
+        }
+        // this.$set(row, 'loading', true);
+        approveApi.cadreresultcountbyrole(params).then((res) => {
+          if (res.data.code === 0) {
+            console.log(res.data.data, 777)
+            let da = res.data.data
+            let xLabel = []
+            let sys=[]
+            let temp=[]
+            for (let i = 0; i < da.length; i++) {
+              if (xLabel.indexOf(da[i].NAME)==-1) {
+                   xLabel.push(da[i].NAME)
+              }
+             
+            }
+            da.map(item=>{
+              if (temp.indexOf(item.ROLENAME)==-1) {
+                 
+                temp.push(item.ROLENAME)
+                let ob = {
+                  name:item.ROLENAME,
+                  data:[]
+                }
+                sys.push(ob)
+
+              }
+            })
+           
+            for (let i = 0; i < sys.length; i++) {
+              
+               for (let j = 0; j < da.length; j++) {
+
+                  if (sys[i].name==da[j].ROLENAME) {
+                    sys[i].data.push(da[j].VALUE)
+                  }
+                 
+               }
+              
+            }
+
+            
+            this.initLineChart(xLabel, sys)
+          }
+        })
       }
     }
   }
 </script>
 
 <style lang="scss">
+.btn41{
+  padding: 0px 10px!important;
+}
+.rad-icon{
+  width: 30px!important;
+  height: 30px!important;
+}
+.el-table th {
+    overflow: hidden;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    background: #e1e2ed;
+}
   #echarts {
     width: 800px;
-    height: 800px;
+    height: 700px;
   }
 
   .chart-container {
@@ -613,12 +653,13 @@
     top: 10%;
 
     .el-dialog__header {
-      background: #97a8be;
+      background: #8e8272;
     }
     .el-dialog__body{
-      padding: 0px;
+      margin: 0px;
+      padding: 0px!important;
       width: 800px;
-      height: 800px;
+      height: 700px;
     }
     .el-dialog__title,
     .el-dialog__headerbtn .el-dialog__close {

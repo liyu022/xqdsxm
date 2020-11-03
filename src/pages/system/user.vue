@@ -86,13 +86,14 @@
                                 <el-input v-if="showxq" v-model="form.isenabled"></el-input>
                             </el-form-item>
                             <el-form-item label="职位">
-                                <el-select v-model="form.position" placeholder="请选择职位">
+                                 <el-input v-model="form.position" placeholder="请输入职位"></el-input>
+                                <!-- <el-select v-model="form.position" placeholder="请选择职位">
                                     <el-option label="处长" value="1"></el-option>
                                     <el-option label="副处长" value="2"></el-option>
                                     <el-option label="科长" value="3"></el-option>
                                     <el-option label="副科长" value="4"></el-option>
                                     <el-option label="科员" value="5"></el-option>
-                                </el-select>
+                                </el-select> -->
                             </el-form-item>
                             <el-form-item label="app授权" v-if="showxq">
                                 <el-input v-model="form.authorize"></el-input>
