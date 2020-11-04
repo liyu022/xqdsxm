@@ -250,9 +250,13 @@ export default {
             let va = val.updatetime.replace('.000+0000', '').replace('T', ' ')
             return va;
         },
-        handleSelectionChange(val) {
-            this.multipleSelection = val
-        },
+        handleSelectionChange(rows) {
+        if (rows.length > 1) {
+          this.$refs.multipleTable.toggleRowSelection(rows[0], false);
+          rows.splice(0, 1);
+        }
+        this.multipleSelection = rows;
+      },
         selectTreeDate() {
             api.selectOrganizationTree().then(res => {
                 if (res.data.code === 0) {
