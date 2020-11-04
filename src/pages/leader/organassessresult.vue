@@ -22,7 +22,14 @@
           </el-table>
         </template>
       </el-table-column>
-      <el-table-column type="index" label="排名" width="100">
+      <el-table-column  label="排名" width="100">
+          <template slot-scope="props">
+            <span v-if="props.$index==0" class="first">{{Number(props.$index) + 1}}</span>
+            <span v-else-if="props.$index==1" class="second">{{Number(props.$index) + 1}}</span>
+            <span v-else-if="props.$index==2" class="three">{{Number(props.$index) + 1}}</span>
+            <span v-else  class="gen">{{Number(props.$index) + 1}}</span>
+         
+        </template>
       </el-table-column>
       <el-table-column prop="USERNAME" label="被考核人">
       </el-table-column>
@@ -35,7 +42,7 @@
       </el-table-column>
       <el-table-column label="是否有效">
         <template slot-scope="props">
-          <span>{{Number(props.row.TOTAL) == Number(props.row.UNTOTAL) ? "有效" : "无效" }}</span>
+          <span :class='Number(props.row.TOTAL) == Number(props.row.UNTOTAL) ? "green" : "red"'>{{Number(props.row.TOTAL) == Number(props.row.UNTOTAL) ? "有效" : "无效" }}</span>
         </template>
       </el-table-column>
       <el-table-column label="已考核人数" prop="UNTOTAL">
@@ -624,6 +631,39 @@
 </script>
 
 <style lang="scss">
+.green{
+color: #67C23A;
+}
+.red{
+color:#F56C6C;
+}
+.first,.second,.three{
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 50%;
+  color: #fff;
+  text-align: center;
+}
+.gen{
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 50%;
+  color: #000;
+  text-align: center;
+}
+.first{
+  background:#F56C6C;
+}
+.second{
+ background: #E6A23C;
+}
+.three{
+  background: #67C23A;
+}
 .btn41{
   padding: 0px 10px!important;
 }
@@ -639,6 +679,7 @@
     user-select: none;
     background: #e1e2ed;
 }
+
   #echarts {
     width: 800px;
     height: 700px;

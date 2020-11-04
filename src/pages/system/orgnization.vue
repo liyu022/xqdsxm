@@ -113,7 +113,7 @@ export default {
             form:{},
             defaultProps: {
                 label: 'NAME',
-                children: 'children'
+                children: 'childern'
             },
             tableData:[],
             treedata: [],
@@ -295,7 +295,7 @@ export default {
     display: flex;
     flex-wrap: nowrap;
     .left-content {
-      width: 20%;
+      width: 15%;
       height: calc(100vh - 150px) !important;
       background-color: #ffffff;
       overflow: auto;
@@ -304,7 +304,7 @@ export default {
       }
     }
       .right-content {
-        width: 80%;
+        width: 85%;
         height: calc(100vh - 150px) !important;
         margin: 0px;
         overflow: auto;

@@ -316,19 +316,18 @@
   .content-main {
     width: 100%;
     padding-top: 5px;
+    display: flex;
     height: calc(100vh - 150px) !important;
   .left-content {
-    width: 20%;
+    width: 15%;
     height: calc(100vh - 150px) !important;
     background-color: #ffffff;
-    float: left;
     overflow: auto;
   }
   .right-content {
-    width: 80%;
+    width: 85%;
     height: calc(100vh - 150px) !important;
     margin: 0px;
-    float: left;
     overflow: auto;
     background-color: #ffffff;
   }

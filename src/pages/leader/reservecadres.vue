@@ -106,6 +106,10 @@ import * as approveApi from '@/api/approve'
            if (res.data.code == 0) {
              this.showView=false
              this.isActiveShow = false
+             this.$message({
+               type:'success',
+               message:'推荐成功'
+             })
           }
         })
       },

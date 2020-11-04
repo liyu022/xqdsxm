@@ -279,7 +279,7 @@ input[type="number"] {
   width:auto!important;
 }
 .sbTree,.bmTree,.zwTree,.roleTree{
-  position: absolute;
+  position: relative;
   min-width: 210px;
   background: white;
   border: 1px solid #999999;

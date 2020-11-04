@@ -73,7 +73,8 @@
       if(this.proportion.length>1){
         this.name = "  考核人角色："+this.infoz[0].name + ",   考核人姓名：" + info.name +"， 机关干部打分权重：" + this.proportion[0].proportion + ",  站队科级干部打分权重："+ this.proportion[1].proportion
       }else{
-        if (infoz[0].name == "站队一般员工") {
+     
+        if (this.infoz[0].name == "站队一般员工") {
           this.name = "  考核人角色："+this.infoz[0].name + ",   考核人姓名：" + info.name +"， 站队科级干部打分权重：" + this.proportion[0].proportion
         }else{
           this.name = "  考核人角色："+this.infoz[0].name + ",   考核人姓名：" + info.name +"， 机关干部打分权重：" + this.proportion[0].proportion
@@ -333,9 +334,6 @@
 
 
     .card {
-
-      height: 300px;
-
       border: 1px solid #EBEEF5;
 
     }
