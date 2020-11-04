@@ -5,7 +5,7 @@
         <span>最多选择{{limit}}位，进行投票，可以不选。</span>
         <span>
            <el-button type="primary">
-                      <el-link target="_blank" href="./../../../static/file/后备干部基本资料.xls" :underline="false"
+                      <el-link target="_blank" href="http://47.108.145.125/xqdsxm/static/file/后备干部基本资料.xls" :underline="false"
                                 style="color:#ffffff;">下载模板
                       </el-link>
             </el-button>

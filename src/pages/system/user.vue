@@ -69,11 +69,14 @@
                             <el-form-item label="密码" v-if="isadd">
                                 <el-input v-model="form.password" placeholder="请输入密码"></el-input>
                             </el-form-item>
-                            <el-form-item label="联系电话">
-                                <el-input v-model="form.phone" placeholder="请输入联系电话"></el-input>
+                            <el-form-item label="身份证号">
+                                <el-input v-model="form.hint" placeholder="请输入身份证号"></el-input>
                             </el-form-item>
                             <el-form-item label="员工编号">
                                 <el-input v-model="form.email" placeholder="员工编号"></el-input>
+                            </el-form-item>
+                             <el-form-item label="app授权" v-if="showxq">
+                                <el-input v-model="form.authorize"></el-input>
                             </el-form-item>
                             <el-form-item label="状态">
                                 <el-select v-if="!showxq" v-model="form.isenabled" placeholder="请选择状态">
@@ -92,9 +95,7 @@
                                     <el-option label="科员" value="5"></el-option>
                                 </el-select> -->
                             </el-form-item>
-                            <el-form-item label="app授权" v-if="showxq">
-                                <el-input v-model="form.authorize"></el-input>
-                            </el-form-item>
+                           
                         </el-form>
                     </div>
                     <span slot="footer" class="dialog-footer" v-if="isadd">
