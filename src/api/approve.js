@@ -229,3 +229,13 @@ export const cadreresultcountbyrole = _params => {
         baseURL: config.baseUrlSBGL
     })
   }
+
+
+  //导入数据
+
+  export const importhbcadreExcel = _params => {
+    return axios.post(`excel/importhbcadreExcel`, _params,{
+      baseURL: config.baseUrlSBGL
+  })
+  }
+  

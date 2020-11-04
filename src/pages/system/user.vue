@@ -43,17 +43,14 @@
                         </template>
                     </el-table-column>
                     <el-table-column align="center" prop="name" label="姓名" width="100"></el-table-column>
-                    <el-table-column align="center" label="职位" show-overflow-tooltip>
-                        <template slot-scope="scope">
+                    <el-table-column align="center" prop="position" label="职位" show-overflow-tooltip>
+                        <!-- <template slot-scope="scope">
                             <span>{{ {'1':'处长','2':'副处长','3':'科长','4':'副科长','5':'科员'}[scope.row.position] }}</span>
-                        </template>
+                        </template> -->
                     </el-table-column>
-                    <el-table-column align="center" prop="username" label="用户名" width="90"></el-table-column>
-                    <el-table-column align="center" prop="phone" label="联系电话" width="120"></el-table-column>
-                    <el-table-column align="center" prop="isenabled" label="状态" width="80"></el-table-column>
-                    <el-table-column align="center" prop="email" label="邮箱"></el-table-column>
-                    <el-table-column align="center" prop="authorize" label="app授权" width="90"></el-table-column>
-                    <el-table-column align="center" prop="updatetime" label="创建时间" width="160" :formatter="formatterTime"></el-table-column>
+                    <el-table-column align="center" prop="username" label="用户名"  ></el-table-column>
+                    <el-table-column align="center" prop="email" label="员工编号"  ></el-table-column>
+                    <el-table-column align="center" prop="hint" label="身份证号"    ></el-table-column>
                 </el-table>
 
                 <el-dialog :title="title"
@@ -75,8 +72,8 @@
                             <el-form-item label="联系电话">
                                 <el-input v-model="form.phone" placeholder="请输入联系电话"></el-input>
                             </el-form-item>
-                            <el-form-item label="电子邮箱">
-                                <el-input v-model="form.email" placeholder="请输入电子邮箱"></el-input>
+                            <el-form-item label="员工编号">
+                                <el-input v-model="form.email" placeholder="员工编号"></el-input>
                             </el-form-item>
                             <el-form-item label="状态">
                                 <el-select v-if="!showxq" v-model="form.isenabled" placeholder="请选择状态">

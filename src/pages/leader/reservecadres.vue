@@ -3,7 +3,14 @@
     <div class="hd">
       <div class="elrow">
         <span>最多选择{{limit}}位，进行投票，可以不选。</span>
-        <span></span>
+        <span>
+           <el-button type="primary">
+                      <el-link target="_blank" href="./../../../static/file/后备干部基本资料.xls" :underline="false"
+                                style="color:#ffffff;">下载模板
+                      </el-link>
+            </el-button>
+          <el-button @click="importData()" type="primary"><i class="el-icon-upload2"> 导入</i></el-button>
+        </span>
       </div>
       <div class="table-res">
         <el-table :data="tableData" ref="multipleTable" border style="width: 100%"  @selection-change="handleSelectionChange">
@@ -23,9 +30,9 @@
           </el-table-column>
           <el-table-column prop="ygxs" label="用工形式">
           </el-table-column>
-          <el-table-column prop="xrzjsj" label="现任职务时间">
+          <el-table-column prop="xrzwsj" label="现任职务时间">
           </el-table-column>
-          <el-table-column prop="xrzwsj" label="现任职级时间">
+          <el-table-column prop="xrzjsj" label="现任职级时间">
           </el-table-column>
           <el-table-column label-class-name="DisabledSelection" type="selection" width="80" align="center">
           </el-table-column>
@@ -39,7 +46,7 @@
   title="提交预览"
   custom-class="viewPage"
   :visible.sync="showView"
-  width="35%">
+  width="800px">
    <ul v-if="multipleSelection.length==0">
      <li class="empty">你未选择任何人，确认请点击提交</li>
    </ul>
@@ -56,6 +63,26 @@
     <el-button type="primary" v-if="isshowView" @click="summit">提 交</el-button>
   </span>
 </el-dialog>
+ <el-dialog title="上传数据" :visible.sync="excelDetail" width="800px">
+            <div class="dialog_warp">
+                <el-form ref="form"  label-width="120px" class="demo-ruleForm">
+                    <el-form-item label="导入文件" style="width:100%;">
+                        <el-upload
+                                action=""
+                                class="upload-demo"
+                                ref="uploadleaders"
+                                :auto-upload="false"
+                                :limit="1"
+                                accept=".xlsx, .xls"
+                                :http-request="uploadSectionFile">
+                            <el-button slot="trigger" size="small" type="primary">选择上传文件</el-button>
+                            <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">开始上传</el-button>
+                            <div slot="tip" class="el-upload__tip" style="color:#ff0402;">只能上传excel文件,一次只能上传一个文件</div>
+                        </el-upload>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </el-dialog>
   </div>
 </template>
 
@@ -65,6 +92,7 @@ import * as approveApi from '@/api/approve'
     name: 'MixChart',
     data() {
       return {
+        excelDetail:false,
         showView:false,
         isshowView:false,
         limit:3,
@@ -84,6 +112,35 @@ import * as approveApi from '@/api/approve'
       }
     },
     methods:{
+      importData(){
+        this.title = '导入excel数据'
+        this.excelDetail = true
+      },
+       submitUpload() {
+            this.$refs.uploadleaders.submit();
+        },
+        uploadSectionFile(param) {
+            let userid = JSON.parse(localStorage.getItem('userid'))
+            let fileObj = param.file
+            let form = new FormData()
+            form.append("file", fileObj)
+            form.append("userid", userid)
+            approveApi.importhbcadreExcel(form).then(res => {
+                if (res.data.code === 0) {
+                  this.excelDetail=false
+                  this.gethbcadreitemList()
+                    this.$message({
+                      type:'success',
+                      message:'上传成功'
+                    })
+                }else{
+                  this.$message({
+                      type:'error',
+                      message:'上传失败'
+                    })
+                }
+            })
+        },
       handleSelectionChange(rows){
         if(rows.length > this.limit){  //单选时为1，需要选择n项改数值为n就可以     
         this.$refs.multipleTable.toggleRowSelection(rows[0],false);//超出指定选择个数后，把第一个选中的selection设为false
@@ -96,12 +153,22 @@ import * as approveApi from '@/api/approve'
         this.isshowView=true
       },
       summit(){
+        let checkuserid =JSON.parse(localStorage.getItem('userid'))
         let arr = this.multipleSelection.map(item =>{
             return {
-              checkuserid:JSON.parse(localStorage.getItem('userid')),
+              checkuserid:checkuserid,
               hbcardreirtemid:item.id
             }
         })
+        if (arr.length==0) {
+          let ob= {
+            checkuserid,
+            hbcardreirtemid:null
+          }
+         arr.push(ob)
+        }
+     
+   
         approveApi.hbcadResultAdds(arr).then(res => {
            if (res.data.code == 0) {
              this.showView=false
