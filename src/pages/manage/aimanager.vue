@@ -202,13 +202,18 @@
     width: 100%;
     padding-top: 5px;
     height: calc(100vh - 150px) !important;
-  .left-content {
-    width: 20%;
-    height: calc(100vh - 150px) !important;
-    background-color: #ffffff;
-    float: left;
-    overflow: auto;
-  }
+    display: flex;
+    flex-wrap: nowrap;
+    .left-content {
+      width: 20%;
+      height: calc(100vh - 150px) !important;
+      background-color: #ffffff;
+      float: left;
+      overflow: auto;
+      .sbTree{
+          width: 100%;
+      }
+    }
   .right-content {
     width: 80%;
     height: calc(100vh - 150px) !important;

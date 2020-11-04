@@ -289,16 +289,21 @@ export default {
   margin:0px;
   padding:0px;
     .content-main {
-      width: 100%;
-      padding-top: 5px;
+    width: 100%;
+    padding-top: 5px;
+    height: calc(100vh - 150px) !important;
+    display: flex;
+    flex-wrap: nowrap;
+    .left-content {
+      width: 20%;
       height: calc(100vh - 150px) !important;
-      .left-content {
-        width: 20%;
-        height: calc(100vh - 150px) !important;
-        background-color: #ffffff;
-        float: left;
-        overflow: auto;
+      background-color: #ffffff;
+      float: left;
+      overflow: auto;
+      .sbTree{
+          width: 100%;
       }
+    }
       .right-content {
         width: 80%;
         height: calc(100vh - 150px) !important;
