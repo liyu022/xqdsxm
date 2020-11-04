@@ -201,7 +201,6 @@
       width: 20%;
       height: calc(100vh - 150px) !important;
       background-color: #ffffff;
-      float: left;
       overflow: auto;
       .sbTree{
           width: 100%;
@@ -211,7 +210,6 @@
     width: 80%;
     height: calc(100vh - 150px) !important;
     margin: 0px;
-    float: left;
     overflow: auto;
     background-color: #ffffff;
   }
