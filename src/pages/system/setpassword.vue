@@ -87,11 +87,18 @@ import * as approveApi from '@/api/approve'
               npassword:this.ruleForm.newpass
             }
             approveApi.changepassword(params).then(res=>{
-              console.log(res)
+            
               if (res.data.code==0) {
-                  console.log(res)
+                    this.$message({
+                      type:'success',
+                      message:'修改成功'
+                    })
+                  this.$router.push('/')
               } else {
-                
+                  this.$message({
+                      type:'error',
+                      message:'修改成功'
+                    })
               }
             })
           } else {
