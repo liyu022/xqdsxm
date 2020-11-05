@@ -87,6 +87,7 @@ import * as approveApi from '@/api/approve'
               npassword:this.ruleForm.newpass
             }
             approveApi.changepassword(params).then(res=>{
+            
               if (res.data.code==0) {
                     this.$message({
                       type:'success',
@@ -96,7 +97,7 @@ import * as approveApi from '@/api/approve'
               } else {
                   this.$message({
                       type:'error',
-                      message:'修改失败'
+                      message:'修改成功'
                     })
               }
             })

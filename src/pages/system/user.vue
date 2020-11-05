@@ -45,7 +45,7 @@
                     <el-table-column align="center" prop="name" label="姓名" width="100"></el-table-column>
                     <el-table-column align="center" prop="position" label="职位" show-overflow-tooltip>
                         <!-- <template slot-scope="scope">
-                            <span>{{ {'1':'处长','2':'副处长','3':'科长','4':'副科长','5':'科员'}[scope.row.position] }}</span>
+                            <span>{{ {'1':'处长','2':'副处长','3':'科长','4':'副科长','5':'科员'}[scope.row.position] }}</span>rolename
                         </template> -->
                     </el-table-column>
                     <el-table-column align="center"  label="授权角色名称" show-overflow-tooltip>
