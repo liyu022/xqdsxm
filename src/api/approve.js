@@ -239,3 +239,12 @@ export const cadreresultcountbyrole = _params => {
   })
   }
   
+  //修改密码
+
+  export const changepassword = _params => {
+    return axios.get(`user/changepassword`, {
+        params: _params,
+        baseURL: config.baseUrlSBGL
+    })
+  }
+ 

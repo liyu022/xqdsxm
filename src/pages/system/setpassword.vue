@@ -13,7 +13,7 @@
         <el-form-item label="确认密码" prop="checkPass">
           <el-input type="password"   v-model="ruleForm.checkPass"  ></el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item style="margin-top:50">
           <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
         </el-form-item>
       </el-form>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import * as approveApi from '@/api/approve'
   export default {
 
     data() {
@@ -79,7 +80,20 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            let userid = JSON.parse(localStorage.getItem('userid'))
+            let params={
+              id:userid,
+              password: this.ruleForm.pass,
+              npassword:this.ruleForm.newpass
+            }
+            approveApi.changepassword(params).then(res=>{
+              console.log(res)
+              if (res.data.code==0) {
+                  console.log(res)
+              } else {
+                
+              }
+            })
           } else {
             console.log('error submit!!');
             return false;
