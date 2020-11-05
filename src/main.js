@@ -11,6 +11,8 @@ import XEUtils from 'xe-utils'
 import VXEUtils from 'vxe-utils'
 import VXETable from 'vxe-table'
 import 'vxe-table/lib/index.css'
+
+import { Message } from 'element-ui'
 Vue.use(VXEUtils, XEUtils, {mounts: ['locat', 'browse', 'cookie']})
 Vue.use(VXETable)
 Vue.use(ElementUI)
@@ -42,10 +44,23 @@ router.beforeEach((to, from, next) => {
   if (to.path!='/') {
  
    let token=localStorage.getItem('token')
-   console.log(token,55 )
+   let role= JSON.parse(localStorage.getItem('role'))
+   console.log(role,777)
    if (!token) {
+    Message({
+      type:'error',
+      message:'登录信息失效，请重新登录'
+    })
      next('/')
    }
+   if (role.length==0) {
+      Message({
+        type:'error',
+        message:'该角色尚未完成授权，请联系系统管理员'
+      })
+    next('/')
+   }
+
   }
   next()
 })
