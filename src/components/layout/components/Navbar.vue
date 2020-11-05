@@ -24,7 +24,7 @@
           <router-link to="/profile/index">
             <el-dropdown-item>关于我</el-dropdown-item>
           </router-link>
-          <router-link to="/">
+          <router-link to="/system/setPassword">
             <el-dropdown-item>修改密码</el-dropdown-item>
           </router-link>
          <!-- <a target="_blank" href="https://github.com/PanJiaChen/vue-element-admin/">

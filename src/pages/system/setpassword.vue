@@ -3,13 +3,15 @@
     <div class="content-main">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="原密码" prop="name">
-          <el-input v-model="ruleForm.name"></el-input>
+          <el-input  :type="passw"  v-model="ruleForm.pass"  >
+            <i slot="suffix" :class="icon" @click="showPass"></i>
+          </el-input>
         </el-form-item>
         <el-form-item label="密码" prop="pass">
-          <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+          <el-input type="password"   v-model="ruleForm.newpass"  ></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="checkPass">
-          <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+          <el-input type="password"   v-model="ruleForm.checkPass"  ></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -43,7 +45,13 @@
         }
       };
       return {
-        ruleForm: {},
+        passw:"password",
+        icon:"el-input__icon el-icon-view",
+        ruleForm: {
+          pass:'',
+          newpass:'',
+          checkPass:''
+        },
         rules: {
           pass: [{
             validator: validatePass,
@@ -57,6 +65,17 @@
       }
     },
     methods: {
+      showPass(){
+　　　　　　　　　　//点击图标是密码隐藏或显示
+               if( this.passw=="text"){
+                   this.passw="password";
+                   //更换图标
+                   this.icon="el-input__icon el-icon-view";
+               }else {
+                   this.passw="text";
+                   this.icon="el-input__icon el-icon-loading";
+               };
+            },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
