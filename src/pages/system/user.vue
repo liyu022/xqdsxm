@@ -21,7 +21,7 @@
                             <el-button @click="showAdd()" type="primary"><i class="el-icon-edit-outline"> 添加</i></el-button>
                             <el-button @click="showSearch()" type="primary"><i class="el-icon-search"> 查询</i></el-button>
                             <!-- <el-button @click="showAppAdd()" type="primary"><i class="el-icon-setting"> app授权</i></el-button> -->
-                            <el-button @click="distribution()" type="primary"><i class="el-icon-setting"> 分配角色</i></el-button>
+                            <el-button  v-if="nobtn" @click="distribution()" type="primary"><i class="el-icon-setting"> 分配角色</i></el-button>
                             <div class="clear"></div>
                         </el-form-item>
                     </el-form>
@@ -47,6 +47,11 @@
                         <!-- <template slot-scope="scope">
                             <span>{{ {'1':'处长','2':'副处长','3':'科长','4':'副科长','5':'科员'}[scope.row.position] }}</span>
                         </template> -->
+                    </el-table-column>
+                    <el-table-column align="center"  label="授权角色名称" show-overflow-tooltip>
+                        <template slot-scope="scope">
+                            <span :class="scope.row.rolename==null?'red':'green'">{{scope.row.rolename==null?'未授权': scope.row.rolename}}</span>
+                        </template>
                     </el-table-column>
                     <el-table-column align="center" prop="username" label="用户名"  ></el-table-column>
                     <el-table-column align="center" prop="email" label="员工编号"  ></el-table-column>
@@ -192,14 +197,23 @@ export default {
             warrantList:[],
             showWarrant:false,
             warrantValue:'',
-            id:''
+            id:'',
+            nobtn:false
         }
     },
     mounted() {
         this.selectAllDate()
         this.selectTreeDate()
     },
-
+    created(){
+        let role = JSON.parse(localStorage.getItem('role'))
+      if (role[0].name=='系统管理员') {
+        this.nobtn=true
+      }else{
+        this.nobtn=false
+      }
+    //   console.log(this.nobtn,role )
+    },
     methods: {
         /**
          * 角色授权
@@ -240,6 +254,7 @@ export default {
                 roleid:this.warrantValue
             }).then(res=>{
                 if(res.data.code == 0){
+                    this.selectAllDate()
                     this.showWarrant = false
                 }
             })
@@ -456,6 +471,12 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.red{
+    color: red;
+}
+.green{
+    color: green;
+}
 .content {
   margin: 0px;
   padding: 0px;

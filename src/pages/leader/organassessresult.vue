@@ -138,7 +138,9 @@
         }
       },
       initRadarChart(ins, data) {
+        this.chart = null
         this.chart = echarts.init(document.getElementById('echarts'))
+        this.chart.clear()
         const createSvg = ({
           width,
           height,
@@ -374,7 +376,7 @@
        },
       initLineChart(xLabel,sys) {
         this.chart=null
-       console.log(xLabel, sys)
+
         this.chart = echarts.init(document.getElementById('echarts'))
         this.chart.clear()
         let series=[]

@@ -2,18 +2,18 @@
   <div class="contents">
     <div class="content-main">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="原密码" prop="name">
+        <el-form-item label="原密码" prop="pass">
           <el-input  :type="passw"  v-model="ruleForm.pass"  >
             <i slot="suffix" :class="icon" @click="showPass"></i>
           </el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="pass">
+        <el-form-item label="密码" prop="newpass">
           <el-input type="password"   v-model="ruleForm.newpass"  ></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="checkPass">
           <el-input type="password"   v-model="ruleForm.checkPass"  ></el-input>
         </el-form-item>
-        <el-form-item style="margin-top:50">
+        <el-form-item style="margin-top:50px">
           <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
         </el-form-item>
       </el-form>
@@ -39,7 +39,7 @@ import * as approveApi from '@/api/approve'
       var validatePass2 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请再次输入密码'));
-        } else if (value !== this.ruleForm.pass) {
+        } else if (value !== this.ruleForm.newpass) {
           callback(new Error('两次输入密码不一致!'));
         } else {
           callback();
@@ -54,7 +54,7 @@ import * as approveApi from '@/api/approve'
           checkPass:''
         },
         rules: {
-          pass: [{
+          newpass: [{
             validator: validatePass,
             trigger: 'blur'
           }],
@@ -87,11 +87,17 @@ import * as approveApi from '@/api/approve'
               npassword:this.ruleForm.newpass
             }
             approveApi.changepassword(params).then(res=>{
-              console.log(res)
               if (res.data.code==0) {
-                  console.log(res)
+                    this.$message({
+                      type:'success',
+                      message:'修改成功'
+                    })
+                  this.$router.push('/')
               } else {
-                
+                  this.$message({
+                      type:'error',
+                      message:'修改失败'
+                    })
               }
             })
           } else {

@@ -141,8 +141,13 @@
           label: 'FUN_NAME'
         },
         treeData: [],
-        checkedKeys: []
+        checkedKeys: [],
+        nobtn: false,
       }
+    },
+    created(){
+      
+    
     },
     mounted() {
       this.selectAllDate()
@@ -330,6 +335,10 @@
           funs:funs.join()
         }).then(res => {
           if (res.data.code == 0) {
+            this.$message({
+              type: 'success',
+              message: '修改成功!'
+            })
             this.showWarrant = false
           }
         })
@@ -396,6 +405,10 @@
       subimetForm() {
         api.addRole(JSON.stringify(this.form)).then(res => {
           if (res.data.code === 0) {
+            this.$message({
+              type: 'success',
+              message: '修改成功!'
+            })
             this.resetForm()
             this.selectAllDate()
           }

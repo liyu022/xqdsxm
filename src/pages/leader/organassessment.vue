@@ -30,7 +30,7 @@
           </li>
         </ul>
         <div class="btn-group">
-          <el-button v-if="!nosubmit" type="primary"   @click='handelSubmit'>提交</el-button>
+          <el-button v-if="!nosubmit" type="primary" :disabled="ableds"  @click='handelSubmit'>提交</el-button>
         </div>
 
       </div>
@@ -51,6 +51,7 @@
     name: 'MixChart',
     data() {
       return {
+        ableds:false,
         nosubmit:false,
         loading:false,
         activeName: '',
@@ -96,6 +97,7 @@
     methods: {
       handleClick(e) {
         this.activeName = e
+        this.ableds=false
         if(this.infoz[0].name == "系统管理员"){
           this.nosubmit = true;
           alert("您是系统管理员,不能参加考核!");
@@ -189,7 +191,7 @@
       },
       handelSubmit() {
 
-
+        this.ableds=true
         let uid = JSON.parse(localStorage.getItem('userid'))
         let sdata = JSON.parse(JSON.stringify(this.tableData))
         let aff = []
@@ -227,6 +229,12 @@
            if(res.data.code === 0){
              alert("考核成功");
              this.nosubmit = true;
+           }else{
+             this.$message({
+               type:'error',
+               message:'考核失败'
+             })
+             this.ableds=false
            }
         })
       },
