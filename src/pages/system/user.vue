@@ -219,27 +219,28 @@ export default {
          * 角色授权
          */
         distribution() {
-            if (this.multipleSelection.length === 1) {
-                this.id = this.multipleSelection[0].id
-                api.getRoleByUserId(this.id).then(res=>{
-                    if(res.data.data && res.data.data.length >0  && res.data.data[0].id){
-                        this.warrantValue = res.data.data[0].id
-                    }else{
-                        this.warrantValue = undefined
-                    }
-                })
+            if (this.multipleSelection.length > 0) {
+                // this.id = this.multipleSelection[0].id
+                // api.getRoleByUserId(this.id).then(res=>{
+                //     if(res.data.data && res.data.data.length >0  && res.data.data[0].id){
+                //         this.warrantValue = res.data.data[0].id
+                //     }else{
+                //         this.warrantValue = undefined
+                //     }
+                // })
                 api.selecRoleList({
                     currentPage: 1,
                     pageSize: 99999999,
                 }).then(res => {
                     const list = res.data.data.list
                     this.warrantList = list
+                    this.showWarrant = true
                 })
-                this.showWarrant = true
+               
             } else {
                 this.$message({
                     showClose: true,
-                    message: '不行！必须选择一条数据',
+                    message: '不行！最少选择一条数据',
                     type: 'error'
                 })
             }
@@ -248,9 +249,20 @@ export default {
          * 提交角色授权
          */
         subWarrant(){
+            let idstr=""
+            for (let i = 0; i < this.multipleSelection.length; i++) {
+                if(i < this.multipleSelection.length-1){
+                    idstr += this.multipleSelection[i].id+',';
+                }else{
+                    idstr += this.multipleSelection[i].id;
+                }
+                
+                
+            }
+ 
             api.userRole({
                 loginid:JSON.parse(localStorage.getItem('userid')),
-                id:this.id,
+                id:idstr,
                 roleid:this.warrantValue
             }).then(res=>{
                 if(res.data.code == 0){
@@ -264,10 +276,10 @@ export default {
             return va;
         },
         handleSelectionChange(rows) {
-        if (rows.length > 1) {
-          this.$refs.multipleTable.toggleRowSelection(rows[0], false);
-          rows.splice(0, 1);
-        }
+        // if (rows.length > 1) {
+        //   this.$refs.multipleTable.toggleRowSelection(rows[0], false);
+        //   rows.splice(0, 1);
+        // }
         this.multipleSelection = rows;
       },
         selectTreeDate() {
@@ -415,6 +427,7 @@ export default {
                 'id': this.form.id,
                 'authorize': this.form.authorize
             }
+      
             api.appPower(param).then(res => {
                 if (res.data.code === 0) {
                     this.$message({
