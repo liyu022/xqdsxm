@@ -144,7 +144,7 @@ export default {
                             this.url=""
                             this.geturl(as)
                             console.log(this.url,8520)
-                            this.$router.push('/system/user')
+                            this.$router.push(this.url)
                         }
 
                     }
@@ -152,9 +152,10 @@ export default {
             }
         },
         geturl(res){
-            this.url+=res.funUrl
             if (res.children!=undefined && res.children.length>0) {
-                this.geturl(res.children)
+                this.geturl(res.children[0])
+            }else{
+                    this.url=res.path
             }
         }
     }
