@@ -31,6 +31,7 @@
                           border
                           style="width: 100%;overflow:auto;"
                           :row-style="{fontFamily: '宋体', fontSize: '12px',height:'40px'}"
+                          :selectable='checkboxT'
                           @selection-change="handleSelectionChange">
                     <el-table-column
                             type="selection"
@@ -215,6 +216,14 @@ export default {
     //   console.log(this.nobtn,role )
     },
     methods: {
+        checkboxT(row, rowIndex){
+        if(row.rolename=='系统管理员'){
+//      if(row.lie =='1'){
+          return false;//禁用
+        }else{
+          return true;//不禁用
+        }
+      },
         /**
          * 角色授权
          */
