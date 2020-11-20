@@ -15,7 +15,6 @@ const mkTree = (data) => {
                     data[i].children[j].name = data[i].children[j].funName
                     for (let k = 0; k < data[i].children[j].children.length; k++) {
                         let coms = () => import('./pages' + data[i].funUrl + data[i].children[j].children[k].funUrl + '.vue')
-                        console.log('./pages' + data[i].funUrl + data[i].children[j].children[k].funUrl + '.vue',3)
                         data[i].children[j].children[k].component = coms
                         data[i].children[j].children[k].path = data[i].funUrl + data[i].children[j].children[k].funUrl
                         data[i].children[j].children[k].name = data[i].children[j].children[k].funName
