@@ -31,9 +31,9 @@
                           border
                           style="width: 100%;overflow:auto;"
                           :row-style="{fontFamily: '宋体', fontSize: '12px',height:'40px'}"
-                          :selectable='checkboxT'
                           @selection-change="handleSelectionChange">
                     <el-table-column
+                            :selectable='checkboxT'
                             type="selection"
                             width="55">
                     </el-table-column>
