@@ -5,10 +5,10 @@
       </el-table-column>
       <el-table-column prop="ROLANAME" label="角色名称">
       </el-table-column>
-      <el-table-column   label="机关科室">
+      <el-table-column   label="评价角色">
           <template slot-scope="scope">
               <span v-if="scope.row.TYPE=='A'">机关科级干部</span>
-              <span v-if="scope.row.TYPE=='D'">战队科级干部</span>
+              <span v-if="scope.row.TYPE=='D'">站队科级干部</span>
           </template>
       </el-table-column>
       <el-table-column prop="CREATENAME" label="创建人">

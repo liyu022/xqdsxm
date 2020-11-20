@@ -35,7 +35,7 @@
             </template>
           </el-table-column>
           <el-table-column align="center" prop="NAME" label="考核计划名称" width="260"></el-table-column>
-          <el-table-column align="center" prop="TOTAL" label="考核总人数" width="160"></el-table-column>
+          <!-- <el-table-column align="center" prop="TOTAL" label="考核总人数" width="160"></el-table-column> -->
           <el-table-column align="center" prop="YEAR" label="考核时间" width="150"></el-table-column>
           <el-table-column align="center" prop="STATE" label="考核计划状态"></el-table-column>
           <el-table-column align="center" prop="CREATETIME" label="创建时间"></el-table-column>
