@@ -63,7 +63,8 @@ export default {
             type:'password',
             form: {
                 name: "admin"
-            }
+            },
+            url:''
         };
     },
     methods: {
@@ -126,7 +127,7 @@ export default {
                             localStorage.setItem('userid', JSON.stringify(res.data.data.user.id))
                             localStorage.setItem("orgid", res.data.data.organization[0].id);
                             var da = mkTree(res.data.data.fun);
-                            console.log(da,77)
+                             
                             localStorage.setItem('menu', JSON.stringify(da))
                             let addRoutes = [
                                 {
@@ -139,11 +140,21 @@ export default {
                             this.$router.addRoutes(addRoutes);
                             //保存token
                             this.isnull = false;
+                            let as=da[0]
+                            this.url=""
+                            this.geturl(as)
+                            console.log(this.url,8520)
                             this.$router.push('/system/user')
                         }
 
                     }
                 })
+            }
+        },
+        geturl(res){
+            this.url+=res.funUrl
+            if (res.children!=undefined && res.children.length>0) {
+                this.geturl(res.children)
             }
         }
     }
