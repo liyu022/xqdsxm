@@ -55,7 +55,7 @@
               </el-row>
               <el-row v-if="isadd">
                 <el-form-item label="计划类型">
-                  <el-select v-model="form.TYPE" placeholder="请选择">
+                  <el-select v-model="form.TYPE" placeholder="请选择" value-key>
                     <el-option label="机关考核" value="机关考核">
                     </el-option>
                     <el-option label="后备干部推荐" value="后备干部推荐">
@@ -213,7 +213,7 @@
 
       showAdd() {
         this.title = '添加'
-        this.form.TYPE="机关考核"
+        this.$set(this.form,"TYPE","机关考核")
         this.showDetail = true
         this.showxq = false
         this.isadd = true
