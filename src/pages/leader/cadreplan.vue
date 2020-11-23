@@ -213,6 +213,7 @@
 
       showAdd() {
         this.title = '添加'
+        this.form.TYPE="机关考核"
         this.showDetail = true
         this.showxq = false
         this.isadd = true
