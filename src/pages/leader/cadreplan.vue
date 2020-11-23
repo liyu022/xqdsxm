@@ -27,11 +27,13 @@
           :row-style="{fontFamily: '宋体', fontSize: '12px',height:'40px'}" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="55">
           </el-table-column>
-          <el-table-column align="center" class-name="column-caoz" label="操作"  >
+          <el-table-column align="center" class-name="column-caoz" label="操作">
             <template slot-scope="scope">
-                <el-button type="primary" size="mini" @click="updateFormDia(scope.row, scope.$index)">编辑</el-button>
-                <el-button type="success" size="mini" v-if="scope.row.STATE!='已启动'" @click="startUp(scope.row)">启动考核</el-button>
-                <el-button type="danger"  size="mini" v-if="scope.row.STATE=='已启动'" @click="shurDown(scope.row)">停止考核</el-button>
+              <el-button type="primary" size="mini" @click="updateFormDia(scope.row, scope.$index)">编辑</el-button>
+              <el-button type="success" size="mini" v-if="scope.row.STATE!='已启动'" @click="startUp(scope.row)">启动考核
+              </el-button>
+              <el-button type="danger" size="mini" v-if="scope.row.STATE=='已启动'" @click="shurDown(scope.row)">停止考核
+              </el-button>
               <!-- <span style="color:#00a2fd;cursor: pointer;text-align: center" @click="showBhFormDia(scope.row)">详情</span> -->
             </template>
           </el-table-column>
@@ -41,7 +43,7 @@
           <el-table-column align="center" prop="STATE" label="考核计划状态"></el-table-column>
           <el-table-column align="center" prop="CREATETIME" label="创建时间"></el-table-column>
         </el-table>
-       
+
         <el-dialog :title="title" custom-class="dialog" :modal="modal" :before-close="resetForm"
           :visible.sync="showDetail" width="700px" :close-on-click-modal="modal" @close="resetForm">
           <div class="dialog_warp" v-if="!issh">
@@ -51,14 +53,14 @@
                   <el-input v-model="form.NAME" placeholder="请输入考核计划名称" style="width:400px;"></el-input>
                 </el-form-item>
               </el-row>
-              <el-row  v-if="isadd">
-                <el-form-item label="计划类型" >
+              <el-row v-if="isadd">
+                <el-form-item label="计划类型">
                   <el-select v-model="form.TYPE" placeholder="请选择">
-    <el-option
-      label="机关考核"
-      value="后备干部推荐">
-    </el-option>
-  </el-select>
+                    <el-option label="机关考核" value="机关考核">
+                    </el-option>
+                    <el-option label="后备干部推荐" value="后备干部推荐">
+                    </el-option>
+                  </el-select>
                 </el-form-item>
               </el-row>
             </el-form>
@@ -203,7 +205,7 @@
         this.showxq = true
         this.isadd = false
         this.form = JSON.parse(JSON.stringify(row))
-    
+
       },
       exportData() {
 
@@ -259,11 +261,12 @@
         }
       },
       subimetForm() {
-          let uid =JSON.parse(localStorage.getItem('userid')) 
+        let uid = JSON.parse(localStorage.getItem('userid'))
         let pas = {
           "createby": uid,
           "name": this.form.NAME,
-          "year":moment(new Date()).format('YY-MM-DD')
+          "year": moment(new Date()).format('YYYY-MM-DD'),
+          "type": this.form.TYPE
         }
         api.cadreplanAdd(pas).then(res => {
           if (res.data.code === 0) {
@@ -283,8 +286,8 @@
 
       },
       editForm() {
-        this.form.id=this.form.ID
-        this.form.name=this.form.NAME
+        this.form.id = this.form.ID
+        this.form.name = this.form.NAME
         api.cadreplanUpdate(JSON.stringify(this.form)).then(res => {
           if (res.data.code === 0) {
             this.$message({
@@ -301,8 +304,8 @@
           this.resetForm()
         })
       },
-      startUp(row){
-        row.STATE="已启动"
+      startUp(row) {
+        row.STATE = "已启动"
         api.cadreplanUpdate(JSON.stringify(row)).then(res => {
           if (res.data.code === 0) {
             this.$message({
@@ -319,8 +322,8 @@
           this.resetForm()
         })
       },
-      shurDown(row){
-        row.STATE="停止"
+      shurDown(row) {
+        row.STATE = "停止"
         api.cadreplanUpdate(JSON.stringify(row)).then(res => {
           if (res.data.code === 0) {
             this.$message({
