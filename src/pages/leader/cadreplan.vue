@@ -29,8 +29,9 @@
           </el-table-column>
           <el-table-column align="center" class-name="column-caoz" label="操作" width="160">
             <template slot-scope="scope">
-              <span style="color:#00a2fd;cursor: pointer;text-align: center"
-                @click="updateFormDia(scope.row, scope.$index)">编辑</span>
+                <el-button type="primary" size="mini" @click="updateFormDia(scope.row, scope.$index)">编辑</el-button>
+                <el-button type="success" size="mini" v-if="scope.row.STATE!='已启动'">启动考核</el-button>
+                <el-button type="danger"  size="mini" v-if="scope.row.STATE=='已启动'">停止考核</el-button>
               <!-- <span style="color:#00a2fd;cursor: pointer;text-align: center" @click="showBhFormDia(scope.row)">详情</span> -->
             </template>
           </el-table-column>
