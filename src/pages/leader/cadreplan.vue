@@ -265,7 +265,7 @@
         let pas = {
           "createby": uid,
           "name": this.form.NAME,
-          "year": moment(new Date()).format('YYYY-MM-DD'),
+          "date": moment(new Date()).format('YYYY-MM-DD'),
           "type": this.form.TYPE
         }
         api.cadreplanAdd(pas).then(res => {
