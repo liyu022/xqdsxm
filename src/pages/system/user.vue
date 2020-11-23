@@ -17,10 +17,11 @@
                                 <el-input v-model="searchForm.phone" size="mini" placeholder="请输入联系电话"></el-input>
                             </el-form-item>
                             <!-- <li><i class="el-icon-download"> 导出</i></li>-->
-                            <el-button @click="deleteData()" type="primary"><i class="el-icon-delete"> 删除</i></el-button>
+                            <el-button @click="deleteData()" type="danger"><i class="el-icon-delete"> 删除</i></el-button>
                             <el-button @click="showAdd()" type="primary"><i class="el-icon-edit-outline"> 添加</i></el-button>
-                            <el-button @click="showSearch()" type="primary"><i class="el-icon-search"> 查询</i></el-button>
+                            <el-button @click="showSearch()" type="success"><i class="el-icon-search"> 查询</i></el-button>
                             <!-- <el-button @click="showAppAdd()" type="primary"><i class="el-icon-setting"> app授权</i></el-button> -->
+                            <el-button @click="importData()" type="primary"><i class="el-icon-upload2"> 导入人员</i></el-button>
                             <el-button  v-if="nobtn" @click="distribution()" type="primary"><i class="el-icon-setting"> 分配角色</i></el-button>
                             <div class="clear"></div>
                         </el-form-item>
@@ -167,14 +168,35 @@
                     :total="total">
             </el-pagination>
         </div>
+         <el-dialog title="上传数据" :visible.sync="excelDetail" width="800px">
+            <div class="dialog_warp">
+                <el-form ref="form"  label-width="120px" class="demo-ruleForm">
+                    <el-form-item label="导入文件" style="width:100%;">
+                        <el-upload
+                                action=""
+                                class="upload-demo"
+                                ref="uploadleaders"
+                                :auto-upload="false"
+                                :limit="1"
+                                accept=".xlsx, .xls"
+                                :http-request="uploadSectionFile">
+                            <el-button slot="trigger" size="small" type="primary">选择上传文件</el-button>
+                            <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">开始上传</el-button>
+                            <div slot="tip" class="el-upload__tip" style="color:#ff0402;">只能上传excel文件,一次只能上传一个文件</div>
+                        </el-upload>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </el-dialog>
     </div>
 </template>
 <script>
 import * as api from '../../api/system'
-
+import * as approveApi from '@/api/approve'
 export default {
     data() {
         return {
+            excelDetail:false,
             form: {},
             defaultProps: {
                 label: 'NAME',
@@ -216,6 +238,35 @@ export default {
     //   console.log(this.nobtn,role )
     },
     methods: {
+        importData(){
+        this.title = '导入excel数据'
+        this.excelDetail = true
+      },
+       submitUpload() {
+            this.$refs.uploadleaders.submit();
+        },
+        uploadSectionFile(param) {
+            let userid = JSON.parse(localStorage.getItem('userid'))
+            let fileObj = param.file
+            let form = new FormData()
+            form.append("file", fileObj)
+            form.append("userid", userid)
+            approveApi.importUserExcel(form).then(res => {
+                if (res.data.code === 0) {
+                  this.excelDetail=false
+                  this.selectAllDate()
+                    this.$message({
+                      type:'success',
+                      message:'上传成功'
+                    })
+                }else{
+                  this.$message({
+                      type:'error',
+                      message:'上传失败'
+                    })
+                }
+            })
+        },
         checkboxT(row, rowIndex){
         if(row.rolename=='系统管理员'){
 //      if(row.lie =='1'){

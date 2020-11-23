@@ -239,6 +239,12 @@ export const cadreresultcountbyrole = _params => {
   })
   }
   
+  
+  export const importUserExcel = _params => {
+    return axios.post(`excel/importUserExcel`, _params,{
+      baseURL: config.baseUrlSBGL
+  })
+  }
   //修改密码
 
   export const changepassword = _params => {
