@@ -27,11 +27,11 @@
           :row-style="{fontFamily: '宋体', fontSize: '12px',height:'40px'}" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="55">
           </el-table-column>
-          <el-table-column align="center" class-name="column-caoz" label="操作" width="160">
+          <el-table-column align="center" class-name="column-caoz" label="操作"  >
             <template slot-scope="scope">
                 <el-button type="primary" size="mini" @click="updateFormDia(scope.row, scope.$index)">编辑</el-button>
-                <el-button type="success" size="mini" v-if="scope.row.STATE!='已启动'">启动考核</el-button>
-                <el-button type="danger"  size="mini" v-if="scope.row.STATE=='已启动'">停止考核</el-button>
+                <el-button type="success" size="mini" v-if="scope.row.STATE!='已启动'" @click="startUp(scope.row)">启动考核</el-button>
+                <el-button type="danger"  size="mini" v-if="scope.row.STATE=='已启动'" @click="shurDown(scope.row)">停止考核</el-button>
               <!-- <span style="color:#00a2fd;cursor: pointer;text-align: center" @click="showBhFormDia(scope.row)">详情</span> -->
             </template>
           </el-table-column>
@@ -51,7 +51,16 @@
                   <el-input v-model="form.NAME" placeholder="请输入考核计划名称" style="width:400px;"></el-input>
                 </el-form-item>
               </el-row>
-
+              <el-row  v-if="isadd">
+                <el-form-item label="计划类型" >
+                  <el-select v-model="form.TYPE" placeholder="请选择">
+    <el-option
+      label="机关考核"
+      value="后备干部推荐">
+    </el-option>
+  </el-select>
+                </el-form-item>
+              </el-row>
             </el-form>
           </div>
           <span slot="footer" class="dialog-footer" v-if="isadd">
@@ -287,6 +296,42 @@
             this.$message({
               type: 'error',
               message: '修改失败!'
+            })
+          }
+          this.resetForm()
+        })
+      },
+      startUp(row){
+        row.STATE="已启动"
+        api.cadreplanUpdate(JSON.stringify(row)).then(res => {
+          if (res.data.code === 0) {
+            this.$message({
+              type: 'success',
+              message: '启动成功!'
+            })
+            this.selectAllDate()
+          } else {
+            this.$message({
+              type: 'error',
+              message: '启动失败!'
+            })
+          }
+          this.resetForm()
+        })
+      },
+      shurDown(row){
+        row.STATE="停止"
+        api.cadreplanUpdate(JSON.stringify(row)).then(res => {
+          if (res.data.code === 0) {
+            this.$message({
+              type: 'success',
+              message: '已停止!'
+            })
+            this.selectAllDate()
+          } else {
+            this.$message({
+              type: 'error',
+              message: '操作失败!'
             })
           }
           this.resetForm()
