@@ -30,6 +30,7 @@
           <el-table-column align="center" class-name="column-caoz" label="操作">
             <template slot-scope="scope">
               <el-button type="primary" size="mini" @click="updateFormDia(scope.row, scope.$index)">编辑</el-button>
+              <el-button type="primary" size="mini" @click="handelS(scope.row)">选择人员</el-button>
               <el-button type="success" size="mini" v-if="scope.row.STATE!='已启动'" @click="startUp(scope.row)">启动考核
               </el-button>
               <el-button type="danger" size="mini" v-if="scope.row.STATE=='已启动'" @click="shurDown(scope.row)">停止考核
@@ -172,6 +173,9 @@
     },
 
     methods: {
+      handelS(){
+        this.showUser=true
+      },
        handleNodeClick(data){
       this.selectDw=data.text
       this.searchForm.tbdwdm= data.id
