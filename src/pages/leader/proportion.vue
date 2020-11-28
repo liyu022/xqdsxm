@@ -126,7 +126,7 @@
     methods: {
       expandChange(row, expandedRows) {
 
-        if (row.children.length == 0) {
+   
           // 通过$set属性可设置loading实现实时加载loading效果(经过测试,通过$set直接给父层数据声明子层数据时会出现报错,所以才在获取父层表格数据时声明子层表格数据)
          let parmas={
           planid:row.ID
@@ -150,7 +150,7 @@
           }, (err) => {
             this.$set(row, 'loading', false);
           });
-        }
+        
       },
       getProportionByPlanid(row){
         let parmas={
@@ -190,6 +190,10 @@
         api.cadreplanList(param).then(res => {
           if (res.data.code === 0) {
             this.tableData = res.data.data.list
+            this.tableData.forEach(item=>{
+                item.loading=false
+                item.children=[]
+            })
             this.total = res.data.data.total
           }
         })
