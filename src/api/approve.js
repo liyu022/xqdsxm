@@ -254,3 +254,20 @@ export const cadreresultcountbyrole = _params => {
     })
   }
  
+  //权重
+
+  
+  export const getProportionByPlanid = _params => {
+    return axios.get(`cadreplan/getProportionByPlanid`, {
+        params: _params,
+        baseURL: config.baseUrlSBGL
+    })
+  }
+  
+  
+
+  export const sysroleproportion = _params => {
+    return axios.post(`sysroleproportion/inserts`, _params,{
+      baseURL: config.baseUrlSBGL
+  })
+  }

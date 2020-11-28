@@ -5,7 +5,7 @@
         <div class="header">
           <el-form :inline="true" :model="searchForm" ref="searchForm" class="searchForm">
             <el-form-item style="margin-bottom: 0px;margin-left:10px;" label="" prop="" class="">
-
+<!-- 
               <el-form-item class="" label="考核计划类型" prop="type">
                 <el-select v-model="searchForm.type" size="mini" placeholder="请选择考核计划类型">
                   <el-option label="全部" value=""></el-option>
@@ -13,7 +13,7 @@
                   <el-option label="季度考核" value="季度考核"></el-option>
                   <el-option label="月度考核" value="月度考核"></el-option>
                 </el-select>
-              </el-form-item>
+              </el-form-item> -->
               <el-button @click="showSearch()" type="primary"><i class="el-icon-search"> 查询</i></el-button>
               <el-button @click="deleteData()" type="primary"><i class="el-icon-delete"> 删除</i></el-button>
               <el-button @click="showAdd()" type="primary"><i class="el-icon-circle-plus-outline"> 添加</i></el-button>
@@ -38,8 +38,8 @@
             </template>
           </el-table-column>
           <el-table-column align="center" prop="NAME" label="考核计划名称" width="260"></el-table-column>
-          <!-- <el-table-column align="center" prop="TOTAL" label="考核总人数" width="160"></el-table-column> -->
-          <el-table-column align="center" prop="YEAR" label="考核时间" width="150"></el-table-column>
+          <el-table-column align="center" prop="TYPE" label="考核类型" width="160"></el-table-column>
+          <el-table-column align="center" prop="DATA" label="考核时间" width="150"></el-table-column>
           <el-table-column align="center" prop="STATE" label="考核计划状态"></el-table-column>
           <el-table-column align="center" prop="CREATETIME" label="创建时间"></el-table-column>
         </el-table>
@@ -91,6 +91,7 @@
 </template>
 <script>
   import * as api from '@/api/leader'
+ 
   import * as apie from '@/api/common'
   import moment from 'moment'
   export default {
@@ -132,6 +133,7 @@
     },
 
     methods: {
+       
       formatterType(val) {
         if (val === '0') {
           return '一级';

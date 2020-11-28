@@ -1,28 +1,22 @@
 <template>
   <div class="pro_page">
-    <el-table :data="tableData" ref="multipleTable" border style="width: 100%">
-      <el-table-column type="index" label="序号" width="60px" align="center">
-      </el-table-column>
-      <el-table-column prop="ROLANAME" label="角色名称">
-      </el-table-column>
-      <el-table-column   label="评价角色">
-          <template slot-scope="scope">
-              <span v-if="scope.row.TYPE=='A'">机关科级干部</span>
-              <span v-if="scope.row.TYPE=='D'">站队科级干部</span>
-          </template>
-      </el-table-column>
-      <el-table-column prop="CREATENAME" label="创建人">
-      </el-table-column>
-      <el-table-column prop="CREATETIME" label="更新时间">
-      </el-table-column>
-      <el-table-column prop="PROPORTION" label="权重">
-      </el-table-column>
-      <el-table-column label="分配权重">
-        <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handelClick(scope.row)">分配权重</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+    <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark"
+          style="width: 100%;height: 100%!important;overflow:auto;" row-class-name="row_class" border
+          :row-style="{fontFamily: '宋体', fontSize: '12px',height:'40px'}" >
+ 
+          <el-table-column align="center" class-name="column-caoz" label="操作">
+            <template slot-scope="scope">
+              <el-button type="primary" size="mini" @click="getProportionByPlanid(scope.row)">分配权重</el-button>
+              <!-- <span style="color:#00a2fd;cursor: pointer;text-align: center" @click="showBhFormDia(scope.row)">详情</span> -->
+            </template>
+          </el-table-column>
+          <el-table-column align="center" prop="NAME" label="考核计划名称" width="260"></el-table-column>
+          <el-table-column align="center" prop="TYPE" label="考核类型" width="160"></el-table-column>
+          <el-table-column align="center" prop="DATA" label="考核时间" width="150"></el-table-column>
+          <el-table-column align="center" prop="STATE" label="考核计划状态"></el-table-column>
+          <el-table-column align="center" prop="CREATETIME" label="创建时间"></el-table-column>
+        </el-table>
+  
     <div class="footer">
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
         layout="total, sizes, prev, pager, next, jumper" :total="total">
@@ -49,11 +43,41 @@
         <el-button type="primary" @click="handelSubmit">提 交</el-button>
       </span>
     </el-dialog>
+     <el-dialog title="权重设置" :visible.sync="subDetail" width="90%" :close-on-click-modal="false">
+            <div class="dialog_warp">
+                 <el-table :data="subtableData" ref="multipleTable" border style="width: 100%">
+      <el-table-column type="index" label="序号" width="60px" align="center">
+      </el-table-column>
+      <el-table-column prop="ROLANAME" label="角色名称">
+      </el-table-column>
+      <el-table-column   label="评价角色">
+          <template slot-scope="scope">
+              <span v-if="scope.row.TYPE=='A'">机关科级干部</span>
+              <span v-if="scope.row.TYPE=='D'">站队科级干部</span>
+          </template>
+      </el-table-column>
+      <el-table-column prop="CREATENAME" label="创建人">
+      </el-table-column>
+      <el-table-column prop="CREATETIME" label="更新时间">
+      </el-table-column>
+      <el-table-column prop="PROPORTION" label="权重">
+          <template slot-scope="scope">
+              <el-input :min="0" :max="1" v-model="scope.row.PROPORTION" type="number"> </el-input>
+          </template>
+      </el-table-column>
+    </el-table>
+            </div>
+            <span slot="footer" class="dialog-footer">
+        <el-button @click="subDetail = false">取 消</el-button>
+        <el-button type="primary" @click="handelSubmitPRO">提 交</el-button>
+      </span>
+        </el-dialog>
   </div>
 </template>
 
 <script>
   import * as approveApi from '@/api/approve'
+  import * as api from '@/api/leader'
   export default {
     data() {
       return {
@@ -61,9 +85,13 @@
         tableData: [{
 
         }],
+        subtableData:[],
+        subDetail:false,
         form: {
           PROPORTION: 0
         },
+        searchForm: {},
+        currentId:'',
         total: 0,
         currentPage: 1,
         pageSize: 10,
@@ -73,6 +101,24 @@
       this.getsysroleproportionList()
     },
     methods: {
+      getProportionByPlanid(row){
+        let parmas={
+          planid:row.ID
+        }
+         approveApi.getProportionByPlanid(parmas).then(res => {
+           if(res.data.code === 0){
+             this.subtableData = res.data.data
+             this.currentId=row.ID
+             this.subDetail=true
+           }else{
+             this.$message({
+               type:'error',
+               message:'获取失败'
+             })
+            this.subDetail=false
+           }
+        })
+      },
       handleSizeChange(val) {
         this.pageSize = val
         this.getsysroleproportionList()
@@ -82,17 +128,18 @@
         this.getsysroleproportionList()
       },
       getsysroleproportionList() {
-        let uid = JSON.parse(localStorage.getItem('userid')) 
-        let params = {
-          currentPage: this.currentPage,
-          pageSize: this.pageSize,
-          uid,
-        }
-        approveApi.sysroleproportionList(params).then(res => {
-          if (res.data.code == 0) {
-            let data = res.data.data
-            this.total = data.total
-            this.tableData = data.list
+        let param = {
+          'currentPage': this.currentPage,
+          'pageSize': this.pageSize,
+          'name': this.searchForm.name,
+          'type': this.searchForm.type,
+          'status': this.searchForm.status,
+          'id': this.searchForm.id
+        };
+        api.cadreplanList(param).then(res => {
+          if (res.data.code === 0) {
+            this.tableData = res.data.data.list
+            this.total = res.data.data.total
           }
         })
       },
@@ -110,13 +157,39 @@
           "type": this.form.TYPE
         }
         approveApi.sysroleproportionUpdate(params).then(res => {
-          console.log(res, 555)
-
+      
           if (res.data.code == 0) {
             this.form = {}
             this.showView = false
             this.getsysroleproportionList()
           }
+        })
+      },
+      handelSubmitPRO(){
+        let userid = JSON.parse(localStorage.getItem('userid'))
+          for (let i = 0; i < this.subtableData.length; i++) {
+             this.subtableData[i].PLANID=this.currentId
+             this.subtableData[i].CREATEBY=userid
+          }
+          // let params={
+          //   result:JSON.parse(JSON.stringify(this.subtableData)) , 
+          //   planid: this.currentId
+          // }
+
+           approveApi.sysroleproportion(this.subtableData).then(res => {
+           if(res.data.code === 0){
+              this.$message({
+               type:'success',
+               message:'分配成功'
+             })
+             this.subDetail=false
+           }else{
+             this.$message({
+               type:'error',
+               message:'获取失败'
+             })
+            this.subDetail=true
+           }
         })
       }
     }
