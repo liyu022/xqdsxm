@@ -38,7 +38,12 @@
             </template>
           </el-table-column>
           <el-table-column align="center" prop="NAME" label="考核计划名称" width="260"></el-table-column>
-          <el-table-column align="center" prop="TYPE" label="考核类型" width="160"></el-table-column>
+          <el-table-column align="center"  label="考核类型" width="160">
+             <template slot-scope="scope">
+                <span v-if="scope.row.TYPE=='后备干部推荐'" style="color:#F56C6C">{{scope.row.TYPE}}</span>
+                <span v-else style="color:#67C23A">{{scope.row.TYPE}}</span>
+             </template>
+        </el-table-column>
           <el-table-column align="center" prop="DATA" label="考核时间" width="150"></el-table-column>
           <el-table-column align="center" prop="STATE" label="考核计划状态"></el-table-column>
           <el-table-column align="center" prop="CREATETIME" label="创建时间"></el-table-column>
@@ -352,8 +357,9 @@
         })
       },
       startUp(row) {
-        row.STATE = "已启动"
-        api.cadreplanUpdate(JSON.stringify(row)).then(res => {
+        
+        let pams=  {"data":row.DATA,"state":'已启动',"username":row.USERNAME,"id":row.ID,"createtime":row.CREATETIME,"type":row.TYPE,"name":row.NAME}
+        api.cadreplanUpdate(JSON.stringify(pams)).then(res => {
           if (res.data.code === 0) {
             this.$message({
               type: 'success',
@@ -370,8 +376,8 @@
         })
       },
       shurDown(row) {
-        row.STATE = "停止"
-        api.cadreplanUpdate(JSON.stringify(row)).then(res => {
+         let pams=  {"data":row.DATA,"state":'停止',"username":row.USERNAME,"id":row.ID,"createtime":row.CREATETIME,"type":row.TYPE,"name":row.NAME}
+        api.cadreplanUpdate(JSON.stringify(pams)).then(res => {
           if (res.data.code === 0) {
             this.$message({
               type: 'success',
