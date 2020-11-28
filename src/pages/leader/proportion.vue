@@ -189,11 +189,12 @@
         };
         api.cadreplanList(param).then(res => {
           if (res.data.code === 0) {
-            this.tableData = res.data.data.list
-            this.tableData.forEach(item=>{
-                item.loading=false
-                item.children=[]
+            
+             res.data.data.list.forEach(item=>{
+                item.children = []; // 添加子表格数据
+                item.loading = false
             })
+            this.tableData = res.data.data.list
             this.total = res.data.data.total
           }
         })

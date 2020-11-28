@@ -87,6 +87,33 @@
         layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
+
+    <el-dialog   custom-class="dialog"    
+          :visible.sync="showUser" width="90%" :close-on-click-modal="modal" @close="showUser=false">
+          <div class="dialog_warp"  >
+              <div class="header">
+                 <el-form :inline="true" :model="searchForm" ref="searchForm" class="searchForm">
+                     <el-form-item style="margin-bottom: 0px" prop="" class=""  >
+            <div class="tbdw">
+              <el-tree :accordion="true" :data="tbdwList" node-key="id" :default-expanded-keys="[zkx]" :props="defaultTreeProps" @node-click="handleNodeClick"></el-tree>
+            </div>
+            <el-input   class="selectDw" style="width:200px" v-model="selectDw" size="mini" placeholder="请输选择单位" @focus="selectDwTree">
+              <i
+    class="el-icon-error"
+    slot="suffix"
+    @click="handleIconClick">
+  </i>
+            </el-input>
+          </el-form-item>
+                 </el-form>
+              </div>
+          </div>
+          <span slot="footer" class="dialog-footer" v-if="isadd">
+            <el-button @click="showUser=false">取 消</el-button>
+            <el-button type="primary"  >添 加</el-button>
+          </span>
+         
+        </el-dialog>
   </div>
 </template>
 <script>
@@ -97,7 +124,13 @@
   export default {
     data() {
       return {
+        showUser:false,
+        zkx:'',
         form: {},
+        defaultTreeProps:{
+          children: 'children',
+          label: 'text'
+        },
         defaultProps: {
           label: 'name',
           children: 'children'
@@ -125,7 +158,8 @@
         idlist: '',
         id: '',
         currentPage: 1,
-        pageSize: 10
+        pageSize: 10,
+        selectDw:''
       }
     },
     mounted() {
@@ -133,7 +167,17 @@
     },
 
     methods: {
-       
+       handleNodeClick(data){
+      this.selectDw=data.text
+      this.searchForm.tbdwdm= data.id
+       $('.tbdw').hide()
+    },
+     selectDwTree(){
+      $('.tbdw').show()
+    },
+     handleIconClick (){
+      this.selectDw=''
+    },
       formatterType(val) {
         if (val === '0') {
           return '一级';
@@ -363,6 +407,40 @@
     }
   }
 </script>
+<style lang="scss">
+.dialog_warp{
+   .tbdw{
+          display:none;
+          width: 200px;
+          max-height: 500px;
+          overflow-y: scroll;
+          border: 1px solid #D5D6D7;
+          position: absolute;
+          top:40px;
+          z-index: 999;
+        }
+      .selectDw{
+        display: inline-block;
+          width: 150px;
+          height: 30px;
+          vertical-align: top;
+      }
+        .el-tree{
+          min-width: 120px;
+          position: relative;
+
+        }
+        .el-tree__empty-text,.el-tree__empty-block{
+          position: relative;
+          width: 120px;
+          height: 26px;
+          min-height: 26px;
+          line-height: 26px;
+          top: 0px;
+        }
+}
+    
+</style>
 <style lang="scss" scoped>
   .content {
     margin: 0px;
