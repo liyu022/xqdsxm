@@ -124,18 +124,19 @@
 </template>
 <script>
   import * as api from '@/api/leader'
- 
+  import * as systemapi from '../../api/system'
   import * as apie from '@/api/common'
   import moment from 'moment'
   export default {
     data() {
       return {
         showUser:false,
+        tbdwList:[],
         zkx:'',
         form: {},
         defaultTreeProps:{
-          children: 'children',
-          label: 'text'
+          label: 'NAME',
+          children: 'childern'
         },
         defaultProps: {
           label: 'name',
@@ -170,6 +171,7 @@
     },
     mounted() {
       this.selectAllDate()
+      this.selectTreeDate()
     },
 
     methods: {
@@ -187,6 +189,13 @@
      handleIconClick (){
       this.selectDw=''
     },
+    selectTreeDate() {
+            systemapi.selectOrganizationTree().then(res => {
+                if (res.data.code === 0) {
+                    this.tbdwList = res.data.data
+                }
+            })
+        },
       formatterType(val) {
         if (val === '0') {
           return '一级';
