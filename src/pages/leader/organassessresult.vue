@@ -4,7 +4,7 @@
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-table border :data="props.row.children" v-loading="props.row.loading" style="width: 100%"
-            :default-sort="{prop: 'date', order: 'descending'}">
+             >
             <el-table-column prop="UNCHECKUSERNAME" label="被考核人">
             </el-table-column>
             <el-table-column prop="CREATENAME" label="考核人">
@@ -126,7 +126,7 @@
               this.tableData.forEach((temp, index) => {
                 // 找到当前展开的行，把获取到的数据赋值进去
                 if (temp.ID === row.ID) {
-                  console.log(taskData, 77)
+        
                   this.tableData[index].children = taskData || [];
                 }
               });

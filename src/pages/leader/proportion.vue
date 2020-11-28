@@ -2,9 +2,32 @@
   <div class="pro_page">
     <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark"
           style="width: 100%;height: 100%!important;overflow:auto;" row-class-name="row_class" border
-          :row-style="{fontFamily: '宋体', fontSize: '12px',height:'40px'}" >
- 
+          :row-style="{fontFamily: '宋体', fontSize: '12px',height:'40px'}" @expand-change="expandChange" >
+          <el-table-column type="expand">
+          <template slot-scope="props">
+          <el-table border :data="props.row.children" v-loading="props.row.loading" style="width: 100%"
+            >
+            <el-table-column type="index" label="序号" width="60px" align="center">
+      </el-table-column>
+      <el-table-column prop="ROLANAME" label="角色名称">
+      </el-table-column>
+      <el-table-column   label="评价角色">
+          <template slot-scope="scope">
+              <span v-if="scope.row.TYPE=='A'">机关科级干部</span>
+              <span v-if="scope.row.TYPE=='D'">站队科级干部</span>
+          </template>
+      </el-table-column>
+      <el-table-column prop="CREATENAME" label="创建人">
+      </el-table-column>
+      <el-table-column prop="CREATETIME" label="更新时间">
+      </el-table-column>
+      <el-table-column prop="PROPORTION" label="权重">
+      </el-table-column>
+          </el-table>
+        </template>
+      </el-table-column>
           <el-table-column align="center" class-name="column-caoz" label="操作">
+
             <template slot-scope="scope">
               <el-button type="primary" size="mini" @click="getProportionByPlanid(scope.row)">分配权重</el-button>
               <!-- <span style="color:#00a2fd;cursor: pointer;text-align: center" @click="showBhFormDia(scope.row)">详情</span> -->
@@ -101,6 +124,34 @@
       this.getsysroleproportionList()
     },
     methods: {
+      expandChange(row, expandedRows) {
+
+        if (row.children.length == 0) {
+          // 通过$set属性可设置loading实现实时加载loading效果(经过测试,通过$set直接给父层数据声明子层数据时会出现报错,所以才在获取父层表格数据时声明子层表格数据)
+         let parmas={
+          planid:row.ID
+        }
+          // this.$set(row, 'loading', true);
+          approveApi.getProportionByPlanid(parmas).then((res) => {
+            if (res.data.code === 0) {
+
+              const taskData = JSON.parse(JSON.stringify(res.data.data));
+              // 遍历父层表格数据
+              this.$set(row, 'children', taskData);
+
+              this.tableData.forEach((temp, index) => {
+                // 找到当前展开的行，把获取到的数据赋值进去
+                if (temp.ID === row.ID) {
+                  this.tableData[index].children = taskData || [];
+                }
+              });
+            }
+            this.$set(row, 'loading', false);
+          }, (err) => {
+            this.$set(row, 'loading', false);
+          });
+        }
+      },
       getProportionByPlanid(row){
         let parmas={
           planid:row.ID
