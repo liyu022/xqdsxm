@@ -126,6 +126,7 @@ export default {
                             localStorage.setItem("role", JSON.stringify(res.data.data.role));
                             localStorage.setItem('userid', JSON.stringify(res.data.data.user.id))
                             localStorage.setItem("orgid", res.data.data.organization[0].id);
+                            localStorage.setItem("plan", JSON.stringify(res.data.data.plan));
                             var da = mkTree(res.data.data.fun);
                              
                             localStorage.setItem('menu', JSON.stringify(da))

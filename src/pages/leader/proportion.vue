@@ -196,7 +196,7 @@
           'currentPage': this.currentPage,
           'pageSize': this.pageSize,
           'name': this.searchForm.name,
-          'type': this.searchForm.type,
+          'type': "机关考核",
           'status': this.searchForm.status,
           'id': this.searchForm.id
         };
@@ -240,11 +240,33 @@
           this.subtableData[i].PLANID = this.currentId
           this.subtableData[i].CREATEBY = userid
         }
-        // let params={
-        //   result:JSON.parse(JSON.stringify(this.subtableData)) , 
-        //   planid: this.currentId
-        // }
+        let AValue=0
+        let DValue=0
 
+        for (let index = 0; index < this.subtableData.length; index++) {
+           if (this.subtableData[index].TYPE=='A') {
+              AValue+=Number(this.subtableData[index].PROPORTION)
+           }
+           if (this.subtableData[index].TYPE=='D') {
+              DValue+=Number(this.subtableData[index].PROPORTION)
+           }
+          
+        }
+
+        if (AValue!=1) {
+          this.$message({
+            type:'error',
+            message:'机关干部权重设置值不为1，无法保存'
+          })
+            return
+        } 
+        if (DValue!=1) {
+          this.$message({
+            type:'error',
+            message:'战队干部权重设置值不为1，无法保存'
+          })
+          return
+        }
         approveApi.sysroleproportion(this.subtableData).then(res => {
           if (res.data.code === 0) {
             this.$message({

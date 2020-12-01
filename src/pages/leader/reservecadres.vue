@@ -1,6 +1,6 @@
 <template>
   <div class="chart-container">
-    <div class="hd">
+    <div class="hd"  v-if="isStart">
       <div class="elrow">
         <span>最多选择{{limit}}位，进行投票，可以不选。</span>
         <span>
@@ -41,6 +41,9 @@
           <el-button   type="primary" @click="handelSubmit">提 交</el-button>
         </div>
       </div>
+    </div>
+    <div class="hd"  v-else>
+      暂未启动机关考核计划
     </div>
     <el-dialog
   title="提交预览"
@@ -99,16 +102,34 @@ import * as approveApi from '@/api/approve'
         isActiveShow:true,
         multipleSelection:[],
         tableData: [],
-        infoz: JSON.parse(localStorage.getItem('role'))
+        infoz: JSON.parse(localStorage.getItem('role')),
+        isStart:false
       }
     },
     created(){
+      let plan = JSON.parse(localStorage.getItem('plan'))
       if(this.infoz[0].name == "系统管理员"){
         this.isActiveShow = false;
         alert("您是系统管理员,不能参加考核!");
       }else{
+
+      for (let i = 0; i < plan.length; i++) {
+         if (plan[i].TYPE=='后备干部推荐') {
+           this.isStart = true
+         }
+        
+      }
+      if (!this.isStart) {
+        
+        return
+
+      }else{
         this.getUserCheck();
         this.gethbcadreitemList()
+      }
+
+
+        
       }
     },
     methods:{

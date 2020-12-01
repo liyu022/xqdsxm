@@ -1,8 +1,8 @@
 <template>
-  <div class="chart-container_org">
+  <div class="chart-container_org" >
     <!-- 科技机关考核 -->
 
-    <div class="main">
+    <div class="main" v-if="isStart">
       <div class="tabs">
         <span v-if="flag.indexOf('A')>-1" class="tabs__item" :class="activeName=='A'?'active':''"
           @click="handleClick('A')">机关考核</span>
@@ -36,7 +36,9 @@
       </div>
 
     </div>
-
+    <div class="main"  v-else>
+      暂未启动机关考核计划
+    </div>
 
 
 
@@ -63,15 +65,29 @@
         planId: '',
         name: '',
         infoz: '',
+        isStart:false
       }
     },
     created() {
       this.proportion = JSON.parse(localStorage.getItem('proportion'))
+      let plan = JSON.parse(localStorage.getItem('plan'))
       this.flag = []
       let obj = {}
       let info = JSON.parse(localStorage.getItem('userDetail'))
       this.infoz = JSON.parse(localStorage.getItem('role'))
-      if(this.proportion.length>1){
+     
+      for (let i = 0; i < plan.length; i++) {
+         if (plan[i].TYPE=='机关考核') {
+           this.isStart = true
+         }
+        
+      }
+      if (!this.isStart) {
+        
+        return
+
+      }else{
+        if(this.proportion.length>1){
         this.name = "  考核人角色："+this.infoz[0].name + ",   考核人姓名：" + info.name +"， 机关干部打分权重：" + this.proportion[0].proportion + ",  站队科级干部打分权重："+ this.proportion[1].proportion
       }else{
      
@@ -93,6 +109,9 @@
       }else{
         this.cadreplanGetMaxList()
       }
+      }
+      
+      
     },
     methods: {
       handleClick(e) {

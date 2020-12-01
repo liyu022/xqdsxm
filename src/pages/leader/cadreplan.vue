@@ -27,11 +27,11 @@
           :row-style="{fontFamily: '宋体', fontSize: '12px',height:'40px'}" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="55">
           </el-table-column>
-          <el-table-column align="center" class-name="column-caoz" label="操作">
+          <el-table-column align="left" class-name="column-caoz" label="操作">
             <template slot-scope="scope">
               <el-button type="danger" size="mini" @click="updateFormDia(scope.row, scope.$index)">编辑</el-button>
               <el-button type="primary" size="mini" @click="showdetail(scope.row, scope.$index)">详情</el-button>
-              <el-button type="info" size="mini" @click="handelS(scope.row)">选择人员</el-button>
+              <el-button type="info" v-if="scope.row.TYPE!='后备干部推荐'" size="mini" @click="handelS(scope.row)">选择人员</el-button>
               <el-button type="success" size="mini" v-if="scope.row.STATE!='已启动'" @click="startUp(scope.row)">启动考核
               </el-button>
               <el-button type="danger" size="mini" v-if="scope.row.STATE=='已启动'" @click="shurDown(scope.row)">停止考核
@@ -546,7 +546,33 @@
         })
       },
       startUp(row) {
-        approveApi.selectStateByPlanid({
+        if (row.TYPE=='后备干部推荐') {
+            let pams = {
+                "data": row.DATA,
+                "state": '已启动',
+                "username": row.USERNAME,
+                "id": row.ID,
+                "createtime": row.CREATETIME,
+                "type": row.TYPE,
+                "name": row.NAME
+              }
+              api.cadreplanUpdate(JSON.stringify(pams)).then(res => {
+                if (res.data.code === 0) {
+                  this.$message({
+                    type: 'success',
+                    message: '启动成功!'
+                  })
+                  this.selectAllDate()
+                } else {
+                  this.$message({
+                    type: 'error',
+                    message: '启动失败!'
+                  })
+                }
+                this.resetForm()
+              })
+        }else{
+            approveApi.selectStateByPlanid({
           planid: row.ID
         }).then(res => {
           if (res.data.code === 0) {
@@ -597,6 +623,8 @@
 
           }
         })
+        }
+        
 
       },
       shurDown(row) {
