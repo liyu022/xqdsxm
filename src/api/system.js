@@ -75,6 +75,18 @@ export const deleteOrganzation = _params => {
     })
 }
 //============================组织机构管理接口end=======================
+export const selectPageUserByOrgid = _params => {
+    return axios.get(`user/selectPageUserByOrgid`, {
+        params: _params,
+        baseURL: config.baseUrlSBGL
+    })
+}
+export const cadreitemInserts = _params => {
+    return axios.post(`cadreitem/inserts`, _params,{
+      baseURL: config.baseUrlSBGL
+  })
+  }
+
 /**
  *  系统管理用户管理查询
  * @param _params

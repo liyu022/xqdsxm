@@ -271,3 +271,13 @@ export const cadreresultcountbyrole = _params => {
       baseURL: config.baseUrlSBGL
   })
   }
+
+
+ 
+  
+  export const selectStateByPlanid = _params => {
+    return axios.get(`cadreplan/selectStateByPlanid`, {
+        params: _params,
+        baseURL: config.baseUrlSBGL
+    })
+  }

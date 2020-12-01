@@ -5,7 +5,7 @@
         <div class="header">
           <el-form :inline="true" :model="searchForm" ref="searchForm" class="searchForm">
             <el-form-item style="margin-bottom: 0px;margin-left:10px;" label="" prop="" class="">
-<!-- 
+              <!-- 
               <el-form-item class="" label="考核计划类型" prop="type">
                 <el-select v-model="searchForm.type" size="mini" placeholder="请选择考核计划类型">
                   <el-option label="全部" value=""></el-option>
@@ -29,8 +29,9 @@
           </el-table-column>
           <el-table-column align="center" class-name="column-caoz" label="操作">
             <template slot-scope="scope">
-              <el-button type="primary" size="mini" @click="updateFormDia(scope.row, scope.$index)">编辑</el-button>
-              <el-button type="primary" size="mini" @click="handelS(scope.row)">选择人员</el-button>
+              <el-button type="danger" size="mini" @click="updateFormDia(scope.row, scope.$index)">编辑</el-button>
+              <el-button type="primary" size="mini" @click="showdetail(scope.row, scope.$index)">详情</el-button>
+              <el-button type="info" size="mini" @click="handelS(scope.row)">选择人员</el-button>
               <el-button type="success" size="mini" v-if="scope.row.STATE!='已启动'" @click="startUp(scope.row)">启动考核
               </el-button>
               <el-button type="danger" size="mini" v-if="scope.row.STATE=='已启动'" @click="shurDown(scope.row)">停止考核
@@ -39,12 +40,12 @@
             </template>
           </el-table-column>
           <el-table-column align="center" prop="NAME" label="考核计划名称" width="260"></el-table-column>
-          <el-table-column align="center"  label="考核类型" width="160">
-             <template slot-scope="scope">
-                <span v-if="scope.row.TYPE=='后备干部推荐'" style="color:#F56C6C">{{scope.row.TYPE}}</span>
-                <span v-else style="color:#67C23A">{{scope.row.TYPE}}</span>
-             </template>
-        </el-table-column>
+          <el-table-column align="center" label="考核类型" width="160">
+            <template slot-scope="scope">
+              <span v-if="scope.row.TYPE=='后备干部推荐'" style="color:#F56C6C">{{scope.row.TYPE}}</span>
+              <span v-else style="color:#67C23A">{{scope.row.TYPE}}</span>
+            </template>
+          </el-table-column>
           <el-table-column align="center" prop="DATA" label="考核时间" width="150"></el-table-column>
           <el-table-column align="center" prop="STATE" label="考核计划状态"></el-table-column>
           <el-table-column align="center" prop="CREATETIME" label="创建时间"></el-table-column>
@@ -94,47 +95,116 @@
       </el-pagination>
     </div>
 
-    <el-dialog   custom-class="dialog"    
-          :visible.sync="showUser" width="90%" :close-on-click-modal="modal" @close="showUser=false">
-          <div class="dialog_warp"  >
-              <div class="header">
-                 <el-form :inline="true" :model="searchForm" ref="searchForm" class="searchForm">
-                     <el-form-item style="margin-bottom: 0px" prop="" class=""  >
-            <div class="tbdw">
-              <el-tree :accordion="true" :data="tbdwList" node-key="id" :default-expanded-keys="[zkx]" :props="defaultTreeProps" @node-click="handleNodeClick"></el-tree>
-            </div>
-            <el-input   class="selectDw" style="width:200px" v-model="selectDw" size="mini" placeholder="请输选择单位" @focus="selectDwTree">
-              <i
-    class="el-icon-error"
-    slot="suffix"
-    @click="handleIconClick">
-  </i>
-            </el-input>
-          </el-form-item>
-                 </el-form>
+    <el-dialog custom-class="dialog" title="选择被考核人" :visible.sync="showUser" width="70%" :close-on-click-modal="modal"
+      @close="showUser=false">
+      <div class="dialog_warps">
+        <div class="header">
+          <el-form :inline="true" :model="searchForm" ref="searchForm" class="searchForm">
+            <el-form-item style="margin-bottom: 0px" prop="" label="组织单位">
+              <div class="tbdw">
+                <el-tree :accordion="true" :data="tbdwList" node-key="id" :default-expanded-keys="[zkx]"
+                  :props="defaultTreeProps" @node-click="handleNodeClick"></el-tree>
               </div>
-          </div>
-          <span slot="footer" class="dialog-footer" v-if="isadd">
-            <el-button @click="showUser=false">取 消</el-button>
-            <el-button type="primary"  >添 加</el-button>
-          </span>
-         
-        </el-dialog>
+              <el-input class="selectDw" v-model="selectDw" size="mini" placeholder="请输选择单位" @focus="selectDwTree">
+                <i class="el-icon-error" slot="suffix" @click="handleIconClick">
+                </i>
+              </el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" size="mini" @click="selectUserDate">查 询</el-button>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="success" size="mini" @click="submitUser">提 交</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+        <div class="tableC">
+          <el-table ref="multipleTableUser" v-loading="loadings" element-loading-text="正在加载，请稍后..."
+            element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)" :data="userData"
+            tooltip-effect="dark" row-class-name="row_class" border style="width: 100%;overflow:auto;"
+            :row-style="{fontFamily: '宋体', fontSize: '12px',height:'40px'}"
+            @selection-change="handleSelectionChangeUser">
+            <el-table-column type="selection" width="55">
+            </el-table-column>
+            <el-table-column align="center" prop="name" label="姓名" width="100"></el-table-column>
+            <el-table-column align="center" prop="rolename" label="授权角色" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column align="center" prop="username" label="用户名"></el-table-column>
+            <el-table-column align="center" prop="email" label="员工编号"></el-table-column>
+            <el-table-column align="center" prop="hint" label="身份证号"></el-table-column>
+          </el-table>
+        </div>
+      </div>
+      <span slot="footer" class="dialog-footer" v-if="isadd">
+        <el-button @click="showUser=false">取 消</el-button>
+        <el-button type="primary">添 加</el-button>
+      </span>
+
+    </el-dialog>
+
+    <el-dialog custom-class="dialog" title="详情" :visible.sync="showDetailPage" width="70%" :close-on-click-modal="modal"
+      @close="showDetailPage=false">
+      <div class="dialog_warps">
+        <h1>权限分配情况</h1>
+        <div class="tableC">
+          <el-table ref="multipleTableProportation" :data="propList" tooltip-effect="dark" row-class-name="row_class" border
+            style="width: 100%;overflow:auto;" :row-style="{fontFamily: '宋体', fontSize: '12px',height:'40px'}">
+          <el-table-column type="index" label="序号" width="60px" align="center">
+          </el-table-column>
+          <el-table-column prop="ROLANAME" label="角色名称">
+          </el-table-column>
+          <el-table-column label="评价角色">
+            <template slot-scope="scope">
+              <span v-if="scope.row.TYPE=='A'">机关科级干部</span>
+              <span v-if="scope.row.TYPE=='D'">站队科级干部</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="CREATENAME" label="创建人">
+          </el-table-column>
+          <el-table-column prop="CREATETIME" label="更新时间">
+          </el-table-column>
+          <el-table-column prop="PROPORTION" label="权重"></el-table-column>
+          </el-table>
+        </div>
+        <h1>被考核人</h1>
+        <div class="tableC">
+          <el-table ref="multipleTableUser" :data="alluserList" tooltip-effect="dark" row-class-name="row_class" border
+            style="width: 100%;overflow:auto;" :row-style="{fontFamily: '宋体', fontSize: '12px',height:'40px'}">
+
+            <el-table-column align="center" prop="name" label="姓名" width="100"></el-table-column>
+            <el-table-column align="center" prop="rolename" label="授权角色" show-overflow-tooltip>
+            </el-table-column>
+            <el-table-column align="center" prop="username" label="用户名"></el-table-column>
+            <el-table-column align="center" prop="email" label="员工编号"></el-table-column>
+            <el-table-column align="center" prop="hint" label="身份证号"></el-table-column>
+          </el-table>
+        </div>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="showDetailPage=false">取 消</el-button>
+
+      </span>
+
+    </el-dialog>
   </div>
 </template>
 <script>
   import * as api from '@/api/leader'
   import * as systemapi from '../../api/system'
   import * as apie from '@/api/common'
+  import * as approveApi from '@/api/approve'
   import moment from 'moment'
   export default {
     data() {
       return {
-        showUser:false,
-        tbdwList:[],
-        zkx:'',
+        loadings: false,
+        refresh: true,
+        showUser: false,
+        userData: [],
+        tbdwList: [],
+        zkx: '',
         form: {},
-        defaultTreeProps:{
+        defaultTreeProps: {
           label: 'NAME',
           children: 'childern'
         },
@@ -166,7 +236,15 @@
         id: '',
         currentPage: 1,
         pageSize: 10,
-        selectDw:''
+        selectDw: '',
+        selectDwID: '',
+        userList: [],
+        areadyList: [],
+        planid: '',
+        showDetailPage: false,
+        xpinfo: {},
+        alluserList: [],
+        propList: [],
       }
     },
     mounted() {
@@ -175,27 +253,110 @@
     },
 
     methods: {
-      handelS(){
-        this.showUser=true
+      handelS(row) {
+        if (!row.ID) {
+          return
+        }
+        this.planid = row.ID
+        systemapi.selectOrganizationTree().then(res => {
+          if (res.data.code === 0) {
+            this.tbdwList = res.data.data
+            this.selectDwID = this.tbdwList[0].ID
+            this.selectDw = this.tbdwList[0].NAME
+            this.selectUserDate()
+            this.showUser = true
+          }
+        })
       },
-       handleNodeClick(data){
-      this.selectDw=data.text
-      this.searchForm.tbdwdm= data.id
-       $('.tbdw').hide()
-    },
-     selectDwTree(){
-      $('.tbdw').show()
-    },
-     handleIconClick (){
-      this.selectDw=''
-    },
-    selectTreeDate() {
-            systemapi.selectOrganizationTree().then(res => {
-                if (res.data.code === 0) {
-                    this.tbdwList = res.data.data
-                }
+      submitUser() {
+        console.log(this.userList)
+        let userid = JSON.parse(localStorage.getItem('userid'))
+        let params = JSON.parse(JSON.stringify(this.userList))
+        params.forEach(item => {
+          item.planid = this.planid
+          item.createby = userid
+        })
+        systemapi.cadreitemInserts(params).then(res => {
+
+          if (res.data.code == 0) {
+            this.showUser = false
+            this.selectAllDate()
+            this.$message({
+              type: 'success',
+              message: '添加成功'
             })
-        },
+          } else {
+            this.$message({
+              type: 'error',
+              message: '添加失败'
+            })
+          }
+        })
+      },
+      handleNodeClick(data) {
+        this.selectDw = data.NAME
+        this.selectDwID = data.ID
+        $('.tbdw').hide()
+      },
+      selectDwTree() {
+
+        $('.tbdw').show()
+      },
+      handleIconClick() {
+        this.selectDw = ''
+      },
+      handleSelectionChangeUser(val) {
+        this.userList = val
+      },
+      selectUserDate() {
+        let param = {
+          'orgid': this.selectDwID,
+          'planid': this.planid
+        };
+        systemapi.selectPageUserByOrgid(param).then(res => {
+
+          if (res.data.data != null) {
+            this.userData = res.data.data.all
+            this.areadyList = JSON.parse(JSON.stringify(res.data.data.check))
+            let temp = []
+            for (let index = 0; index < this.areadyList.length; index++) {
+              temp.push(this.areadyList[index].id)
+            }
+            if (temp.length > 0) {
+              this.checkS(temp)
+              this.loadings = true
+            }
+
+          }
+        })
+      },
+      checkS(arr) {
+        let that = this
+
+        that.$nextTick(function () {
+          that.userData.forEach(row => {
+
+            if (arr.includes(row.id)) {
+              that.$refs.multipleTableUser.toggleRowSelection(row, true);
+
+            }
+          });
+          that.loadings = false
+        });
+
+
+
+      },
+      selectTreeDate() {
+        systemapi.selectOrganizationTree().then(res => {
+          if (res.data.code === 0) {
+            this.tbdwList = res.data.data
+            this.selectDwID = this.tbdwList[0].ID
+            this.selectDw = this.tbdwList[0].NAME
+            this.selectUserDate()
+          }
+        })
+      },
       formatterType(val) {
         if (val === '0') {
           return '一级';
@@ -263,6 +424,21 @@
         this.showxq = false
         this.form = JSON.parse(JSON.stringify(row))
       },
+      showdetail(row) {
+        // this.showDetailPage = true
+
+        this.xpinfo = JSON.parse(JSON.stringify(row))
+        approveApi.selectStateByPlanid({
+          planid: row.ID
+        }).then(res => {
+          if (res.data.code === 0) {
+            this.showDetailPage = true
+            this.alluserList = res.data.data.uncheckuserid
+            this.propList = res.data.data.proportation
+          }
+        })
+
+      },
       showBhFormDia(row) {
         this.title = '详情'
         this.showDetail = true
@@ -277,7 +453,7 @@
 
       showAdd() {
         this.title = '添加'
-        this.$set(this.form,"TYPE","机关考核")
+        this.$set(this.form, "TYPE", "机关考核")
         this.showDetail = true
         this.showxq = false
         this.isadd = true
@@ -370,26 +546,69 @@
         })
       },
       startUp(row) {
-        
-        let pams=  {"data":row.DATA,"state":'已启动',"username":row.USERNAME,"id":row.ID,"createtime":row.CREATETIME,"type":row.TYPE,"name":row.NAME}
-        api.cadreplanUpdate(JSON.stringify(pams)).then(res => {
+        approveApi.selectStateByPlanid({
+          planid: row.ID
+        }).then(res => {
           if (res.data.code === 0) {
-            this.$message({
-              type: 'success',
-              message: '启动成功!'
-            })
-            this.selectAllDate()
-          } else {
-            this.$message({
-              type: 'error',
-              message: '启动失败!'
-            })
+            this.alluserList = res.data.data.uncheckuserid
+            this.propList = res.data.data.proportation
+            if (this.alluserList.length == 0) {
+              this.$message({
+                type: 'error',
+                message: '未选择被考核人员!'
+              })
+              return
+            } else if (this.propList.length == 0) {
+              this.$message({
+                type: 'error',
+                message: '未分配权重!'
+              })
+              return
+            } else {
+
+              let pams = {
+                "data": row.DATA,
+                "state": '已启动',
+                "username": row.USERNAME,
+                "id": row.ID,
+                "createtime": row.CREATETIME,
+                "type": row.TYPE,
+                "name": row.NAME
+              }
+              api.cadreplanUpdate(JSON.stringify(pams)).then(res => {
+                if (res.data.code === 0) {
+                  this.$message({
+                    type: 'success',
+                    message: '启动成功!'
+                  })
+                  this.selectAllDate()
+                } else {
+                  this.$message({
+                    type: 'error',
+                    message: '启动失败!'
+                  })
+                }
+                this.resetForm()
+              })
+
+
+
+            }
+
           }
-          this.resetForm()
         })
+
       },
       shurDown(row) {
-         let pams=  {"data":row.DATA,"state":'停止',"username":row.USERNAME,"id":row.ID,"createtime":row.CREATETIME,"type":row.TYPE,"name":row.NAME}
+        let pams = {
+          "data": row.DATA,
+          "state": '停止',
+          "username": row.USERNAME,
+          "id": row.ID,
+          "createtime": row.CREATETIME,
+          "type": row.TYPE,
+          "name": row.NAME
+        }
         api.cadreplanUpdate(JSON.stringify(pams)).then(res => {
           if (res.data.code === 0) {
             this.$message({
@@ -427,38 +646,43 @@
   }
 </script>
 <style lang="scss">
-.dialog_warp{
-   .tbdw{
-          display:none;
-          width: 200px;
-          max-height: 500px;
-          overflow-y: scroll;
-          border: 1px solid #D5D6D7;
-          position: absolute;
-          top:40px;
-          z-index: 999;
-        }
-      .selectDw{
-        display: inline-block;
-          width: 150px;
-          height: 30px;
-          vertical-align: top;
-      }
-        .el-tree{
-          min-width: 120px;
-          position: relative;
+  .dialog_warps {
+    min-height: 600px;
 
-        }
-        .el-tree__empty-text,.el-tree__empty-block{
-          position: relative;
-          width: 120px;
-          height: 26px;
-          min-height: 26px;
-          line-height: 26px;
-          top: 0px;
-        }
-}
-    
+    .tbdw {
+      display: none;
+      width: 200px;
+      max-height: 500px;
+      overflow-y: scroll;
+      border: 1px solid #D5D6D7;
+      position: absolute;
+      top: 40px;
+      z-index: 999;
+    }
+
+    .selectDw {
+      display: inline-block;
+      width: 200px;
+      height: 30px;
+      vertical-align: top;
+    }
+
+    .el-tree {
+      min-width: 120px;
+      position: relative;
+
+    }
+
+    .el-tree__empty-text,
+    .el-tree__empty-block {
+      position: relative;
+      width: 120px;
+      height: 26px;
+      min-height: 26px;
+      line-height: 26px;
+      top: 0px;
+    }
+  }
 </style>
 <style lang="scss" scoped>
   .content {
