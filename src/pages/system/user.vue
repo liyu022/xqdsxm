@@ -18,16 +18,16 @@
                 <el-input v-model="searchForm.phone" size="mini" placeholder="请输入联系电话"></el-input>
               </el-form-item>
               <!-- <li><i class="el-icon-download"> 导出</i></li>-->
-              <el-button @click="deleteData()" type="danger"><i class="el-icon-delete"> 删除</i></el-button>
-              <el-button @click="showAdd()" type="primary"><i class="el-icon-edit-outline"> 添加</i></el-button>
+              <el-button v-if="nobtn" @click="deleteData()" type="danger"><i class="el-icon-delete"> 删除</i></el-button>
+              <el-button v-if="nobtn" @click="showAdd()" type="primary"><i class="el-icon-edit-outline"> 添加</i></el-button>
               <el-button @click="showSearch()" type="success"><i class="el-icon-search"> 查询</i></el-button>
-              <el-button type="primary">
+              <el-button v-if="nobtn" type="primary">
                 <el-link target="_blank" href="http://47.108.145.125/xqdsxm/static/file/用户表导入模板.xls" :underline="false"
                   style="color:#ffffff;">下载模板
                 </el-link>
               </el-button>
               <!-- <el-button @click="showAppAdd()" type="primary"><i class="el-icon-setting"> 下载模板</i></el-button> -->
-              <el-button @click="importData()" type="primary"><i class="el-icon-upload2"> 导入人员</i></el-button>
+              <el-button v-if="nobtn" @click="importData()" type="primary"><i class="el-icon-upload2"> 导入人员</i></el-button>
               <el-button v-if="nobtn" @click="distribution()" type="primary"><i class="el-icon-setting"> 分配角色</i>
               </el-button>
               <div class="clear"></div>
@@ -208,7 +208,7 @@
         showWarrant: false,
         warrantValue: '',
         id: '',
-        nobtn: false
+        nobtn: false,
       }
     },
     mounted() {

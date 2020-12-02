@@ -281,3 +281,10 @@ export const cadreresultcountbyrole = _params => {
         baseURL: config.baseUrlSBGL
     })
   }
+  
+  export const selectPlanAndProportion = _params => {
+    return axios.get(`cadreplan/selectPlanAndProportion`, {
+        params: _params,
+        baseURL: config.baseUrlSBGL
+    })
+  }

@@ -1,6 +1,6 @@
 <template>
   <div class="chart-container">
-    <div class="hd">
+    <div class="hd" v-if="isStart">
       <div class="table-res">
         <el-table :data="tableData" ref="multipleTable" border style="width: 100%"  @selection-change="handleSelectionChange">
           <el-table-column type="index" label="排名" width="60">
@@ -31,6 +31,9 @@
         </el-table>
       </div>
     </div>
+    <div class="hd" v-else>
+      暂未启动后备干部推荐计划
+    </div>
   </div>
 </template>
 
@@ -43,11 +46,39 @@
         showView:false,
         limit:3,
         multipleSelection:[],
-        tableData: []
+        tableData: [],
+        isStart:false,
+        planId:''
       }
     },
     created(){
-      this.gethbcadreitemList()
+      let params = {
+        uid: JSON.parse(localStorage.getItem('userid'))
+      }
+      approveApi.selectPlanAndProportion(params).then(res => {
+        if (res.data.code == 0) {
+          let plan = res.data.data.plan
+            for (let i = 0; i < plan.length; i++) {
+              if (plan[i].TYPE == '后备干部推荐') {
+                this.planId=plan[i].ID
+                this.isStart = true
+              }
+            }
+            if (!this.isStart) {
+              return
+            } else {
+               this.gethbcadreitemList()
+            }
+          
+
+        } else {
+          this.$message({
+            type: 'error',
+            message: res.data.message
+          })
+        }
+      })
+     
     },
     methods:{
       handleSelectionChange(rows){
@@ -62,7 +93,10 @@
         console.log(this.multipleSelection,555)
       },
       gethbcadreitemList() {
-        approveApi.selectHbcadreResultList().then(res => {
+        let params={
+          planid:this.planId
+        }
+        approveApi.selectHbcadreResultList(params).then(res => {
           if (res.data.code == 0) {
             this.tableData = res.data.data
           }

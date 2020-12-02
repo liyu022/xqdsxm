@@ -1,5 +1,5 @@
 <template>
-  <div class="chart-container_org" >
+  <div class="chart-container_org">
     <!-- 科技机关考核 -->
 
     <div class="main" v-if="isStart">
@@ -8,7 +8,8 @@
           @click="handleClick('A')">机关考核</span>
         <span v-if="flag.indexOf('D')>-1" class="tabs__item" :class="activeName=='D'?'active':''"
           @click="handleClick('D')">站队考核</span>
-          &nbsp;&nbsp;&nbsp;&nbsp;<span class="el-icon-star-on"></span><span class="el-icon-star-on"></span><span class="el-icon-star-on"></span><span style="color:red;font-weight:600;">{{name}}</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="el-icon-star-on"></span><span class="el-icon-star-on"></span><span
+          class="el-icon-star-on"></span><span style="color:red;font-weight:600;">{{name}}</span>
       </div>
       <div class="hd">
 
@@ -30,13 +31,13 @@
           </li>
         </ul>
         <div class="btn-group">
-          <el-button v-if="!nosubmit" type="primary" :disabled="ableds"  @click='handelSubmit'>提交</el-button>
+          <el-button v-if="!nosubmit" type="primary" :disabled="ableds" @click='handelSubmit'>提交</el-button>
         </div>
 
       </div>
 
     </div>
-    <div class="main"  v-else>
+    <div class="main" v-else>
       暂未启动机关考核计划
     </div>
 
@@ -53,9 +54,9 @@
     name: 'MixChart',
     data() {
       return {
-        ableds:false,
-        nosubmit:false,
-        loading:false,
+        ableds: false,
+        nosubmit: false,
+        loading: false,
         activeName: '',
         texts: ['1分', '2分', '3分', '4分', '5分', '6分', '7分', '8分', '9分', '10分'],
         tableData: [],
@@ -65,62 +66,102 @@
         planId: '',
         name: '',
         infoz: '',
-        isStart:false
+        isStart: false,
+        planId:''
       }
     },
     created() {
-      this.proportion = JSON.parse(localStorage.getItem('proportion'))
-      let plan = JSON.parse(localStorage.getItem('plan'))
       this.flag = []
       let obj = {}
       let info = JSON.parse(localStorage.getItem('userDetail'))
       this.infoz = JSON.parse(localStorage.getItem('role'))
-     
-      for (let i = 0; i < plan.length; i++) {
-         if (plan[i].TYPE=='机关考核') {
-           this.isStart = true
-         }
-        
-      }
-      if (!this.isStart) {
-        
-        return
 
-      }else{
-        if(this.proportion.length>1){
-        this.name = "  考核人角色："+this.infoz[0].name + ",   考核人姓名：" + info.name +"， 机关干部打分权重：" + this.proportion[0].proportion + ",  站队科级干部打分权重："+ this.proportion[1].proportion
-      }else{
-     
-        if (this.infoz[0].name == "站队一般员工") {
-          this.name = "  考核人角色："+this.infoz[0].name + ",   考核人姓名：" + info.name +"， 站队科级干部打分权重：" + this.proportion[0].proportion
-        }else{
-          this.name = "  考核人角色："+this.infoz[0].name + ",   考核人姓名：" + info.name +"， 机关干部打分权重：" + this.proportion[0].proportion
+      let params = {
+        uid: JSON.parse(localStorage.getItem('userid'))
+      }
+      approveApi.selectPlanAndProportion(params).then(res => {
+        if (res.data.code == 0) {
+          this.proportion = res.data.data.proportion
+          let plan = res.data.data.plan
+          for (let i = 0; i < plan.length; i++) {
+            if (plan[i].TYPE == '机关考核') {
+              this.planId=plan[i].ID
+              this.isStart = true
+            }
+
+          }
+          if (!this.isStart) {
+
+            return
+
+          } else {
+            if (this.proportion.length > 1) {
+              this.name = "  考核人角色：" + this.infoz[0].name + ",   考核人姓名：" + info.name + "， 机关干部打分权重：" + this
+                .proportion[0].proportion + ",  站队科级干部打分权重：" + this.proportion[1].proportion
+            } else {
+
+              if (this.infoz[0].name == "站队一般员工") {
+                this.name = "  考核人角色：" + this.infoz[0].name + ",   考核人姓名：" + info.name + "， 站队科级干部打分权重：" + this
+                  .proportion[0].proportion
+              } else {
+                this.name = "  考核人角色：" + this.infoz[0].name + ",   考核人姓名：" + info.name + "， 机关干部打分权重：" + this
+                  .proportion[0].proportion
+              }
+            }
+            for (let i = 0; i < this.proportion.length; i++) {
+              obj[this.proportion[i].type] = this.proportion[i].proportion
+              this.flag.push(this.proportion[i].type)
+            }
+            this.activeName = this.flag[0]
+            this.flagValue = obj
+            if (this.infoz[0].name == "系统管理员") {
+              this.nosubmit = true;
+              alert("您是系统管理员,不能参加考核!");
+            } else {
+              this.cadreplanGetMaxList()
+            }
+          }
+
+
+        } else {
+          this.$message({
+            type: 'error',
+            message: res.data.message
+          })
         }
-      }
-      for (let i = 0; i < this.proportion.length; i++) {
-        obj[this.proportion[i].type] = this.proportion[i].proportion
-        this.flag.push(this.proportion[i].type)
-      }
-      this.activeName = this.flag[0]
-      this.flagValue = obj
-      if(this.infoz[0].name == "系统管理员"){
-        this.nosubmit = true;
-        alert("您是系统管理员,不能参加考核!");
-      }else{
-        this.cadreplanGetMaxList()
-      }
-      }
-      
-      
+      })
+
+
+      // let params={
+      //   uid:JSON.parse(localStorage.getItem('userid'))
+      // }
+      // approveApi.selectPlanAndProportion(params).then(res=>{
+      //     if (res.data.code == 0) {
+      //         this.proportion=res.data.data.proportion
+      //         let plan= res.data.data.plan
+
+
+
+      //     }else{
+      //       this.$message({
+      //         type:'error',
+      //         message:res.data.message
+      //       })
+      //     }
+      // })
+
+
+
+
     },
     methods: {
       handleClick(e) {
         this.activeName = e
-        this.ableds=false
-        if(this.infoz[0].name == "系统管理员"){
+        this.ableds = false
+        if (this.infoz[0].name == "系统管理员") {
           this.nosubmit = true;
           alert("您是系统管理员,不能参加考核!");
-        }else{
+        } else {
           this.cadreplanGetMaxList()
         }
       },
@@ -129,18 +170,18 @@
         let params = {
           type: this.activeName,
           uid,
+          planid:this.planId
         }
         approveApi.cadreplanGetMaxList(params).then(res => {
           if (res.data.code == 0) {
             if (res.data.data.map.length === 0) {
               //未考核
               this.nosubmit = false;
-              this.planId = res.data.data.plan.id
               this.getcadreitemList()
             } else {
               let org = res.data.data.map
               let Obj = org.reduce((pre, cur, index) => {
-                 cur.VALUE = Number(cur.VALUE)
+                cur.VALUE = Number(cur.VALUE)
                 if (!pre[cur.UNCHECKUSERID]) {
                   pre[cur["UNCHECKUSERID"]] = [cur]
                 } else {
@@ -156,7 +197,7 @@
                   }
                 }
               })
-              this.nosubmit=true
+              this.nosubmit = true
               this.tableData = JSON.parse(JSON.stringify(aff))
             }
           }
@@ -177,12 +218,13 @@
           currentPage: 1,
           pageSize: 1000,
           uid,
-          orgid
+          orgid,
+          planid:this.planId
         }
-        this.loading=true
+        this.loading = true
         approveApi.cadreitemList(params).then(res => {
           if (res.data.code == 0) {
-            this.loading=false
+            this.loading = false
             let org = res.data.data.list
             let Obj = org.reduce((pre, cur, index) => {
               cur.VALUE = 0
@@ -210,12 +252,12 @@
       },
       handelSubmit() {
 
-        this.ableds=true
+        this.ableds = true
         let uid = JSON.parse(localStorage.getItem('userid'))
         let sdata = JSON.parse(JSON.stringify(this.tableData))
         let aff = []
         for (let i = 0; i < sdata.length; i++) {
-          sdata[i].CADRERESULTID = '2020103119293339441'
+          sdata[i].CADRERESULTID = this.planId
           sdata[i].CHECKRESULT = 0
           sdata[i].TYPE = this.activeName
           sdata[i].PROPORTION = this.flagValue[this.activeName]
@@ -226,7 +268,7 @@
             sdata[i].temp[j].CHECKUSERID = uid
             delete sdata[i].temp[j].CREATEBY
 
-            sdata[i].temp[j].CADRERESULTID = '2020103119293339441'
+            sdata[i].temp[j].CADRERESULTID = this.planId
             // if (sdata[i].temp[j].VALUE==0) {
             //   this.$message({
             //       type:'error',
@@ -245,16 +287,16 @@
           sdata[i].temp = JSON.stringify(sdata[i].temp)
         }
         approveApi.cadreresultdetailCadreResult(sdata).then(res => {
-           if(res.data.code === 0){
-             alert("考核成功");
-             this.nosubmit = true;
-           }else{
-             this.$message({
-               type:'error',
-               message:'考核失败'
-             })
-             this.ableds=false
-           }
+          if (res.data.code === 0) {
+            alert("考核成功");
+            this.nosubmit = true;
+          } else {
+            this.$message({
+              type: 'error',
+              message: '考核失败'
+            })
+            this.ableds = false
+          }
         })
       },
       mergeRowMethod({

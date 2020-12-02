@@ -5,15 +5,14 @@
         <div class="header">
           <el-form :inline="true" :model="searchForm" ref="searchForm" class="searchForm">
             <el-form-item style="margin-bottom: 0px;margin-left:10px;" label="" prop="" class="">
-              <!-- 
+              
               <el-form-item class="" label="考核计划类型" prop="type">
                 <el-select v-model="searchForm.type" size="mini" placeholder="请选择考核计划类型">
                   <el-option label="全部" value=""></el-option>
-                  <el-option label="年度考核" value="年度考核"></el-option>
-                  <el-option label="季度考核" value="季度考核"></el-option>
-                  <el-option label="月度考核" value="月度考核"></el-option>
+                  <el-option label="机关考核" value="机关考核"></el-option>
+                  <el-option label="后备干部推荐" value="后备干部推荐"></el-option>
                 </el-select>
-              </el-form-item> -->
+              </el-form-item>
               <el-button @click="showSearch()" type="primary"><i class="el-icon-search"> 查询</i></el-button>
               <el-button @click="deleteData()" type="primary"><i class="el-icon-delete"> 删除</i></el-button>
               <el-button @click="showAdd()" type="primary"><i class="el-icon-circle-plus-outline"> 添加</i></el-button>

@@ -1,5 +1,6 @@
 <template>
   <div class="chart-container">
+    <div v-if="isStart">
     <el-table :data="tableData" v-if="refresh" style="width: 100%" @expand-change="expandChange">
       <el-table-column type="expand">
         <template slot-scope="props">
@@ -59,9 +60,12 @@
         </template>
       </el-table-column>
     </el-table>
+    </div>
+    <div class="hd" v-else>
+      暂未启动机关考核计划
+    </div>
 
-
-    <el-dialog :title="ctitle" custom-class="viewPage" :visible.sync="showView" width="800px">
+    <el-dialog :title="ctitle" custom-class="viewPages" :visible.sync="showView" width="800px">
 
       <div id="echarts">
 
@@ -88,16 +92,49 @@
         multipleSelection: [],
         tableData: [],
         refresh: true,
-        ctitle:''
+        ctitle:'',
+        isStart: false,
+        planId:''
       }
     },
     created() {
-      this.getcadreresultCadrelist()
+      let planId=''
+      let params = {
+        uid: JSON.parse(localStorage.getItem('userid'))
+      }
+      approveApi.selectPlanAndProportion(params).then(res => {
+        if (res.data.code == 0) {
+          let plan = res.data.data.plan
+            for (let i = 0; i < plan.length; i++) {
+              if (plan[i].TYPE == '机关考核') {
+                this.planId=plan[i].ID
+                planId=plan[i].ID
+                this.isStart = true
+              }
+            }
+            if (!this.isStart) {
+              return
+            } else {
+              this.getcadreresultCadrelist(planId)
+            }
+          
+
+        } else {
+          this.$message({
+            type: 'error',
+            message: res.data.message
+          })
+        }
+      })
+      
     },
 
     methods: {
-      getcadreresultCadrelist() {
-        approveApi.cadreresultCadrelist().then(res => {
+      getcadreresultCadrelist(planId) {
+        let params={
+          planid:planId
+        }
+        approveApi.cadreresultCadrelist(params).then(res => {
           if (res.data.code == 0) {
             res.data.data.map((item, index) => {
               item.children = []; // 添加子表格数据
@@ -113,7 +150,8 @@
         if (row.children.length == 0) {
           // 通过$set属性可设置loading实现实时加载loading效果(经过测试,通过$set直接给父层数据声明子层数据时会出现报错,所以才在获取父层表格数据时声明子层表格数据)
           let params = {
-            userid: row.UNCHECKUSERID
+            userid: row.UNCHECKUSERID,
+            planid: this.planId
           }
           // this.$set(row, 'loading', true);
           approveApi.cadrelistbyuserid(params).then((res) => {
@@ -554,7 +592,8 @@
         this.showView = true
         this.ctitle= row.USERNAME+ '综合指标分析'
         let params = {
-          userid: row.UNCHECKUSERID
+          userid: row.UNCHECKUSERID,
+          planid:this.planId
         }
         // this.$set(row, 'loading', true);
         approveApi.cadreresultcount(params).then((res) => {
@@ -569,7 +608,7 @@
 
               }
               indicator.push(da[i].NAME)
-              data.push(da[i].VALUE)
+              data.push(da[i].VALUE.toFixed(2))
             }
           
             this.initRadarChart(indicator, data)
@@ -578,11 +617,11 @@
       },
       handleDelete(row) {
         // 折线图
-        console.log(row, 555)
         this.showView = true
         this.ctitle= row.USERNAME+ '综合指标分析'
         let params = {
-          userid: row.UNCHECKUSERID
+          userid: row.UNCHECKUSERID,
+          planid:this.planId
         }
         // this.$set(row, 'loading', true);
         approveApi.cadreresultcountbyrole(params).then((res) => {
@@ -692,7 +731,7 @@ color:#F56C6C;
     margin: 10px;
   }
  
-  .viewPage {
+  .viewPages {
     top: 10%;
 
     .el-dialog__header {

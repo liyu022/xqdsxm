@@ -12,10 +12,10 @@
                 <el-input v-model="searchForm.name" size="mini" placeholder="请输入名称"></el-input>
               </el-form-item>
               <!-- <li><i class="el-icon-download"> 导出</i></li>-->
-              <el-button @click="deleteData()" type="primary"><i class="el-icon-delete"> 删除</i></el-button>
-              <el-button @click="showAdd()" type="primary"><i class="el-icon-edit-outline"> 添加</i></el-button>
+              <el-button v-if="nobtn" @click="deleteData()" type="primary"><i class="el-icon-delete"> 删除</i></el-button>
+              <el-button v-if="nobtn" @click="showAdd()" type="primary"><i class="el-icon-edit-outline"> 添加</i></el-button>
               <el-button @click="showSearch()" type="primary"><i class="el-icon-search"> 查询</i></el-button>
-              <el-button @click="updateForm()" type="primary"><i class="el-icon-setting"> 角色授权</i></el-button>
+              <el-button v-if="nobtn" @click="updateForm()" type="primary"><i class="el-icon-setting"> 角色授权</i></el-button>
               <div class="clear"></div>
             </el-form-item>
           </el-form>
@@ -146,9 +146,13 @@
       }
     },
     created(){
-      
-    
-    },
+      let role = JSON.parse(localStorage.getItem('role'))
+      if (role[0].name == '系统管理员') {
+        this.nobtn = true
+      } else {
+        this.nobtn = false
+      }
+    }, 
     mounted() {
       this.selectAllDate()
     },
