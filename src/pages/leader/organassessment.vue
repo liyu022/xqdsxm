@@ -11,10 +11,10 @@
         &nbsp;&nbsp;&nbsp;&nbsp;<span class="el-icon-star-on"></span><span class="el-icon-star-on"></span><span
           class="el-icon-star-on"></span><span style="color:red;font-weight:600;">{{name}}</span>
       </div>
-      <div class="hd">
+      <div class="hd" >
 
       </div>
-      <div class="card">
+      <div class="card" v-if="!nosubmit">
         <ul class="tab_c" v-loading="loading">
           <li v-for="(item,index) in tableData" :key="index">
             <vxe-table border :show-header="index>1?false:true" :span-method="mergeRowMethod" resizable
@@ -95,7 +95,12 @@
             return
 
           } else {
-            if (this.proportion.length > 1) {
+            if (this.proportion.length==0) {
+              this.nosubmit = true;
+              alert("你是管理员，无法参加考核")
+              // this.cadreplanGetMaxList()
+            }else{
+              if (this.proportion.length > 1) {
               this.name = "  考核人角色：" + this.infoz[0].name + ",   考核人姓名：" + info.name + "， 机关干部打分权重：" + this
                 .proportion[0].proportion + ",  站队科级干部打分权重：" + this.proportion[1].proportion
             } else {
@@ -116,10 +121,11 @@
             this.flagValue = obj
             if (this.infoz[0].name == "系统管理员") {
               this.nosubmit = true;
-              alert("您是系统管理员,不能参加考核!");
             } else {
               this.cadreplanGetMaxList()
             }
+            }
+            
           }
 
 
