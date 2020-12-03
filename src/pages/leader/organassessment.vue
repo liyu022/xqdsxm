@@ -14,7 +14,7 @@
       <div class="hd" >
 
       </div>
-      <div class="card" v-if="!nosubmit">
+      <div class="card" v-if="!isgly" >
         <ul class="tab_c" v-loading="loading">
           <li v-for="(item,index) in tableData" :key="index">
             <vxe-table border :show-header="index>1?false:true" :span-method="mergeRowMethod" resizable
@@ -67,7 +67,8 @@
         name: '',
         infoz: '',
         isStart: false,
-        planId:''
+        planId:'',
+        isgly:false
       }
     },
     created() {
@@ -120,6 +121,7 @@
             this.activeName = this.flag[0]
             this.flagValue = obj
             if (this.infoz[0].name == "系统管理员") {
+              this.isgly=true
               this.nosubmit = true;
             } else {
               this.cadreplanGetMaxList()
