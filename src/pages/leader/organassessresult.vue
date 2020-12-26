@@ -106,30 +106,45 @@
       }
     },
     created() {
+      let uinfo = JSON.parse(localStorage.getItem('role'))[0]
+       
       let planId=''
       let params = {
         uid: JSON.parse(localStorage.getItem('userid'))
       }
+      
+      let st=''
       approveApi.selectPlanAndProportion(params).then(res => {
         if (res.data.code == 0) {
           let plan = res.data.data.plan
- 
+  
             for (let i = 0; i < plan.length; i++) {
               
               if (plan[i].TYPE == '科级干部考核') {
                 this.planId=plan[i].ID
                 planId=plan[i].ID
                 this.isStart = true
+                st=plan[i].STATE
               }
             }
+
             if (!this.isStart) {
               return
             } else {
-              console.log(planId);
-              this.getcadreresultCadrelist(planId)
-            }
-          
+              if (uinfo.name != '系统管理员' ) {
+                console.log(st);
+                if (st=='已完成') {
+                  this.getcadreresultCadrelist(planId)
+                }else{
+                  this.isStart=false
+                  return
+                }
 
+              }else{
+                this.getcadreresultCadrelist(planId)
+              }
+              
+            }
         } else {
           this.$message({
             type: 'error',

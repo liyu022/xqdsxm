@@ -463,6 +463,8 @@
           this.$message('请选选择部门')
           return
         } else {
+          // this.form.isenabled='启用'
+          this.$set(this.form,'isenabled','启用')
           this.title = '添加'
           this.showDetail = true
           this.showxq = false
