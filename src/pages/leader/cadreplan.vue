@@ -5,7 +5,7 @@
         <div class="header">
           <el-form :inline="true" :model="searchForm" ref="searchForm" class="searchForm">
             <el-form-item style="margin-bottom: 0px;margin-left:10px;" label="" prop="" class="">
-              
+
               <el-form-item class="" label="考核计划类型" prop="type">
                 <el-select v-model="searchForm.type" size="mini" placeholder="请选择考核计划类型">
                   <el-option label="全部" value=""></el-option>
@@ -30,10 +30,12 @@
             <template slot-scope="scope">
               <el-button type="danger" size="mini" @click="updateFormDia(scope.row, scope.$index)">编辑</el-button>
               <el-button type="primary" size="mini" @click="showdetail(scope.row, scope.$index)">详情</el-button>
-              <el-button type="info" v-if="scope.row.TYPE!='后备干部推荐' && scope.row.STATE=='已创建'" size="mini" @click="handelS(scope.row)">选择人员</el-button>
+              <el-button type="info" v-if="scope.row.TYPE!='后备干部推荐' && scope.row.STATE=='已创建'" size="mini"
+                @click="handelS(scope.row)">选择人员</el-button>
               <el-button type="success" size="mini" v-if="scope.row.STATE=='已创建'" @click="startUp(scope.row)">启动考核
               </el-button>
-              <el-button type="danger" size="mini" v-if="scope.row.STATE=='已启动'" @click="shurDown(scope.row)">停止考核
+              <el-button type="danger" size="mini" v-if="scope.row.STATE=='已启动' || scope.row.STATE=='已完成'"
+                @click="shurDown(scope.row)">停止考核
               </el-button>
               <!-- <span style="color:#00a2fd;cursor: pointer;text-align: center" @click="showBhFormDia(scope.row)">详情</span> -->
             </template>
@@ -96,7 +98,7 @@
 
     <el-dialog custom-class="dialog" title="选择被考核人" :visible.sync="showUser" width="70%" :close-on-click-modal="modal"
       @close="showUser=false">
-     
+
       <div class="dialog_warps">
         <div class="header">
           <el-form :inline="true" :model="uForm" ref="uForm" class="uForm">
@@ -111,24 +113,24 @@
               </el-input>
             </el-form-item>
             <el-form-item style="margin-bottom: 0px" prop="" label="人员名称">
-              <el-input   v-model="uForm.name" size="mini" placeholder="请输入人员姓名"  >
+              <el-input v-model="uForm.name" size="mini" placeholder="请输入人员姓名">
               </el-input>
             </el-form-item>
             <el-form-item style="margin-bottom: 0px" prop="" label="级别">
               <el-select v-model="uForm.rolename" placeholder="请选择" value-key>
-                 <el-option label="全部" value="">
-                    </el-option>
-                    <el-option label="站队一般员工" value="站队一般员工">
-                    </el-option>
-                    <el-option label="机关一般员工" value="机关一般员工">
-                    </el-option>
-                    <el-option label="站队长" value="站队长">
-                    </el-option>
-                    <el-option label="机关科室长" value="机关科室长">
-                    </el-option>
-                    <el-option label="处领导" value="处领导">
-                    </el-option>
-                  </el-select>
+                <el-option label="全部" value="">
+                </el-option>
+                <el-option label="站队一般员工" value="站队一般员工">
+                </el-option>
+                <el-option label="机关一般员工" value="机关一般员工">
+                </el-option>
+                <el-option label="站队长" value="站队长">
+                </el-option>
+                <el-option label="机关科室长" value="机关科室长">
+                </el-option>
+                <el-option label="处领导" value="处领导">
+                </el-option>
+              </el-select>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" size="mini" @click="selectUserDate">查 询</el-button>
@@ -138,38 +140,38 @@
             </el-form-item>
           </el-form>
         </div>
-         <div class="outbox">
-        <div class="tableC">
-          <el-table ref="multipleTableUser" v-loading="loadings" element-loading-text="正在加载，请稍后..."
-            element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)" :data="userData"
-            tooltip-effect="dark" row-class-name="row_class" border style="width: 100%;overflow:auto;" :row-key="bindRowKey"
-            :row-style="{fontFamily: '宋体', fontSize: '12px',height:'40px'}"
-            @selection-change="handleSelectionChangeUser">
-            <el-table-column type="selection" width="55" :reserve-selection="true">
-            </el-table-column>
-            <el-table-column align="center" prop="name" label="姓名" width="100"></el-table-column>
-            <el-table-column align="center" prop="rolename" label="授权角色" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column align="center" prop="username" label="用户名"></el-table-column>
-            <el-table-column align="center" prop="email" label="员工编号"></el-table-column>
-            <el-table-column align="center" prop="hint" label="身份证号"></el-table-column>
-          </el-table>
-        </div>
-        <!-- <div class="showSelect">
+        <div class="outbox">
+          <div class="tableC">
+            <el-table ref="multipleTableUser" v-loading="loadings" element-loading-text="正在加载，请稍后..."
+              element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)" :data="userData"
+              tooltip-effect="dark" row-class-name="row_class" border style="width: 100%;overflow:auto;"
+              :row-key="bindRowKey" :row-style="{fontFamily: '宋体', fontSize: '12px',height:'40px'}"
+              @selection-change="handleSelectionChangeUser">
+              <el-table-column type="selection" width="55" :reserve-selection="true">
+              </el-table-column>
+              <el-table-column align="center" prop="name" label="姓名" width="100"></el-table-column>
+              <el-table-column align="center" prop="rolename" label="授权角色" show-overflow-tooltip>
+              </el-table-column>
+              <el-table-column align="center" prop="username" label="用户名"></el-table-column>
+              <el-table-column align="center" prop="email" label="员工编号"></el-table-column>
+              <el-table-column align="center" prop="hint" label="身份证号"></el-table-column>
+            </el-table>
+          </div>
+          <!-- <div class="showSelect">
           <div class="t12">已选择人员</div>
           <ul class="list">
              <li v-for="(item,index) in userList" :key="index">{{item.name}}</li>
           </ul>
         </div> -->
         </div>
-         <div class="footer">
-      <el-pagination @size-change="handleSizeChangeU" @current-change="handleCurrentChangeU" :current-page="currentPageU"
-        layout="total, sizes, prev, pager, next, jumper" :total="totalU">
-      </el-pagination>
-    </div>
+        <div class="footer">
+          <el-pagination @size-change="handleSizeChangeU" @current-change="handleCurrentChangeU"
+            :current-page="currentPageU" layout="total, sizes, prev, pager, next, jumper" :total="totalU">
+          </el-pagination>
+        </div>
       </div>
-      
-      
+
+
       <span slot="footer" class="dialog-footer" v-if="isadd">
         <el-button @click="showUser=false">取 消</el-button>
         <el-button type="primary">添 加</el-button>
@@ -182,26 +184,29 @@
       <div class="dialog_warps">
         <h1>权限分配情况</h1>
         <div class="tableC">
-          <el-table ref="multipleTableProportation" :data="propList" tooltip-effect="dark" row-class-name="row_class" border
-            style="width: 100%;overflow:auto;" :row-style="{fontFamily: '宋体', fontSize: '12px',height:'40px'}">
-          <el-table-column type="index" label="序号" width="60px" align="center">
-          </el-table-column>
-          <el-table-column prop="ROLANAME" label="角色名称">
-          </el-table-column>
-          <el-table-column label="评价角色">
-            <template slot-scope="scope">
-              <span v-if="scope.row.TYPE=='A'">机关科级干部</span>
-              <span v-if="scope.row.TYPE=='D'">站队科级干部</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="CREATENAME" label="创建人">
-          </el-table-column>
-          <el-table-column prop="CREATETIME" label="更新时间">
-          </el-table-column>
-          <el-table-column prop="PROPORTION" label="权重"></el-table-column>
+          <el-table ref="multipleTableProportation" :data="propList" tooltip-effect="dark" row-class-name="row_class"
+            border style="width: 100%;overflow:auto;" :row-style="{fontFamily: '宋体', fontSize: '12px',height:'40px'}">
+            <el-table-column type="index" label="序号" width="60px" align="center">
+            </el-table-column>
+            <el-table-column prop="ROLANAME" label="角色名称">
+            </el-table-column>
+            <el-table-column label="评价角色">
+              <template slot-scope="scope">
+                <span v-if="scope.row.TYPE=='A'">机关科级干部</span>
+                <span v-if="scope.row.TYPE=='D'">站队科级干部</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="CREATENAME" label="创建人">
+            </el-table-column>
+            <el-table-column prop="CREATETIME" label="更新时间">
+            </el-table-column>
+            <el-table-column prop="PROPORTION" label="权重"></el-table-column>
           </el-table>
         </div>
-        <h1>被考核人</h1>
+        <h1>被考核人<span class="tipss">
+            (共选择人员：{{alluserList.length}}，<span v-for="(item,index) in stri" :key="index"><span>{{item.rolename}}：</span><span>{{item.frequency}}</span><span v-if="index!=stri.length-1">，</span></span>)
+        </span></h1>
+        
         <div class="tableC">
           <el-table ref="multipleTableUser" :data="alluserList" tooltip-effect="dark" row-class-name="row_class" border
             style="width: 100%;overflow:auto;" :row-style="{fontFamily: '宋体', fontSize: '12px',height:'40px'}">
@@ -214,7 +219,7 @@
             <el-table-column align="center" prop="hint" label="身份证号"></el-table-column>
           </el-table>
         </div>
-       
+
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="showDetailPage=false">取 消</el-button>
@@ -233,9 +238,9 @@
   export default {
     data() {
       return {
-        uForm:{
-          name:'',
-          rolename:''
+        uForm: {
+          name: '',
+          rolename: ''
         },
         loadings: false,
         refresh: true,
@@ -287,7 +292,8 @@
         propList: [],
         currentPageU: 1,
         pageSizeU: 10,
-        totalU:0,
+        totalU: 0,
+        stri:''
 
       }
     },
@@ -297,7 +303,7 @@
     },
 
     methods: {
-      bindRowKey(row){
+      bindRowKey(row) {
         return row.id
       },
       handleSizeChangeU(val) {
@@ -357,7 +363,7 @@
         $('.tbdw').show()
       },
       handleIconClick() {
-        this.selectDwID=''
+        this.selectDwID = ''
         this.selectDw = ''
       },
       handleSelectionChangeUser(val) {
@@ -370,7 +376,7 @@
           'planid': this.planid,
           'currentPage': this.currentPageU,
           'pageSize': this.pageSizeU,
-          'name':this.uForm.name,
+          'name': this.uForm.name,
           'rolename': this.uForm.rolename
         };
         systemapi.selectPageUserByOrgid(param).then(res => {
@@ -496,10 +502,21 @@
             this.showDetailPage = true
             this.alluserList = res.data.data.uncheckuserid
             this.propList = res.data.data.proportation
+            this.stri = this.alluserList.reduce((obj, item) => {
+              let find = obj.find(i => i.rolename === item.rolename)
+              let _d = {
+                ...item,
+                frequency: 1
+              }
+              find ? (find.num += item.num, find.frequency++) : obj.push(_d)
+              return obj
+            }, [])
+       
           }
         })
 
       },
+
       showBhFormDia(row) {
         this.title = '详情'
         this.showDetail = true
@@ -607,85 +624,85 @@
         })
       },
       startUp(row) {
-        if (row.TYPE=='后备干部推荐') {
-            let pams = {
-                "data": row.DATA,
-                "state": '已启动',
-                "username": row.USERNAME,
-                "id": row.ID,
-                "createtime": row.CREATETIME,
-                "type": row.TYPE,
-                "name": row.NAME
-              }
-              api.cadreplanUpdate(JSON.stringify(pams)).then(res => {
-                if (res.data.code === 0) {
-                  this.$message({
-                    type: 'success',
-                    message: '启动成功!'
-                  })
-                  this.selectAllDate()
-                } else {
-                  this.$message({
-                    type: 'error',
-                    message: '启动失败!'
-                  })
-                }
-                this.resetForm()
-              })
-        }else{
-            approveApi.selectStateByPlanid({
-          planid: row.ID
-        }).then(res => {
-          if (res.data.code === 0) {
-            this.alluserList = res.data.data.uncheckuserid
-            this.propList = res.data.data.proportation
-            if (this.alluserList.length == 0) {
+        if (row.TYPE == '后备干部推荐') {
+          let pams = {
+            "data": row.DATA,
+            "state": '已启动',
+            "username": row.USERNAME,
+            "id": row.ID,
+            "createtime": row.CREATETIME,
+            "type": row.TYPE,
+            "name": row.NAME
+          }
+          api.cadreplanUpdate(JSON.stringify(pams)).then(res => {
+            if (res.data.code === 0) {
               this.$message({
-                type: 'error',
-                message: '未选择被考核人员!'
+                type: 'success',
+                message: '启动成功!'
               })
-              return
-            } else if (this.propList.length == 0) {
-              this.$message({
-                type: 'error',
-                message: '未分配权重!'
-              })
-              return
+              this.selectAllDate()
             } else {
-
-              let pams = {
-                "data": row.DATA,
-                "state": '已启动',
-                "username": row.USERNAME,
-                "id": row.ID,
-                "createtime": row.CREATETIME,
-                "type": row.TYPE,
-                "name": row.NAME
-              }
-              api.cadreplanUpdate(JSON.stringify(pams)).then(res => {
-                if (res.data.code === 0) {
-                  this.$message({
-                    type: 'success',
-                    message: '启动成功!'
-                  })
-                  this.selectAllDate()
-                } else {
-                  this.$message({
-                    type: 'error',
-                    message: '启动失败!'
-                  })
-                }
-                this.resetForm()
+              this.$message({
+                type: 'error',
+                message: '启动失败!'
               })
+            }
+            this.resetForm()
+          })
+        } else {
+          approveApi.selectStateByPlanid({
+            planid: row.ID
+          }).then(res => {
+            if (res.data.code === 0) {
+              this.alluserList = res.data.data.uncheckuserid
+              this.propList = res.data.data.proportation
+              if (this.alluserList.length == 0) {
+                this.$message({
+                  type: 'error',
+                  message: '未选择被考核人员!'
+                })
+                return
+              } else if (this.propList.length == 0) {
+                this.$message({
+                  type: 'error',
+                  message: '未分配权重!'
+                })
+                return
+              } else {
+
+                let pams = {
+                  "data": row.DATA,
+                  "state": '已启动',
+                  "username": row.USERNAME,
+                  "id": row.ID,
+                  "createtime": row.CREATETIME,
+                  "type": row.TYPE,
+                  "name": row.NAME
+                }
+                api.cadreplanUpdate(JSON.stringify(pams)).then(res => {
+                  if (res.data.code === 0) {
+                    this.$message({
+                      type: 'success',
+                      message: '启动成功!'
+                    })
+                    this.selectAllDate()
+                  } else {
+                    this.$message({
+                      type: 'error',
+                      message: '启动失败!'
+                    })
+                  }
+                  this.resetForm()
+                })
 
 
+
+              }
 
             }
-
-          }
-        })
+          })
         }
-        
+
 
       },
       shurDown(row) {
@@ -735,41 +752,51 @@
   }
 </script>
 <style lang="scss">
-  .showSelect{
+.tipss{
+  font-size: 14px;
+}
+  .showSelect {
     width: 200px;
     margin-left: 8px;
     border: 1px solid #f3f3f3;
-    .t12{
-      
+
+    .t12 {
+
       text-align: center;
       line-height: 32px;
       background: #c5c5c5;
     }
-    .list{
-          max-height: 450px;
-          overflow: auto;
-      li{
+
+    .list {
+      max-height: 450px;
+      overflow: auto;
+
+      li {
         cursor: pointer;
         list-style: none;
         margin: 0;
-        padding:0 ;
+        padding: 0;
         line-height: 20px;
         text-indent: 10px;
-        &:hover{
+
+        &:hover {
           background: #f3f3f3;
         }
       }
     }
   }
-  .outbox{
+
+  .outbox {
     display: flex;
   }
-  .tableC{
+
+  .tableC {
     width: 100%;
     //  width:calc(100% - 210px) ;
   }
+
   .dialog_warps {
-   
+
     min-height: 600px;
 
     .tbdw {

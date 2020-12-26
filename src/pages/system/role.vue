@@ -237,6 +237,7 @@
                     id: '',
                     roleid: this.roleid
                 }).then(({data}) => {
+                  console.log(data);
                     this.warrantList = data.data[0].children;
                     const warrantValue = []
                     for (const items of this.warrantList) {
@@ -254,6 +255,8 @@
                           }
                       }
                     }
+                    console.log(warrantValue,1111);
+
                     this.warrantValue = warrantValue;
                     this.showWarrant = true
                 })

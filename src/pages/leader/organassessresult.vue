@@ -688,7 +688,7 @@
                for (let j = 0; j < da.length; j++) {
 
                   if (sys[i].name==da[j].ROLENAME) {
-                    sys[i].data.push(da[j].VALUE)
+                    sys[i].data.push(da[j].VALUE.toFixed(2))
                   }
                  
                }
