@@ -9,7 +9,7 @@
               <el-form-item class="" label="考核计划类型" prop="type">
                 <el-select v-model="searchForm.type" size="mini" placeholder="请选择考核计划类型">
                   <el-option label="全部" value=""></el-option>
-                  <el-option label="机关考核" value="机关考核"></el-option>
+                  <el-option label="科级干部考核" value="科级干部考核"></el-option>
                   <el-option label="后备干部推荐" value="后备干部推荐"></el-option>
                 </el-select>
               </el-form-item>
@@ -30,8 +30,8 @@
             <template slot-scope="scope">
               <el-button type="danger" size="mini" @click="updateFormDia(scope.row, scope.$index)">编辑</el-button>
               <el-button type="primary" size="mini" @click="showdetail(scope.row, scope.$index)">详情</el-button>
-              <el-button type="info" v-if="scope.row.TYPE!='后备干部推荐'" size="mini" @click="handelS(scope.row)">选择人员</el-button>
-              <el-button type="success" size="mini" v-if="scope.row.STATE!='已启动'" @click="startUp(scope.row)">启动考核
+              <el-button type="info" v-if="scope.row.TYPE!='后备干部推荐' && scope.row.STATE=='已创建'" size="mini" @click="handelS(scope.row)">选择人员</el-button>
+              <el-button type="success" size="mini" v-if="scope.row.STATE=='已创建'" @click="startUp(scope.row)">启动考核
               </el-button>
               <el-button type="danger" size="mini" v-if="scope.row.STATE=='已启动'" @click="shurDown(scope.row)">停止考核
               </el-button>
@@ -62,7 +62,7 @@
               <el-row v-if="isadd">
                 <el-form-item label="计划类型">
                   <el-select v-model="form.TYPE" placeholder="请选择" value-key>
-                    <el-option label="机关考核" value="机关考核">
+                    <el-option label="科级干部考核" value="科级干部考核">
                     </el-option>
                     <el-option label="后备干部推荐" value="后备干部推荐">
                     </el-option>
@@ -98,16 +98,36 @@
       @close="showUser=false">
       <div class="dialog_warps">
         <div class="header">
-          <el-form :inline="true" :model="searchForm" ref="searchForm" class="searchForm">
+          <el-form :inline="true" :model="uForm" ref="uForm" class="uForm">
             <el-form-item style="margin-bottom: 0px" prop="" label="组织单位">
               <div class="tbdw">
                 <el-tree :accordion="true" :data="tbdwList" node-key="id" :default-expanded-keys="[zkx]"
                   :props="defaultTreeProps" @node-click="handleNodeClick"></el-tree>
               </div>
-              <el-input class="selectDw" v-model="selectDw" size="mini" placeholder="请输选择单位" @focus="selectDwTree">
+              <el-input class="selectDw" v-model="selectDw" size="mini" placeholder="请选择单位" @focus="selectDwTree">
                 <i class="el-icon-error" slot="suffix" @click="handleIconClick">
                 </i>
               </el-input>
+            </el-form-item>
+            <el-form-item style="margin-bottom: 0px" prop="" label="人员名称">
+              <el-input   v-model="uForm.name" size="mini" placeholder="请输入人员姓名"  >
+              </el-input>
+            </el-form-item>
+            <el-form-item style="margin-bottom: 0px" prop="" label="级别">
+              <el-select v-model="uForm.rolename" placeholder="请选择" value-key>
+                 <el-option label="全部" value="">
+                    </el-option>
+                    <el-option label="站队一般员工" value="站队一般员工">
+                    </el-option>
+                    <el-option label="机关一般员工" value="机关一般员工">
+                    </el-option>
+                    <el-option label="站队长" value="站队长">
+                    </el-option>
+                    <el-option label="机关科室长" value="机关科室长">
+                    </el-option>
+                    <el-option label="处领导" value="处领导">
+                    </el-option>
+                  </el-select>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" size="mini" @click="selectUserDate">查 询</el-button>
@@ -133,6 +153,11 @@
             <el-table-column align="center" prop="hint" label="身份证号"></el-table-column>
           </el-table>
         </div>
+         <div class="footer">
+      <el-pagination @size-change="handleSizeChangeU" @current-change="handleCurrentChangeU" :current-page="currentPageU"
+        layout="total, sizes, prev, pager, next, jumper" :total="totalU">
+      </el-pagination>
+    </div>
       </div>
       <span slot="footer" class="dialog-footer" v-if="isadd">
         <el-button @click="showUser=false">取 消</el-button>
@@ -178,6 +203,7 @@
             <el-table-column align="center" prop="hint" label="身份证号"></el-table-column>
           </el-table>
         </div>
+       
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="showDetailPage=false">取 消</el-button>
@@ -196,6 +222,10 @@
   export default {
     data() {
       return {
+        uForm:{
+          name:'',
+          rolename:''
+        },
         loadings: false,
         refresh: true,
         showUser: false,
@@ -244,6 +274,10 @@
         xpinfo: {},
         alluserList: [],
         propList: [],
+        currentPageU: 1,
+        pageSizeU: 10,
+        totalU:0,
+
       }
     },
     mounted() {
@@ -252,6 +286,14 @@
     },
 
     methods: {
+      handleSizeChangeU(val) {
+        this.pageSizeU = val
+        this.selectUserDate()
+      },
+      handleCurrentChangeU(val) {
+        this.currentPageU = val
+        this.selectUserDate()
+      },
       handelS(row) {
         if (!row.ID) {
           return
@@ -260,8 +302,8 @@
         systemapi.selectOrganizationTree().then(res => {
           if (res.data.code === 0) {
             this.tbdwList = res.data.data
-            this.selectDwID = this.tbdwList[0].ID
-            this.selectDw = this.tbdwList[0].NAME
+            // this.selectDwID = this.tbdwList[0].ID
+            // this.selectDw = this.tbdwList[0].NAME
             this.selectUserDate()
             this.showUser = true
           }
@@ -302,6 +344,7 @@
         $('.tbdw').show()
       },
       handleIconClick() {
+        this.selectDwID=''
         this.selectDw = ''
       },
       handleSelectionChangeUser(val) {
@@ -310,12 +353,17 @@
       selectUserDate() {
         let param = {
           'orgid': this.selectDwID,
-          'planid': this.planid
+          'planid': this.planid,
+          'currentPage': this.currentPageU,
+          'pageSize': this.pageSizeU,
+          'name':this.uForm.name,
+          'rolename': this.uForm.rolename
         };
         systemapi.selectPageUserByOrgid(param).then(res => {
 
           if (res.data.data != null) {
-            this.userData = res.data.data.all
+            this.userData = res.data.data.all.list
+            this.totalU = res.data.data.all.total
             this.areadyList = JSON.parse(JSON.stringify(res.data.data.check))
             let temp = []
             for (let index = 0; index < this.areadyList.length; index++) {
@@ -323,7 +371,7 @@
             }
             if (temp.length > 0) {
               this.checkS(temp)
-              this.loadings = true
+              // this.loadings = true
             }
 
           }
@@ -340,7 +388,7 @@
 
             }
           });
-          that.loadings = false
+          // that.loadings = false
         });
 
 
@@ -350,8 +398,8 @@
         systemapi.selectOrganizationTree().then(res => {
           if (res.data.code === 0) {
             this.tbdwList = res.data.data
-            this.selectDwID = this.tbdwList[0].ID
-            this.selectDw = this.tbdwList[0].NAME
+            // this.selectDwID = this.tbdwList[0].ID
+            // this.selectDw = this.tbdwList[0].NAME
             this.selectUserDate()
           }
         })
@@ -452,7 +500,7 @@
 
       showAdd() {
         this.title = '添加'
-        this.$set(this.form, "TYPE", "机关考核")
+        this.$set(this.form, "TYPE", "科级干部考核")
         this.showDetail = true
         this.showxq = false
         this.isadd = true

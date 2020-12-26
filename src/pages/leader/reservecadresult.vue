@@ -32,7 +32,7 @@
       </div>
     </div>
     <div class="hd" v-else>
-      暂未启动后备干部推荐计划
+       <img class="emptybox" src="./../../../static/img/nohb.png" alt="">
     </div>
   </div>
 </template>
@@ -107,6 +107,11 @@
 </script>
 
 <style   lang="scss">
+.emptybox{
+     width: 100%;
+     height:800px
+   }
+ 
   .chart-container {
     position: relative;
     margin: 10px;

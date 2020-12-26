@@ -39,7 +39,7 @@
       <el-table-column align="center" class-name="column-caoz" label="操作">
 
             <template slot-scope="scope">
-              <el-button v-if="scope.row.TYPE=='机关考核'" type="primary" size="mini" @click="getProportionByPlanid(scope.row)">分配权重</el-button>
+              <el-button v-if="scope.row.TYPE=='科级干部考核'" type="primary" size="mini" @click="getProportionByPlanid(scope.row)">分配权重</el-button>
        
             </template>
           </el-table-column>
@@ -196,7 +196,7 @@
           'currentPage': this.currentPage,
           'pageSize': this.pageSize,
           'name': this.searchForm.name,
-          'type': "机关考核",
+          'type': "科级干部考核",
           'status': this.searchForm.status,
           'id': this.searchForm.id
         };

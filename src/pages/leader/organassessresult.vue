@@ -14,11 +14,17 @@
             </el-table-column>
             <el-table-column prop="ROLENAME" label="考核人角色">
             </el-table-column>
+            <el-table-column   label="考核状态">
+                <template slot-scope="scope">
+                     <span v-if="scope.row.STATUS=='已考核'" style="color:#67C23A">已考核</span>
+                     <span  v-else style="color:#F56C6C">未考核</span>
+                </template>
+            </el-table-column>
             <el-table-column prop="CHECKRESULT" label="考核人打分">
             </el-table-column>
             <el-table-column prop="PROPORTION" label="考核人权重">
             </el-table-column>
-            <el-table-column prop="CREATETIME" label="考核时间">
+            <el-table-column prop="CREATETIME" label="考核时间" :formatter="formatter">
             </el-table-column>
           </el-table>
         </template>
@@ -43,7 +49,8 @@
       </el-table-column>
       <el-table-column label="是否有效">
         <template slot-scope="props">
-          <span :class='Number(props.row.TOTAL) == Number(props.row.UNTOTAL) ? "green" : "red"'>{{Number(props.row.TOTAL) == Number(props.row.UNTOTAL) ? "有效" : "无效" }}</span>
+          <span v-if="props.row.TOTAL==null" class="red">无效</span>
+          <span v-else :class='Number(props.row.TOTAL) == Number(props.row.UNTOTAL) ? "green" : "red"'>{{Number(props.row.TOTAL) == Number(props.row.UNTOTAL) ? "有效" : "无效" }}</span>
         </template>
       </el-table-column>
       <el-table-column label="已考核人数" prop="UNTOTAL">
@@ -62,7 +69,7 @@
     </el-table>
     </div>
     <div class="hd" v-else>
-      暂未启动机关考核计划
+      <img class="emptybox" src="./../../../static/img/noplan.png" alt="">
     </div>
 
     <el-dialog :title="ctitle" custom-class="viewPages" :visible.sync="showView" width="800px">
@@ -82,6 +89,7 @@
 <script>
   import * as approveApi from '@/api/approve'
   import echarts from 'echarts'
+  import moment from 'moment'
   export default {
     name: 'MixChart',
     data() {
@@ -105,8 +113,10 @@
       approveApi.selectPlanAndProportion(params).then(res => {
         if (res.data.code == 0) {
           let plan = res.data.data.plan
+ 
             for (let i = 0; i < plan.length; i++) {
-              if (plan[i].TYPE == '机关考核') {
+              
+              if (plan[i].TYPE == '科级干部考核') {
                 this.planId=plan[i].ID
                 planId=plan[i].ID
                 this.isStart = true
@@ -115,6 +125,7 @@
             if (!this.isStart) {
               return
             } else {
+              console.log(planId);
               this.getcadreresultCadrelist(planId)
             }
           
@@ -130,6 +141,11 @@
     },
 
     methods: {
+      formatter(row, column, cellValue, index){
+    
+        return moment(cellValue).format('YYYY-MM-DD hh:mm:ss')
+ 
+      },
       getcadreresultCadrelist(planId) {
         let params={
           planid:planId
@@ -151,7 +167,9 @@
           // 通过$set属性可设置loading实现实时加载loading效果(经过测试,通过$set直接给父层数据声明子层数据时会出现报错,所以才在获取父层表格数据时声明子层表格数据)
           let params = {
             userid: row.UNCHECKUSERID,
-            planid: this.planId
+            planid: this.planId,
+            type:row.TYPE,
+            username:row.USERNAME
           }
           // this.$set(row, 'loading', true);
           approveApi.cadrelistbyuserid(params).then((res) => {
@@ -672,6 +690,11 @@
 </script>
 
 <style lang="scss">
+.emptybox{
+     width: 100%;
+     height:800px
+   }
+ 
 .green{
 color: #67C23A;
 }

@@ -15,7 +15,7 @@
 
       </div>
       <div class="card" v-if="!isgly" >
-        <ul class="tab_c" v-loading="loading">
+        <ul class="tab_c" v-loading="loading"  v-if="!nosubmit" >
           <li v-for="(item,index) in tableData" :key="index">
             <vxe-table border :show-header="index>1?false:true" :span-method="mergeRowMethod" resizable
               :data="item.temp" :edit-config="{trigger: 'click', mode: 'cell'}">
@@ -30,6 +30,10 @@
             </vxe-table>
           </li>
         </ul>
+        <ul  v-if="nosubmit">
+           
+         <img class="emptybox" src="./../../../static/img/rplan.png" alt="">
+        </ul>
         <div class="btn-group">
           <el-button v-if="!nosubmit" type="primary" :disabled="ableds" @click='handelSubmit'>提交</el-button>
         </div>
@@ -38,7 +42,8 @@
 
     </div>
     <div class="main" v-else>
-      暂未启动机关考核计划
+      <img class="emptybox" src="./../../../static/img/noplan.png" alt="">
+   
     </div>
 
 
@@ -84,8 +89,9 @@
         if (res.data.code == 0) {
           this.proportion = res.data.data.proportion
           let plan = res.data.data.plan
+          
           for (let i = 0; i < plan.length; i++) {
-            if (plan[i].TYPE == '机关考核') {
+            if (plan[i].TYPE == '科级干部考核') {
               this.planId=plan[i].ID
               this.isStart = true
             }
@@ -98,7 +104,6 @@
           } else {
             if (this.proportion.length==0) {
               this.nosubmit = true;
-              alert("你是管理员，无法参加考核")
               // this.cadreplanGetMaxList()
             }else{
               if (this.proportion.length > 1) {
@@ -277,13 +282,14 @@
             delete sdata[i].temp[j].CREATEBY
 
             sdata[i].temp[j].CADRERESULTID = this.planId
-            // if (sdata[i].temp[j].VALUE==0) {
-            //   this.$message({
-            //       type:'error',
-            //       message:sdata[i].temp[j].USERNAME + '的' +sdata[i].temp[j].NAME +'尚未评分或未0分无法提交。'
-            //   })
-            //   return
-            // }
+            if (sdata[i].temp[j].VALUE==0) {
+              this.ableds = false
+              this.$message({
+                  type:'error',
+                  message:sdata[i].temp[j].USERNAME + '的' +sdata[i].temp[j].NAME +'尚未评分或未0分无法提交。'
+              })
+              return
+            }
             sdata[i].CHECKRESULT += Number(sdata[i].temp[j].VALUE)
 
 
@@ -296,7 +302,11 @@
         }
         approveApi.cadreresultdetailCadreResult(sdata).then(res => {
           if (res.data.code === 0) {
-            alert("考核成功");
+            this.$message({
+                type:'warning',
+                message:'考核成功'
+              })
+        
             this.nosubmit = true;
           } else {
             this.$message({
@@ -343,6 +353,12 @@
 </script>
 
 <style lang="scss">
+
+   .emptybox{
+     width: 100%;
+     height:800px
+   }
+ 
   .app-main {
     overflow: auto !important;
   }

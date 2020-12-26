@@ -45,7 +45,7 @@
       </div>
     </div>
     <div class="hd" v-else>
-      暂未启动后备干部推荐计划
+      <img class="emptybox" src="./../../../static/img/nohb.png" alt="">
     </div>
     <el-dialog title="提交预览" custom-class="viewPage" :visible.sync="showView" width="800px">
       <ul v-if="multipleSelection.length==0">
@@ -107,10 +107,7 @@
       approveApi.selectPlanAndProportion(params).then(res => {
         if (res.data.code == 0) {
           let plan = res.data.data.plan
-          if (this.infoz[0].name == "系统管理员") {
-            this.isActiveShow = false;
-            alert("您是系统管理员,不能参加考核!");
-          } else {
+        
 
             for (let i = 0; i < plan.length; i++) {
               if (plan[i].TYPE == '后备干部推荐') {
@@ -124,7 +121,7 @@
               this.getUserCheck();
               this.gethbcadreitemList()
             }
-          }
+          
 
         } else {
           this.$message({
@@ -215,7 +212,11 @@
         approveApi.hbcadResultByUserId(params).then(res => {
           if (res.data.code === 0) {
             if (res.data.data.length > 0) {
-              alert("你已经进行推荐过了！不用在推荐了");
+              this.$message({
+                type:'warning',
+                message:'你已经进行推荐过了！不用在推荐了'
+              })
+              // alert("你已经进行推荐过了！不用在推荐了");
               if (res.data.data) {
                 this.multipleSelection = res.data.data;
                 this.showView = true;
@@ -244,6 +245,11 @@
   }
 </script>
 <style>
+.emptybox{
+     width: 100%;
+     height:800px
+   }
+ 
   .el-table /deep/.DisabledSelection .cell .el-checkbox__inner {
     display: none;
     position: relative;
