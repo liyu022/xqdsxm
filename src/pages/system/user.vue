@@ -39,11 +39,15 @@
           @selection-change="handleSelectionChange">
           <el-table-column :selectable='checkboxT' type="selection" width="55">
           </el-table-column>
-          <el-table-column align="center" class-name="column-caoz" label="操作" width="100">
+          <el-table-column align="center" class-name="column-caoz" label="操作" width="300">
             <template slot-scope="scope">
-              <span style="color:#00a2fd;cursor: pointer;text-align: center"
-                @click="updateFormDia(scope.row, scope.$index)">编辑</span>
-              <span style="color:#00a2fd;cursor: pointer;text-align: center" @click="showBhFormDia(scope.row)">详情</span>
+              <el-button size="mini"  @click="updateFormDia(scope.row, scope.$index)" >编辑</el-button>
+              <el-button type="info" size="mini"   @click="showBhFormDia(scope.row)" >详情</el-button>
+              <el-button type="primary" size="mini"  @click="distribution_1(scope.row)" >分配角色</el-button>
+              <el-button type="success" size="mini" v-if="scope.row.isenabled=='禁用'"  @click="startUp(scope.row)">启用
+              </el-button>
+              <el-button type="danger" size="mini" v-if="scope.row.isenabled=='启用'" @click="shutUp(scope.row)">禁用
+              </el-button>
             </template>
           </el-table-column>
           <el-table-column align="center" prop="name" label="姓名" width="100"></el-table-column>
@@ -209,6 +213,8 @@
         warrantValue: '',
         id: '',
         nobtn: false,
+        isRowS:false,
+        singleId:''
       }
     },
     mounted() {
@@ -266,6 +272,7 @@
        * 角色授权
        */
       distribution() {
+        this.isRowS=false
         if (this.multipleSelection.length > 0) {
           // this.id = this.multipleSelection[0].id
           // api.getRoleByUserId(this.id).then(res=>{
@@ -292,11 +299,36 @@
           })
         }
       },
+      distribution_1(row){
+        this.isRowS=true
+        this.singleId = row.id
+        api.selecRoleList({
+            currentPage: 1,
+            pageSize: 99999999,
+          }).then(res => {
+            const list = res.data.data.list
+            this.warrantList = list
+            this.showWarrant = true
+          })
+      },
       /**
        * 提交角色授权
        */
       subWarrant() {
-        let idstr = ""
+        if (this.isRowS) {
+          let idstr= this.singleId 
+            api.userRole({
+          loginid: JSON.parse(localStorage.getItem('userid')),
+          id: idstr,
+          roleid: this.warrantValue
+        }).then(res => {
+          if (res.data.code == 0) {
+            this.selectAllDate()
+            this.showWarrant = false
+          }
+        })
+        }else{
+          let idstr = ""
         for (let i = 0; i < this.multipleSelection.length; i++) {
           if (i < this.multipleSelection.length - 1) {
             idstr += this.multipleSelection[i].id + ',';
@@ -317,6 +349,8 @@
             this.showWarrant = false
           }
         })
+        }
+        
       },
       formatterTime(val) {
         let va = val.updatetime.replace('.000+0000', '').replace('T', ' ')
@@ -390,6 +424,32 @@
             type: 'error'
           })
         }
+      },
+      startUp(row){
+        row.isenabled='启用'
+        api.updateUser(JSON.stringify(row)).then(res => {
+          if (res.data.code === 0) {
+            // this.selectTreeDate()
+            this.selectAllDate()
+            this.$message({
+              type: 'success',
+              message: '启用成功!'
+            })
+          }
+        })
+      },
+      shutUp(row){
+        row.isenabled='禁用'
+        api.updateUser(JSON.stringify(row)).then(res => {
+          if (res.data.code === 0) {
+            // this.selectTreeDate()
+            this.selectAllDate()
+            this.$message({
+              type: 'success',
+              message: '禁用成功!'
+            })
+          }
+        })
       },
       showBhFormDia(row) {
         this.title = '详情'
@@ -535,6 +595,11 @@
     }
   }
 </script>
+<style >
+ .column-caoz .el-button+.el-button{
+    margin-left: 0px;
+  }
+</style>
 <style lang="scss" scoped>
   .red {
     color: red;

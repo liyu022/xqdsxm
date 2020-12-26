@@ -19,6 +19,7 @@
         <div class="avatar-wrapper">
           <img src="static/img/icon.jpg?imageView2/2/w/30/h/30" class="user-avatar">
           <i class="el-icon-caret-bottom" />
+          <span class="uname">{{userDetail.name}}</span>
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/profile/index">
@@ -54,7 +55,8 @@ export default {
     Breadcrumb,
     Hamburger,
     Screenfull,
-    SizeSelect
+    SizeSelect,
+    userDetail:''
   },
   computed: {
     ...mapState({
@@ -62,6 +64,9 @@ export default {
       device: state => state.system.app.device,
       avatar: state => state.system.setting.fixedHeader
     })
+  },
+  created(){
+    this.userDetail=JSON.parse(localStorage.getItem('userDetail'))
   },
   methods: {
     toggleSideBar() {
@@ -85,6 +90,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.uname{
+  font-size: 14px;
+}
 .navbar {
   height: 50px;
   overflow: hidden;
@@ -140,9 +148,12 @@ export default {
       margin-right: 30px;
 
       .avatar-wrapper {
-        margin-top: 5px;
+        // margin-top: 5px;
         position: relative;
-
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
         .user-avatar {
           cursor: pointer;
           width: 30px;

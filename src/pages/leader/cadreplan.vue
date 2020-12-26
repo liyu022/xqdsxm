@@ -96,6 +96,7 @@
 
     <el-dialog custom-class="dialog" title="选择被考核人" :visible.sync="showUser" width="70%" :close-on-click-modal="modal"
       @close="showUser=false">
+     
       <div class="dialog_warps">
         <div class="header">
           <el-form :inline="true" :model="uForm" ref="uForm" class="uForm">
@@ -137,13 +138,14 @@
             </el-form-item>
           </el-form>
         </div>
+         <div class="outbox">
         <div class="tableC">
           <el-table ref="multipleTableUser" v-loading="loadings" element-loading-text="正在加载，请稍后..."
             element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)" :data="userData"
-            tooltip-effect="dark" row-class-name="row_class" border style="width: 100%;overflow:auto;"
+            tooltip-effect="dark" row-class-name="row_class" border style="width: 100%;overflow:auto;" :row-key="bindRowKey"
             :row-style="{fontFamily: '宋体', fontSize: '12px',height:'40px'}"
             @selection-change="handleSelectionChangeUser">
-            <el-table-column type="selection" width="55">
+            <el-table-column type="selection" width="55" :reserve-selection="true">
             </el-table-column>
             <el-table-column align="center" prop="name" label="姓名" width="100"></el-table-column>
             <el-table-column align="center" prop="rolename" label="授权角色" show-overflow-tooltip>
@@ -153,12 +155,21 @@
             <el-table-column align="center" prop="hint" label="身份证号"></el-table-column>
           </el-table>
         </div>
+        <!-- <div class="showSelect">
+          <div class="t12">已选择人员</div>
+          <ul class="list">
+             <li v-for="(item,index) in userList" :key="index">{{item.name}}</li>
+          </ul>
+        </div> -->
+        </div>
          <div class="footer">
       <el-pagination @size-change="handleSizeChangeU" @current-change="handleCurrentChangeU" :current-page="currentPageU"
         layout="total, sizes, prev, pager, next, jumper" :total="totalU">
       </el-pagination>
     </div>
       </div>
+      
+      
       <span slot="footer" class="dialog-footer" v-if="isadd">
         <el-button @click="showUser=false">取 消</el-button>
         <el-button type="primary">添 加</el-button>
@@ -286,6 +297,9 @@
     },
 
     methods: {
+      bindRowKey(row){
+        return row.id
+      },
       handleSizeChangeU(val) {
         this.pageSizeU = val
         this.selectUserDate()
@@ -310,7 +324,6 @@
         })
       },
       submitUser() {
-        console.log(this.userList)
         let userid = JSON.parse(localStorage.getItem('userid'))
         let params = JSON.parse(JSON.stringify(this.userList))
         params.forEach(item => {
@@ -348,6 +361,7 @@
         this.selectDw = ''
       },
       handleSelectionChangeUser(val) {
+        console.log(111);
         this.userList = val
       },
       selectUserDate() {
@@ -721,7 +735,41 @@
   }
 </script>
 <style lang="scss">
+  .showSelect{
+    width: 200px;
+    margin-left: 8px;
+    border: 1px solid #f3f3f3;
+    .t12{
+      
+      text-align: center;
+      line-height: 32px;
+      background: #c5c5c5;
+    }
+    .list{
+          max-height: 450px;
+          overflow: auto;
+      li{
+        cursor: pointer;
+        list-style: none;
+        margin: 0;
+        padding:0 ;
+        line-height: 20px;
+        text-indent: 10px;
+        &:hover{
+          background: #f3f3f3;
+        }
+      }
+    }
+  }
+  .outbox{
+    display: flex;
+  }
+  .tableC{
+    width: 100%;
+    //  width:calc(100% - 210px) ;
+  }
   .dialog_warps {
+   
     min-height: 600px;
 
     .tbdw {
