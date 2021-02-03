@@ -1,5 +1,5 @@
 <template>
-  <div class="chart-container">
+  <div class="hbrs">
     <div class="hd" v-if="isStart">
       <div class="table-res">
         <el-table :data="tableData" ref="multipleTable" border style="width: 100%"  @selection-change="handleSelectionChange">
@@ -27,13 +27,38 @@
           </el-table-column>
           <el-table-column prop="XRZWSJ" label="现任职级时间" align="center">
           </el-table-column>
-         
+         <el-table-column align="left" class-name="column-caoz" label="操作">
+            <template slot-scope="scope">
+              <el-button type="primary" size="mini" @click="showdetail(scope.row, scope.$index)">详情</el-button>
+            </template>
+          </el-table-column>
         </el-table>
       </div>
     </div>
     <div class="hd" v-else>
        <img class="emptybox" src="./../../../static/img/nohb.png" alt="">
     </div>
+   
+    <el-dialog title="详情" custom-class="dialog"    style="min-height:600px"
+          :visible.sync="showDetailPage" width="700px" :close-on-click-modal="modal"  >
+           <h1>未推荐人列表</h1>
+           <el-table ref="multipleTable" :data="form" tooltip-effect="dark" row-class-name="row_class" border
+          style="width: 100%;overflow:auto;" :row-style="{fontFamily: '宋体', fontSize: '12px',height:'40px'}">
+
+ 
+          <el-table-column align="center" prop="name" label="姓名" width="100"></el-table-column>
+          <el-table-column align="center" prop="position" label="职位" show-overflow-tooltip>
+          </el-table-column>
+          <el-table-column align="center" prop="username" label="用户名"></el-table-column>
+          <el-table-column align="center" prop="email" label="员工编号"></el-table-column>
+          <el-table-column align="center" prop="hint" label="身份证号"></el-table-column>
+        </el-table>
+
+
+          <span slot="footer" class="dialog-footer" >
+            <el-button @click="showDetailPage=false">取 消</el-button>
+          </span>
+        </el-dialog>
   </div>
 </template>
 
@@ -43,12 +68,15 @@
     name: 'MixChart',
     data() {
       return {
+        modal: false,
+        showDetailPage:false,
         showView:false,
         limit:3,
         multipleSelection:[],
         tableData: [],
         isStart:false,
-        planId:''
+        planId:'',
+        form:{}
       }
     },
     created(){
@@ -81,6 +109,18 @@
      
     },
     methods:{
+      showdetail(row){
+        approveApi.selectNoHbcadre({
+          planid:row.PLANID,
+          hbcardreirtemid:row.ID
+        }).then(res=>{
+          if (res.data.code==0) {
+            this.form=res.data.data
+             this.showDetailPage=true
+          }
+        })
+       
+      },
       handleSelectionChange(rows){
         if(rows.length > this.limit){  //单选时为1，需要选择n项改数值为n就可以     
         this.$refs.multipleTable.toggleRowSelection(rows[0],false);//超出指定选择个数后，把第一个选中的selection设为false
@@ -112,13 +152,15 @@
      height:800px
    }
  
-  .chart-container {
+  .hbrs {
     position: relative;
     margin: 10px;
   }
 
  
-  
+  .hbrs .dialog{
+    min-height: 600px;
+  }
  
  
 </style>

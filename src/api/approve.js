@@ -183,6 +183,19 @@ export const hbcadResultByUserId = _params => {
       baseURL: config.baseUrlSBGL
   })
 }
+
+/**
+*  查询为推荐人
+* @param _params
+* @returns {AxiosPromise}
+*/
+export const selectNoHbcadre = _params => {
+    return axios.get(`hbcadreresult/selectNoHbcadre`, {
+        params: _params,
+        baseURL: config.baseUrlSBGL
+    })
+  }
+  
 /**
 *  批量添加考核投票
 * @param _params
